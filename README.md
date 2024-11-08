@@ -104,4 +104,3 @@ If you encounter errors, follow these steps:
    php artisan serve
    
 
-
