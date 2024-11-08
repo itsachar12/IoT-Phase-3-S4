@@ -83,6 +83,32 @@ If you encounter errors, follow these steps:
 
    ```bash
    php artisan serve
+
+## Handling Errors
+
+If you encounter errors, follow these steps:
+
+1. **Recovery Procedure**:
+
+   ```bash
+   php artisan serve
    ```
+
+2. **If you encounter an Error Code 500**:
+
+   - Rename `.env-example` to `.env`.
+   - Set `APP_DEBUG=true` in the `.env` file.
+
+3. **Generate New Application Key**:
+
+   ```bash
+   php artisan key:generate
+   ```
+
+4. **Restart the Server**:
+
+   ```bash
+   php artisan serve
+   ```   ```
 
 
