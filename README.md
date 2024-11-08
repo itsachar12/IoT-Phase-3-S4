@@ -31,6 +31,13 @@ Kelompok PBL IF-13 DAN IF-14, Beranggotakan! 🚀
 
 ## Initial Setup to Launch the App
 
+Note : 
+- Sudah menginstall xampp, composer, laravel, vs code
+- Siapkan 1 folder untuk nyimpan project
+- Buka folder pada VS Code
+- Lakukan integrasi dibawah pada terminal vs code 
+- Arahkan path sesuai folder diawal
+
 1. **Clone the Project**: Start by cloning the project from your friend's GitHub repository to your local machine.
 
    ```bash
@@ -39,7 +46,7 @@ Kelompok PBL IF-13 DAN IF-14, Beranggotakan! 🚀
 
 2. **Navigate to the project directory**
    ```bash
-   cd GX_DOJO_WEB
+   cd IoT_Panasonic
 
 3. **Install Composer Dependencies**: Navigate to the newly cloned project directory and install Composer dependencies.
 
