@@ -102,6 +102,6 @@ If you encounter errors, follow these steps:
 
    ```bash
    php artisan serve
-   ```   ```
+   
 
 
