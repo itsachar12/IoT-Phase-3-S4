@@ -1,4 +1,4 @@
-# Tugas ATS Pemrograman Web dengan Laravel + TailwindCSS + DaisyUI
+# GX DOJO GREEN, PHASE 3 IOT
 
 Kelompok PBL IF-13 DAN IF-14, Beranggotakan! 🚀
 
