@@ -87,7 +87,6 @@ Note :
 7. **Database COnfiguration**
    - make new database `db-iot-phase-3` to your phpmyadmin database
    - set `DB_CONNECTION=sqlite` to `DB_CONNECTION=mysql`.
-   - set `DB_DATABASE=laravel_11` to `DB_DATABASE=iot-phase-3`.
    - uncomment `DB_HOST=127.0.0.1` `DB_PORT=3306` `DB_DATABASE=laravel_11' 'DB_USERNAME=root' 'DB_PASSWORD=` 
    - set `DB_DATABASE=laravel_11` to `DB_DATABASE=db-iot-phase-3`
    - Jalankan Perintah Berikut pada terminal:
