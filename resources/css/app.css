@@ -1,0 +1,21 @@
+body {
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    min-height: 100vh;
+    display: flex;
+    justify-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.input-shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+/* Efek shadow untuk teks besar */
+.shadow-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Efek shadow untuk teks kecil */
+.shadow-text-sm {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
