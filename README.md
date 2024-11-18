@@ -52,7 +52,7 @@ Note :
 1. **Clone the Project**: Start by cloning the project from your friend's GitHub repository to your local machine.
 
    ```bash
-   git clone https://github.com/RyshaNidya/IoT-Phase-3.githttps://github.com/Irmayani3312301088/IoT-Phase-3.git
+   git clone https://github.com/Irmayani3312301088/IoT-Phase-3.git
 
 2. **Navigate to the project directory**
    ```bash
@@ -85,7 +85,7 @@ Note :
 
 
 7. **Database COnfiguration**
-   - buat database `db-iot-phase-3.sql` to your phpmyadmin database
+   - make new database `db-iot-phase-3` to your phpmyadmin database
    - set `DB_CONNECTION=sqlite` to `DB_CONNECTION=mysql`.
    - uncomment `DB_HOST=127.0.0.1` `DB_PORT=3306` `DB_DATABASE=laravel_11' 'DB_USERNAME=root' 'DB_PASSWORD=` 
    - set `DB_DATABASE=laravel_11` to `DB_DATABASE=db-iot-phase-3`
