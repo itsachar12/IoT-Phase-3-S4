@@ -43,7 +43,7 @@ Implementasi proyek ini diharapkan dapat memberikan wawasan tentang potensi tekn
 ## Initial Setup to Launch the App
 
 Note : 
-- Sudah menginstall xampp, composer, laravel, vs code
+- Sudah menginstall xampp, composer, laravel, vs code, node.js dan npm
 - Siapkan 1 folder untuk nyimpan project
 - Buka folder pada VS Code
 - Lakukan integrasi dibawah pada terminal vs code (ctrl + `)
@@ -52,12 +52,11 @@ Note :
 1. **Clone the Project**: Start by cloning the project from your friend's GitHub repository to your local machine.
 
    ```bash
-   git clone https://github.com/TzyProgrammer/IoT-Panasonic.git
-   ```
+   git clone https://github.com/RyshaNidya/IoT-Phase-3.githttps://github.com/Irmayani3312301088/IoT-Phase-3.git
 
 2. **Navigate to the project directory**
    ```bash
-   cd IoT_Panasonic
+   cd IoT-Phase-3
 
 3. **Install Composer Dependencies**: Navigate to the newly cloned project directory and install Composer dependencies.
 
@@ -72,34 +71,43 @@ Note :
    composer update
    ```
 
-5. **Launch The App**
-   ```bash
-   php artisan serve
-   ```
-
-## Handling Errors
-
-If you encounter errors, follow these steps:
-
-1. **Recovery Procedure**:
+   
+5. **NPM Install**:
 
    ```bash
-   php artisan serve
+   npm install 
    ```
 
-2. **If you encounter an Error Code 500**:
+6. **.env file configuration**:
 
    - Rename `.env-example` to `.env`.
    - Set `APP_DEBUG=true` in the `.env` file.
 
-3. **Generate New Application Key**:
+
+7. **Database COnfiguration**
+   - buat database `db-iot-phase-3.sql` to your phpmyadmin database
+   - set `DB_CONNECTION=sqlite` to `DB_CONNECTION=mysql`.
+   - uncomment `DB_HOST=127.0.0.1` `DB_PORT=3306` `DB_DATABASE=laravel_11' 'DB_USERNAME=root' 'DB_PASSWORD=` 
+   - set `DB_DATABASE=laravel_11` to `DB_DATABASE=db-iot-phase-3`
+   - Jalankan Perintah Berikut pada terminal:
+   ```bash
+   php artisan migrate
+   ```
+
+8. **Generate New Application Key**:
 
    ```bash
    php artisan key:generate
    ```
 
-4. **Restart the Server**:
-
+9. **Launch The App**
+   - Add new terminal for running laravel
    ```bash
    php artisan serve
-   
+   ```
+   - Add 1 more terminal for running node
+   ```bash
+   npm run dev
+   ```
+
+* Note : soo there are 2 terminal running for running the website!!!
