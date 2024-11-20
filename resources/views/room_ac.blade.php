@@ -1,4 +1,4 @@
-@extends('layout.room_light')
+@extends('layout.room_ac')
 
 @section('title', 'Aplikasi GX DOJO')
 
@@ -34,7 +34,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach([1, 2, 3] as $appliance)
                     <div class="bg-white rounded-lg shadow p-6 flex flex-col space-y-4 hover:shadow-lg transition">
-                        <div class="text-gray-800 font-semibold">Panasonic Lamp</div>
+                        <div class="text-gray-800 font-semibold">Panasonic AC</div>
                         <div class="text-gray-500">Usage Time: 3 Hours 18 Minutes</div>
                         <div class="text-gray-500">Power: 23 Watts</div>
                         <div class="text-gray-500">Energy: 67 kWh</div>
@@ -75,6 +75,7 @@
 </div>
 
 <script>
+    // Initialize Chart.js Bar Chart
     const ctx = document.getElementById('roomAnalysisChart').getContext('2d');
     const roomAnalysisChart = new Chart(ctx, {
         type: 'bar',

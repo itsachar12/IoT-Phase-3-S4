@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -9,6 +9,9 @@ use App\Http\Controllers\EmissionsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomLightController;
+use App\Http\Controllers\RoomACController;
+use App\Http\Controllers\ACController;
+use App\Http\Controllers\LightController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +24,7 @@ use App\Http\Controllers\RoomLightController;
 |
 */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -42,6 +41,17 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::get('/room_light', [RoomLightController::class, 'index'])->name('room_light');
+
+Route::get('/light', [LightController::class, 'index'])->name('light');
+
+Route::get('/room_ac', [RoomACController::class, 'index'])->name('room_ac');
+
+Route::get('/ac', [ACController::class, 'index'])->name('ac');
+
+Route::get('/light', [LightController::class, 'index'])->name('light');
+
+
+
 
 
 
