@@ -21,8 +21,8 @@
                <!-- Dropdown menu -->
                <div id="dropdown-user" class="hidden absolute right-0 top-12 w-48 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
                   <div class="px-4 py-3" role="none">
-                     <p class="text-sm text-gray-900 dark:text-white" role="none">Admin Mantap</p>
-                     <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">adminmantap@gmail.com</p>
+                     <p class="text-sm text-gray-900 dark:text-white" role="none">{{ Auth::user()->username }}</p>
+                     <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">{{ Auth::user()->email }}</p>
                   </div>
                   <ul class="py-1" role="none">
                      <li><a href="/profile" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a></li>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
@@ -14,18 +16,24 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $dataLogin = $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('username', 'password'))) {
-            return redirect()->intended('/dashboard');
+        if (Auth::attempt($dataLogin)) {
+            // echo 'berhasil';
+            $request->session()->regenerate();
+            return redirect()->intended('/ ')->with('sukses', 'Login Successful');
+        
+        } else {
+
+            return back()->withErrors([ 
+                
+                'loginGagal' => 'Invalid Username or Pssword!',
+            ]);
         }
 
-        return back()->withErrors([
-            'login' => 'Username atau password salah.',
-        ]);
     }
 }
 

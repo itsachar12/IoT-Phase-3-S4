@@ -21,16 +21,22 @@
                     <p class="text-lg font-semibold text-white tracking-wide">Green Energy System</p>
                 </div>
 
-                <form>
+                <form action="{{ route('login.tes') }}" method="POST" >
+                    @csrf
+                    <div class="mb-6 font-semibold ">
+                        @if($errors->has('loginGagal'))
+                            <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">{{ $errors->first('loginGagal') }}</div>
+                        @endif
+                    </div>
                     <div class="mb-6">
                         <label for="username" class="block font-semibold text-white mb-2">Username</label>
-                        <input type="text" id="username" class="w-full px-4 py-2 rounded-lg shadow-md bg-white text-gray-600 font-semibold placeholder-gray-500 focus:outline-none border-none">
+                        <input type="text" name="username" id="username" placeholder="Enter Username..." class="w-full px-4 py-2 rounded-lg shadow-md bg-white text-gray-600 font-semibold placeholder-gray-500 focus:outline-none border-none" required>
                     </div>
 
                     <div class="mb-6">
                         <label for="password" class="block font-semibold text-white mb-2">Password</label>
                         <div class="relative">
-                            <input type="password" id="password" class="w-full px-4 py-2 rounded-lg shadow-md bg-white text-gray-600 font-semibold placeholder-gray-500 focus:outline-none border-none">
+                            <input type="password" id="password" name="password" placeholder="Enter Password.." class="w-full px-4 py-2 rounded-lg shadow-md bg-white text-gray-600 font-semibold placeholder-gray-500 focus:outline-none border-none" required>
                             <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -46,7 +52,7 @@
                     </div>
 
                     <div class="flex items-center justify-center">
-                        <button class="w-64 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg">
+                        <button class="w-64 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg" type="submit">
                             LOGIN
                         </button>
                     </div>

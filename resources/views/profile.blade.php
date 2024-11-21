@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="max-w-4xl mx-auto bg-green-100 shadow-md rounded-lg p-6 space-y-8 mt-20">
+<div class="max-w-4xl mx-auto bg-green-100 shadow-md rounded-lg p-6 space-y-8 mt-20 ">
     <!-- Header Section -->
     <div class="text-center">
         <h1 class="text-2xl font-bold text-gray-700">Your Profile</h1>
@@ -17,18 +17,18 @@
             <span class="text-gray-400 text-sm">Photo</span>
         </div>
         <div class="flex space-x-4">
-            <button class="flex items-center px-4 py-2 bg-green-100 text-green-600 border border-green-600 rounded-lg font-medium hover:bg-green-600 hover:text-white">
+            <a  class="flex items-center px-4 py-2 bg-green-100 text-green-600 border border-green-600 rounded-lg font-medium hover:bg-green-600 hover:text-white hover:cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
                 Change Picture
-            </button>
-            <button class="flex items-center px-4 py-2 bg-red-100 text-red-600 border border-red-600 rounded-lg font-medium hover:bg-red-600 hover:text-white">
+            </a>
+            <a class="flex items-center px-4 py-2 bg-red-100 text-red-600 border border-red-600 rounded-lg font-medium hover:bg-red-600 hover:text-white hover:cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
                 Delete Picture
-            </button>
+            </a>
         </div>
     </div>
 
@@ -41,11 +41,11 @@
         <div class="mt-4 space-y-4">
             <div class="flex justify-between items-center">
                 <span class="font-medium text-gray-600">Username</span>
-                <span class="text-gray-700">{{ session('username', 'Admin Mantap') }}</span>
+                <span class="text-gray-700">{{ Auth::user()->username }}</span>
             </div>
             <div class="flex justify-between items-center">
                 <span class="font-medium text-gray-600">Email</span>
-                <span class="text-gray-700">{{ session('email', 'adminmantap@gmail.com') }}</span>
+                <span class="text-gray-700">{{ Auth::user()->email }}</span>
             </div>
         </div>
     </div>
@@ -55,16 +55,23 @@
 
     <!-- Edit Profile Section -->
     <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-        <h2 class="text-lg font-bold text-gray-700">Edit Profile</h2>
-        <form action="{{ route('profile.update') }}" method="POST" class="mt-4 space-y-6">
+        @if($errors->has('error'))
+            <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">{{ $errors->first('error') }}</div>
+        @endif
+        @if($errors->has('sukses'))
+            <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">{{ $errors->first('sukses') }}</div>
+        @endif
+        <h2 class="text-lg font-bold text-gray-700 ">Edit Profile</h2>
+        <form action="{{ route('profile.update') }}" method="POST" class="mt-4 space-y-6" >
             @csrf
+            @method('PATCH')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" name="username" placeholder="New Username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
-                <input type="email" name="email" placeholder="New Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
-                <input type="password" name="password" placeholder="New Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                <input type="password" name="password_confirmation" placeholder="Confirm Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                <input type="text" name="username" placeholder="New Username" class="w-full px-4 py-2 border border-gray-300 text-slate-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required value="{{ Auth::user()->username }}">
+                <input type="email" name="email" placeholder="New Email..." class="w-full px-4 py-2 border border-gray-300 text-slate-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required value="{{ Auth::user()->email }}" >
+                <input type="password" name="password" placeholder="New Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" minlength="6" >
+                <input type="password" name="password_confirmation" placeholder="Confirm Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" minlength="6">
             </div>
-            <button type="submit" class="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">
+            <button type="submit" class="w-1/2 mx-auto block px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">
                 Update Profile
             </button>
         </form>

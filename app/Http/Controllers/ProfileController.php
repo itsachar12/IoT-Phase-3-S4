@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -11,20 +13,28 @@ class ProfileController extends Controller
         return view('profile');
     }
 
-    public function update(Request $request)
+    public function update(Request $request) 
     {
         // Validasi data yang dikirimkan
-        $validated = $request->validate([
+        $this->validate($request, [
             'username' => 'required|string|max:255',
             'password' => 'nullable|confirmed|min:6',
             'email' => 'required|email|max:255',
+            'password_confirmation' => 'nullable'
         ]);
 
-        // Logika penyimpanan data (sesuaikan dengan database Anda)
-        // Contoh: menyimpan ke sesi sebagai contoh sementara
-        session(['username' => $validated['username'], 'email' => $validated['email']]);
+        $user = User::findOrFail(Auth::user()->id);
 
-        // Kembalikan respon ke halaman profil dengan pesan sukses
-        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
+        if($request['password'] === $request['password_confirmation']){
+            $request['password'] = bcrypt($request['password']);
+
+            $user->update($request->all());
+            return back()->with('sukses', 'Success changed profile');  
+        } else {
+            return back()->with('error', 'Failed to update profile!');  
+            
+        }
+        return back()->with('error', 'Failed to update profile!');  
+
     }
 }
