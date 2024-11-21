@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RoomLightController extends Controller
+class RoomACController extends Controller
 {
     public function index()
     {
+        // Data simulasi untuk Appliances
         $appliances = [
             ['name' => 'Panasonic Lamp', 'time' => '3Hour 18Minutes', 'watt' => 23, 'kwh' => 67, 'status' => 'Active'],
             ['name' => 'Panasonic Lamp', 'time' => '3Hour 18Minutes', 'watt' => 23, 'kwh' => 67, 'status' => 'Deactivate'],
@@ -25,6 +26,6 @@ class RoomLightController extends Controller
             ['day' => 'Sun', 'value' => 10.222, 'color' => 'blue'],
         ];
 
-        return view('room_light', compact('appliances'));
+        return view('room_ac', compact('appliances', 'roomAnalysis'));
     }
 }

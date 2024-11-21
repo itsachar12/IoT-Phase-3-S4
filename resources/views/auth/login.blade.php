@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="flex h-screen w-screen items-center justify-center bg-white">
-    <div class="flex shadow-md h-full w-full bg-gradient-to-r from-cyan-500 via-lime-900 to-green-700">
+    <div class="flex shadow-md h-full w-full bg-gradient-to-r from-lime-900 to-green-700">
         
         <!-- Bagian Gambar -->
         <div class="w-1/2">

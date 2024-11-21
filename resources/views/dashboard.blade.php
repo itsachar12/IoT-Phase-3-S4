@@ -4,8 +4,8 @@
 
 @section('content')
 
-<div class="flex h-screen w-screen flex-col mt-16 ml-64">
-    <div class="grid grid-cols-5 gap-6 p-6 bg-green-50 min-h-screen">
+<div class="flex h-screen w-screen flex-col mt-20 ml-64">
+    <div class="grid grid-cols-5 gap-6 p-6 bg-green-100 min-h-screen">
 
         <!-- Change in Cost -->
         <div class="col-span-2 bg-white rounded-lg shadow-md p-6">
