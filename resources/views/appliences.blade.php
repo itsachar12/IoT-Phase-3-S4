@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="flex h-screen w-screen flex-col bg-green-100 min-h-screen p-8 mt-20 ml-64">
+<div class="flex h-auto w-auto flex-col bg-green-100 min-h-screen p-8 mt-20 ml-64">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 w-full max-w-screen-xl">
 
         <!-- Appliances Active -->

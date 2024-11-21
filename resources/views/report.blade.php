@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 ml-64">
+<div class="flex flex-col items-center w-auto bg-green-100 min-h-screen mt-20 ml-64">
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-6xl mx-auto mt-10">
         <!-- Filter dan Search -->
         <div class="flex flex-wrap justify-between items-center mb-6 gap-4">

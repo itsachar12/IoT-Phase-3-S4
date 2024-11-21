@@ -4,8 +4,8 @@
 
 @section('content')
 
-<div class="flex bg-green-100 min-h-screen h-screen w-screen flex-col items-center mt-20">
-    <div class="grid gap-6 w-full max-w-5xl">
+<div class="flex bg-green-100 min-h-auto h-screen w-auto flex-col items-center mt-20 ml-52">
+    <div class="grid gap-6 w-full max-w-5xl mb-20">
 
         <!-- Lights Room -->
         <div class="relative mt-6 rounded-lg overflow-hidden shadow-lg bg-white">
