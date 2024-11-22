@@ -17,6 +17,7 @@ class ProfileController extends Controller
     {
         // Validasi data yang dikirimkan
         $this->validate($request, [
+            
             'username' => 'required|string|max:255',
             'password' => 'nullable|confirmed|min:6',
             'email' => 'required|email|max:255',
