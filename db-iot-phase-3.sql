@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Nov 2024 pada 06.43
+-- Waktu pembuatan: 22 Nov 2024 pada 10.27
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `db-iot-phase-3`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `appliances`
+--
+
+CREATE TABLE `appliances` (
+  `id_appliances` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `speed_fan` varchar(20) NOT NULL,
+  `degree` float NOT NULL,
+  `electrical_power` int(11) NOT NULL,
+  `type_appliance` varchar(50) NOT NULL,
+  `lux_percentage` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `appliances`
+--
+
+INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux_percentage`) VALUES
+(1, 'Air Conditioner lt 1 main room', 'Active', 'normal', 25, 234, 'AC', 0),
+(2, 'Lights 1 lt 2 Side Room', 'Inactive', '0', 0, 111, 'Light', 50);
 
 -- --------------------------------------------------------
 
@@ -142,6 +167,31 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `schedule`
+--
+
+CREATE TABLE `schedule` (
+  `id_schedule` int(11) NOT NULL,
+  `name_appliance` varchar(255) NOT NULL,
+  `time_start` time NOT NULL,
+  `time_end` time NOT NULL,
+  `repeat_schedule` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `id_appliances` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `schedule`
+--
+
+INSERT INTO `schedule` (`id_schedule`, `name_appliance`, `time_start`, `time_end`, `repeat_schedule`, `status`, `id_appliances`) VALUES
+(1, 'Air Conditioner lt 1 main room', '16:18:00', '16:21:00', 'Once', 'Active', 1),
+(2, 'Air Conditioner lt 1 main room', '16:25:00', '19:26:00', 'Daily', 'Inactive', 1),
+(3, 'Lights 1 lt 2 Side Room', '04:28:00', '19:29:00', 'Daily', 'Inactive', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `sessions`
 --
 
@@ -197,6 +247,12 @@ INSERT INTO `users` (`id`, `username`, `picture`, `email`, `email_verified_at`, 
 --
 
 --
+-- Indeks untuk tabel `appliances`
+--
+ALTER TABLE `appliances`
+  ADD PRIMARY KEY (`id_appliances`);
+
+--
 -- Indeks untuk tabel `cache`
 --
 ALTER TABLE `cache`
@@ -247,6 +303,13 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indeks untuk tabel `schedule`
+--
+ALTER TABLE `schedule`
+  ADD PRIMARY KEY (`id_schedule`),
+  ADD KEY `id_appliances` (`id_appliances`);
+
+--
 -- Indeks untuk tabel `sessions`
 --
 ALTER TABLE `sessions`
@@ -264,6 +327,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `appliances`
+--
+ALTER TABLE `appliances`
+  MODIFY `id_appliances` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -288,6 +357,12 @@ ALTER TABLE `laporan`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `schedule`
+--
+ALTER TABLE `schedule`
+  MODIFY `id_schedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
