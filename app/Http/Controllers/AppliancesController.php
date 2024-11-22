@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
 use App\Models\Appliances;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AppliancesController extends Controller
 {
@@ -13,8 +14,9 @@ class AppliancesController extends Controller
      */
     public function index()
     {
+        $schedules = Schedule::all();
         $appliances = Appliances::all();
-        return view('appliences', compact('appliances'));
+        return view('appliences', compact('appliances', 'schedules'));
     }
 
     /**

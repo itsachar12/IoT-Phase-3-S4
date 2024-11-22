@@ -107,30 +107,22 @@
                 <!-- Schedule Items -->
                 <div class="space-y-4">
                     <!-- Item 1 -->
+                    @foreach ($schedules as $item)
+                        
                     <div class="flex items-center justify-between bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition">
                         <div>
-                            <p class="text-lg font-semibold">South AC, Main Room It 1</p>
-                            <p class="text-sm text-gray-500">Active 07:00 AM - 11:30 AM</p>
-                            <p class="text-sm text-gray-500">Daily</p>
+                            <p class="text-lg font-semibold">{{ $item->name_appliance }}</p>
+                            <p class="text-sm text-gray-500">{{ $item->status }} {{ $item->time_start }} - {{ $item->time_end }}</p>
+                            <p class="text-sm text-gray-500">{{ $item->repeat_schedule }}</p>
                         </div>
                         <div class="flex space-x-6">
                             <a href="#" class="text-orange-600 font-semibold">Edit</a>
                             <a href="#" class="text-red-600 font-semibold">Delete</a>
                         </div>
                     </div>
+                    @endforeach
 
-                    <!-- Item 2 -->
-                    <div class="flex items-center justify-between bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition">
-                        <div>
-                            <p class="text-lg font-semibold">South AC, Main Room It 1</p>
-                            <p class="text-sm text-gray-500">Active 07:00 AM - 11:30 AM</p>
-                            <p class="text-sm text-gray-500">Once</p>
-                        </div>
-                        <div class="flex space-x-6">
-                            <a href="#" class="text-orange-600 font-semibold">Edit</a>
-                            <a href="#" class="text-red-600 font-semibold">Delete</a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -235,7 +227,7 @@
                                 d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                 clip-rule="evenodd"></path>
                         </svg>
-                        Add new product
+                        Add New Schedule
                     </button>
                 </form>
             </div>
