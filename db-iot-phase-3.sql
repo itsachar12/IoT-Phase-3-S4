@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Nov 2024 pada 10.27
+-- Waktu pembuatan: 05 Des 2024 pada 17.12
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -31,11 +31,11 @@ CREATE TABLE `appliances` (
   `id_appliances` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `status` varchar(20) NOT NULL,
-  `speed_fan` varchar(20) NOT NULL,
-  `degree` float NOT NULL,
+  `speed_fan` varchar(20) DEFAULT NULL,
+  `degree` float DEFAULT NULL,
   `electrical_power` int(11) NOT NULL,
   `type_appliance` varchar(50) NOT NULL,
-  `lux_percentage` int(11) NOT NULL
+  `lux_percentage` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -43,8 +43,11 @@ CREATE TABLE `appliances` (
 --
 
 INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux_percentage`) VALUES
-(1, 'Air Conditioner lt 1 main room', 'Active', 'normal', 25, 234, 'AC', 0),
-(2, 'Lights 1 lt 2 Side Room', 'Inactive', '0', 0, 111, 'Light', 50);
+(1, 'Air Conditioner lt 1 main room', 'Active', 'NORMAL', 20, 234, 'AC', 0),
+(2, 'Lights 1 lt 2 Side Room', 'Inactive', '0', 0, 111, 'Light', 50),
+(3, 'AC 2 ', 'Active', 'FAST', 16, 12, 'AC', 0),
+(4, 'Light 2 comp', 'Active', '', 0, 5, 'Light', 87),
+(5, 'Lamp site a', 'Active', NULL, NULL, 12, 'Light', 66);
 
 -- --------------------------------------------------------
 
@@ -185,9 +188,12 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id_schedule`, `name_appliance`, `time_start`, `time_end`, `repeat_schedule`, `status`, `id_appliances`) VALUES
-(1, 'Air Conditioner lt 1 main room', '16:18:00', '16:21:00', 'Once', 'Active', 1),
-(2, 'Air Conditioner lt 1 main room', '16:25:00', '19:26:00', 'Daily', 'Inactive', 1),
-(3, 'Lights 1 lt 2 Side Room', '04:28:00', '19:29:00', 'Daily', 'Inactive', 2);
+(10, 'AC 2', '18:53:00', '20:50:00', 'Daily', 'Inactive', 3),
+(13, 'AC 2', '20:02:00', '20:04:00', 'Once', 'Inactive', 3),
+(14, 'Air Conditioner lt 1 main room', '20:04:00', '22:04:00', 'Daily', 'Active', 1),
+(15, 'Air Conditioner lt 1 main room', '20:08:00', '20:07:00', 'Once', 'Active', 1),
+(17, 'Light 2 comp', '23:09:00', '23:10:00', 'Daily', 'Active', 4),
+(18, 'Lights 1 lt 2 Side Room', '23:10:00', '12:10:00', 'Once', 'Active', 2);
 
 -- --------------------------------------------------------
 
@@ -332,7 +338,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `appliances`
 --
 ALTER TABLE `appliances`
-  MODIFY `id_appliances` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_appliances` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -362,7 +368,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id_schedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_schedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
