@@ -65,17 +65,22 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Schedule $schedule)
+    public function edit(Schedule $schedule, $id )
     {
-        //
+        $schedule = Schedule::find($id);
+        $dataSch = Schedule::all();
+        return view('edit-schedule', compact('schedule', 'dataSch'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(Request $request, $id  )
     {
-        //
+
+        $sch = Schedule::findOrFail($id);
+        $sch->update($request->all());
+        return redirect()->back()->with('sukses', 'Success Updated Schedule.');
     }
 
     /**

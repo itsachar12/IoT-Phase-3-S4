@@ -49,7 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/schedule/add', [ScheduleController::class, 'index'])->name('schedule.add');
     Route::post('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
 
-    Route::patch('/schedule/update/{id}', [ScheduleController::class, 'update'])->name('schedule.update');
+    Route::get('/schedule/edit/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
+    Route::patch('/schedule/edit/{id}', [ScheduleController::class, 'update'])->name('schedule.update');
     Route::delete('/schedule/delete/{id}', [ScheduleController::class, 'destroy'])->name('schedule.delete');
     
     

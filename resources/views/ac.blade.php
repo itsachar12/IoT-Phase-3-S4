@@ -154,13 +154,15 @@
                                     <td class="p-3 border">{{ $item->name_appliance }}</td>
                                     <td class="p-3 border text-center">{{ $item->time_start }} to {{ $item->time_end }}
                                     </td>
-                                    <td class="p-3 border text-center text-green-600">{{ $item->status }}</td>
+                                    <td class="p-3 border text-center 
+                                    {{ $item->status === 'Active' ? 'text-green-600' : 'text-red-600' }}
+                                    ">{{ $item->status }}</td>
                                     <td class="p-3 border text-center">{{ $item->repeat_schedule }}</td>
                                     <!-- Ikon Edit dan Hapus -->
                                     <td class="p-3 border text-center space-x-4">
-                                        <button class="text-blue-500 hover:text-blue-700">
+                                        <a href="{{ route('schedule.edit', $item->id_schedule) }}" class="text-blue-500 hover:text-blue-700">
                                             <i class="fa-regular fa-pen-to-square"></i>
-                                        </button>
+                                        </a>
                                         <form action="{{ route('schedule.delete', $item->id_schedule) }}" method="post"
                                             class="inline">
                                             @csrf

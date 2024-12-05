@@ -119,7 +119,7 @@
                                 <p class="text-sm text-gray-500">{{ $item->repeat_schedule }}</p>
                             </div>
                             <div class="flex space-x-6">
-                                <a href="#"  class="text-orange-600 font-semibold">Edit</a>
+                                <a href="{{ route('schedule.edit', $item->id_schedule) }}"  class="text-orange-600 font-semibold">Edit</a>
 
                                 <form action="{{ route('schedule.delete', $item->id_schedule) }}" method="post">
                                     @csrf
@@ -135,11 +135,5 @@
             </div>
         </div>
     </div>
-
-
-    {{-- modal add schedule --}}
-    
-
-    {{--! modal edit schedule  --}}
     
 @endsection

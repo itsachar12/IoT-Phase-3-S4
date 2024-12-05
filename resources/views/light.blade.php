@@ -21,7 +21,7 @@
                     <!-- Light Room 1 -->
                     @foreach ($lightList as $item)
                         
-                    @endforeach
+                    
                     <a href="#">
                         <div class="flex items-center p-4 border rounded-lg bg-gray-100  shadow hover:bg-green-100">
                             <div class="mr-4">
@@ -43,8 +43,9 @@
                             </div>
                         </div>
                     </a>
-                    
+                    @endforeach
                 </div>
+
             </div>
 
 
