@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8">
 
             <!-- Diesel Footprint -->
-            <div class="bg-white shadow-md rounded-lg p-6 text-center">
+            <div class="bg-white shadow-md rounded-lg p-6 text-center ">
                 <h2 class="text-xl font-bold mb-4">Diesel Footprint</h2>
                 <div class="relative flex flex-col items-center">
                     <div class="relative bg-red-400 rounded-full w-40 h-56 flex items-center justify-center shadow-lg">

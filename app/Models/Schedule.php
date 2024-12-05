@@ -15,7 +15,7 @@ class Schedule extends Model
 
     public function appliance()
     {
-        return $this->belongsTo(appliances::class, 'id_appliances');
+        return $this->belongsTo(appliances::class);
     }
 
 

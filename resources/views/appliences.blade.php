@@ -6,7 +6,7 @@
 
     <div class="flex h-auto w-auto flex-col bg-green-100 min-h-screen p-8 mt-20 ml-64">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 w-full max-w-screen-xl">
-
+            
             <!-- Appliances Active -->
             <div class="bg-white rounded-lg shadow-md p-4 flex justify-between items-center lg:col-span-1">
                 <div>
@@ -82,10 +82,17 @@
                 </a>
             </div>
 
-            <!-- Schedule -->
+            <!-- ? Schedule -->
             <div class="bg-white rounded-lg shadow-md p-6 lg:col-span-2">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Schedule</h2>
-
+                @if (session('error'))
+                    <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
+                        {{ session('error') }}</div>
+                @endif
+                @if (session('sukses'))
+                    <div class="error  text-green-800 bg-green-300 p-3 rounded-lg mb-2 font-bold ">
+                        {{ session('sukses') }} !!</div>
+                @endif
                 <!-- Info Bar -->
                 <div class="flex items-center bg-gray-200 p-4 rounded-lg mb-6">
                     <a href="#" data-modal-target="crud-modal" data-modal-toggle="crud-modal">
@@ -98,31 +105,32 @@
                     <p class="text-lg font-semibold ml-4">You Created 4 Schedule</p>
                     <span class="text-sm text-gray-600 ml-auto">3 Appliances are in use</span>
                 </div>
-                @if($errors->has('error'))
-                    <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">{{ $errors->first('error') }}</div>
-                @endif
-                @if($errors->has('sukses'))
-                    <div class="error  text-green-600 bg-green-300 p-3 rounded-lg">{{ $errors->first('sukses') }}</div>
-                @endif
+                
                 <!-- Schedule Items -->
                 <div class="space-y-4">
                     <!-- Item 1 -->
                     @foreach ($schedules as $item)
-                        
-                    <div class="flex items-center justify-between bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition">
-                        <div>
-                            <p class="text-lg font-semibold">{{ $item->name_appliance }}</p>
-                            <p class="text-sm text-gray-500">{{ $item->status }} {{ $item->time_start }} - {{ $item->time_end }}</p>
-                            <p class="text-sm text-gray-500">{{ $item->repeat_schedule }}</p>
+                        <div
+                            class="flex items-center justify-between bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition">
+                            <div>
+                                <p class="text-lg font-semibold">{{ $item->name_appliance }}</p>
+                                <p class="text-sm text-gray-500">{{ $item->status }} {{ $item->time_start }} -
+                                    {{ $item->time_end }}</p>
+                                <p class="text-sm text-gray-500">{{ $item->repeat_schedule }}</p>
+                            </div>
+                            <div class="flex space-x-6">
+                                <a href="#"  class="text-orange-600 font-semibold">Edit</a>
+
+                                <form action="{{ route('schedule.delete', $item->id_schedule) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button  class="text-red-600 font-semibold" type="submit" onclick="confirm('Are You Sure Want to Delete this Schedule, with id {{ $item->id_schedule }} ? ') ">Delete</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="flex space-x-6">
-                            <a href="#" class="text-orange-600 font-semibold">Edit</a>
-                            <a href="#" class="text-red-600 font-semibold">Delete</a>
-                        </div>
-                    </div>
                     @endforeach
 
-                    
+
                 </div>
             </div>
         </div>
@@ -151,6 +159,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
+
                 <!-- Modal body -->
                 <form class="p-4 md:p-5" action="{{ route('schedule.add') }}" method="post">
                     @csrf
@@ -164,13 +173,12 @@
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Appliance</label>
                             <select id="name_appliance" required name="name_appliance"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option selected="" disabled >--Select Appliance--</option>
+                                <option selected="" disabled>--Select Appliance--</option>
                                 {{-- perulangan daftar appliances --}}
                                 @foreach ($appliances as $app)
-                                    
-                                <option value="{{ $app->name }}">{{ $app->name }}</option>
+                                    <option value="{{ $app->name }}">{{ $app->name }}</option>
                                 @endforeach
-                                
+
                             </select>
                         </div>
 
@@ -178,12 +186,12 @@
                         <div class="col-span-2 sm:col-span-1">
                             <label for="time_start"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Time Start</label>
-                            <input type="time" name="time_start" id="time_start" 
+                            <input type="time" name="time_start" id="time_start"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 required="">
                         </div>
 
-                        {{-- ? Time End--}}
+                        {{-- ? Time End --}}
                         <div class="col-span-2 sm:col-span-1">
                             <label for="time_end"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Time End</label>
@@ -217,7 +225,7 @@
                                 <option value="Inactive">Inactive</option>
                             </select>
                         </div>
-    
+
                     </div>
                     <button type="submit"
                         class="text-white inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full">
@@ -233,4 +241,7 @@
             </div>
         </div>
     </div>
+
+    {{--! modal edit schedule  --}}
+    
 @endsection

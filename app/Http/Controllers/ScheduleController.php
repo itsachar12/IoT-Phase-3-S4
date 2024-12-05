@@ -35,7 +35,7 @@ class ScheduleController extends Controller
         $request['id_appliances'] = $id_app->id_appliances;
         // dd($request['id_appliances']);
         if (Schedule::create($request->all())) {
-            return back()->with('sukses', 'Success added new schedule');
+            return redirect()->route('appliences')->with('sukses', 'Success added new schedule');
         }
 
         return back()->with('error', 'Failed to add new schedule!');
@@ -76,8 +76,11 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Schedule $schedule)
+    public function destroy($id)
     {
-        
+        $schedule = Schedule::findOrFail($id);
+        $schedule->delete();
+
+        return back()->with('sukses', 'Success Deleted a Schedule ');
     }
 }
