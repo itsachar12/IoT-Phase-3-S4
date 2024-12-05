@@ -8,14 +8,20 @@ use Illuminate\Http\Request;
 
 class ACController extends Controller
 {
-    public function index(Appliances $appliances)
+    public function index(Appliances $appliances, Request $request)
     {
+        // * daftar ac
         $acList = Appliances::where('type_appliance','AC')->get();
-        $schList = Schedule::whereHas('appliance', function ($query) {
-            $query->where('type_appliance', 'AC');
-        });
-        // $schList = Schedule::find(1)->appliance()->where('type_appliance', 'AC')->get();
-        // dd($schList);
-        return view('ac', compact('acList', 'schList'));
+        
+        // * Pilian dari daftar ac
+        $selectedAc = $request->has('id_appliances') ? Appliances::find($request->id_appliances) 
+        : $acList->first();
+
+        // * Jadwall sesuai ac
+        $schList = $request->has('id_appliances') 
+        ? Schedule::where('id_appliances', $request->id_appliances)->get()
+        : Schedule::where('id_appliances', $acList->first()->id_appliances)->get();
+        
+        return view('ac', compact('acList', 'schList', 'selectedAc'));
     }
 }

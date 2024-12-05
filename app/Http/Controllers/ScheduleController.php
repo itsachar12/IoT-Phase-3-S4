@@ -14,7 +14,9 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-
+        $schedules = Schedule::all();
+        $appliances = Appliances::all();
+        return view('add-schedule', compact('schedules', 'appliances'));
     }
 
     /**
@@ -35,7 +37,7 @@ class ScheduleController extends Controller
         $request['id_appliances'] = $id_app->id_appliances;
         // dd($request['id_appliances']);
         if (Schedule::create($request->all())) {
-            return redirect()->route('appliences')->with('sukses', 'Success added new schedule');
+            return back()->with('sukses', 'Success added new schedule');
         }
 
         return back()->with('error', 'Failed to add new schedule!');
@@ -48,6 +50,9 @@ class ScheduleController extends Controller
     {
         //
     }
+    
+
+
 
     /**
      * Display the specified resource.
