@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="mt-28 mb-10 ml-96 w-1/2 ">
-        <a href="/appliances"
+        <a href="/appliences"
             class="text-blue-500 px-4 py-2 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white transition">
             Back
         </a>
