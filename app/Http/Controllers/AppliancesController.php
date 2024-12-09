@@ -28,9 +28,7 @@ class AppliancesController extends Controller
         return view('appliences', compact('appliances', 'schedules', 'total_act', 'total_ac', 'total_lamp', 'total_act_ac', 'total_act_lamp', 'total_power', 'total_power_ac', 'total_power_lamp' ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         //
