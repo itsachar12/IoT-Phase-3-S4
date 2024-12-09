@@ -25,14 +25,5 @@ class ACController extends Controller
         return view('ac', compact('acList', 'schList', 'selectedAc'));
     }
 
-    public function status(Request $request, $id){
-        $request->validate(
-            ['status' =>'required']
-        );
-        
-        $status = Appliances::findOrFail($id);
-        $status->status = $request->status;
-        $status->save();
-        return redirect()->back()->with('sukses', 'Successed');
-    }
+    
 }

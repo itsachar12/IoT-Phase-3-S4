@@ -28,7 +28,16 @@ class AppliancesController extends Controller
         return view('appliences', compact('appliances', 'schedules', 'total_act', 'total_ac', 'total_lamp', 'total_act_ac', 'total_act_lamp', 'total_power', 'total_power_ac', 'total_power_lamp' ));
     }
 
-    
+    public function status(Request $request, $id){
+        $request->validate(
+            ['status' =>'required']
+        );
+        
+        $status = Appliances::findOrFail($id);
+        $status->status = $request->status;
+        $status->save();
+        return redirect()->back()->with('sukses', 'Successed');
+    }
     public function create()
     {
         //

@@ -99,7 +99,11 @@
 
                     <!-- ON/OFF Button -->
                     @if (session('sukses'))
-                        <div ><script>alert(" {{ session('sukses') }} {{ $selectedAc->status }} {{ $selectedAc->name }} ")</script></div>
+                        <div>
+                            <script>
+                                alert(" {{ session('sukses') }} {{ $selectedAc->status }} {{ $selectedAc->name }} ")
+                            </script>
+                        </div>
                     @endif
                     <form action="{{ route('appliances.status', $selectedAc->id_appliances) }}" method="post">
                         @csrf
@@ -111,27 +115,27 @@
 
                         <button class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36 "
                             type="submit" ">
-                                        <div class="flex-1 py-2 text-sm font-medium   rounded-full 
+                                                <div class="flex-1 py-2 text-sm font-medium   rounded-full 
                             {{ $selectedAc->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}"> ON
 
-                                        </div>
-                                        <div class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
+                                                </div>
+                                                <div class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
                             {{ $selectedAc->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}"> OFF
 
-                                        </div>
-                                    </button>
+                                                </div>
+                                            </button>
 
-                                </form>
-                            </div>
-                        </div>
+                                        </form>
+                                    </div>
+                                </div>
 
 
-                        <!-- Schedule -->
-                        <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
-                            <div>
-                                <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
-                                <!-- Tombol Add Schedule dengan jarak -->
-                                   @if (session('error'))
+                                <!-- Schedule -->
+                                <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                                    <div>
+                                        <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
+                                        <!-- Tombol Add Schedule dengan jarak -->
+                                             @if (session('error'))
                             <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
                                 {{ session('error') }}</div>
                             @endif

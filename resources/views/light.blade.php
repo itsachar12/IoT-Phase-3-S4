@@ -81,20 +81,38 @@
                     </div>
 
                     <!-- ON/OFF Button -->
-                    <div class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36">
-                        <!-- Tombol ON -->
-                        <button
-                            class="flex-1 py-2 text-sm font-medium   rounded-full 
-                        {{ $selectedLamp->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
-                            ON
+                    @if (session('sukses'))
+                        <div>
+                            <script>
+                                alert(" {{ session('sukses') }} {{ $selectedLamp->status }} {{ $selectedLamp->name }} ")
+                            </script>
+                        </div>
+                    @endif
+                    <form action="{{ route('appliances.status', $selectedLamp->id_appliances) }}" method="post">
+                        @csrf
+                        @method('PATCH')
+
+                        <input type="text" class="hidden" name="status"
+                            value="
+                        {{ $selectedLamp->status === 'Active' ? 'Inactive' : 'Active' }}">
+
+                        <button class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36 "
+                            type="submit">
+                            <div
+                                class="flex-1 py-2 text-sm font-medium   rounded-full 
+                            {{ $selectedLamp->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
+                                ON
+
+                            </div>
+                            <div
+                                class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
+                            {{ $selectedLamp->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
+                                OFF
+
+                            </div>
                         </button>
-                        <!-- Tombol OFF -->
-                        <button
-                            class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
-                        {{ $selectedLamp->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
-                            OFF
-                        </button>
-                    </div>
+
+                    </form>
                 </div>
             </div>
 
@@ -127,14 +145,18 @@
                                 <tr>
                                     <td class="p-3 border text-center">1</td>
                                     <td class="p-3 border">{{ $item->name_appliance }}</td>
-                                    <td class="p-3 border text-center">{{ $item->time_start }} to {{ $item->time_end }}</td>
-                                    <td class="p-3 border text-center 
+                                    <td class="p-3 border text-center">{{ $item->time_start }} to {{ $item->time_end }}
+                                    </td>
+                                    <td
+                                        class="p-3 border text-center 
                                     {{ $item->status === 'Active' ? 'text-green-600' : 'text-red-600' }}
-                                    ">{{ $item->status }}</td>
+                                    ">
+                                        {{ $item->status }}</td>
                                     <td class="p-3 border text-center">{{ $item->repeat_schedule }}</td>
                                     <!-- Ikon Edit dan Hapus -->
                                     <td class="p-3 border text-center space-x-4">
-                                        <a href="{{ route('schedule.edit', $item->id_schedule) }}" class="text-blue-500 hover:text-blue-700">
+                                        <a href="{{ route('schedule.edit', $item->id_schedule) }}"
+                                            class="text-blue-500 hover:text-blue-700">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                         <form action="{{ route('schedule.delete', $item->id_schedule) }}" method="post"

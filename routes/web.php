@@ -55,6 +55,6 @@ use App\Models\Appliances;
         Route::delete('/schedule/delete/{id}', [ScheduleController::class, 'destroy'])->name('schedule.delete');
 
 
-        Route::patch('/appliances/{id}/status', [ACController::class, 'status'])->name('appliances.status');
+        Route::patch('/appliances/{id}/status', [AppliancesController::class, 'status'])->name('appliances.status');
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
