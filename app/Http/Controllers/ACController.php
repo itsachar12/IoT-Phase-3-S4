@@ -25,5 +25,12 @@ class ACController extends Controller
         return view('ac', compact('acList', 'schList', 'selectedAc'));
     }
 
-    
-}
+    public function speed(Request $request, $id){
+        $request->validate(
+            ['speed_fan' => 'required']
+        );
+
+        $ac = Appliances::findOrFail($id);
+        $ac->update(['speed_fan' => $request->speed_fan]);
+        return redirect()->back()->with('suksesAlert', 'Success Updated AC Speed');
+    }}

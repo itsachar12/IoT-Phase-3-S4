@@ -36,7 +36,7 @@ class AppliancesController extends Controller
         $status = Appliances::findOrFail($id);
         $status->status = $request->status;
         $status->save();
-        return redirect()->back()->with('sukses', 'Successed');
+        return redirect()->back()->with('suksesAlert', 'Successed '.$status->status.' '.$status->name);
     }
     public function create()
     {

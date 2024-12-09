@@ -78,30 +78,39 @@
                     <div class="text-center flex flex-col justify-center items-center">
                         <h2 class="text-lg font-medium mb-2">Speed Fan</h2>
                         <div class="flex gap-2.5">
-                            <button
-                                class="w-24 px-6 py-2 text-sm border rounded-lg 
-                            {{ $selectedAc->speed_fan === 'SLOW' ? 'bg-gray-800 text-white' : 'bg-gray-100' }}
-                            hover:bg-gray-200">
-                                SLOW
-                            </button>
-                            <button
-                                class="w-24 px-6 py-2 text-sm border rounded-lg 
-                            {{ $selectedAc->speed_fan === 'NORMAL' ? 'bg-gray-800 text-white' : 'bg-gray-100' }} ">
-                                NORMAL
-                            </button>
-                            <button
-                                class="w-24 px-6 py-2 text-sm border rounded-lg  
-                            {{ $selectedAc->speed_fan === 'FAST' ? 'bg-gray-800 text-white *:' : 'bg-gray-100' }} hover:bg-gray-200">
-                                FAST
-                            </button>
+                            
+                            <form action="{{ route('ac.speed', $selectedAc->id_appliances ) }}" method="post">
+                                @csrf
+                                @method('PATCH')
+
+                                <button type="submit" name="speed_fan" value="SLOW"
+                                    class="w-24 px-6 py-2 text-sm border rounded-lg 
+                                {{ $selectedAc->speed_fan === 'SLOW' ? 'bg-gray-800 text-white' : 'bg-gray-100' }}
+                                hover:bg-gray-200">
+                                    SLOW
+                                </button>
+                                <button type="submit" name="speed_fan" value="NORMAL"
+                                    class="w-24 px-6 py-2 text-sm border rounded-lg 
+                                {{ $selectedAc->speed_fan === 'NORMAL' ? 'bg-gray-800 text-white' : 'bg-gray-100' }} ">
+                                    NORMAL
+                                </button>
+                                <button type="submit" name="speed_fan" value="FAST"
+                                    class="w-24 px-6 py-2 text-sm border rounded-lg  
+                                {{ $selectedAc->speed_fan === 'FAST' ? 'bg-gray-800 text-white *:' : 'bg-gray-100' }} hover:bg-gray-200">
+                                    FAST
+                                </button>
+
+
+                            </form>
+
                         </div>
                     </div>
 
                     <!-- ON/OFF Button -->
-                    @if (session('sukses'))
+                    @if (session('suksesAlert'))
                         <div>
                             <script>
-                                alert(" {{ session('sukses') }} {{ $selectedAc->status }} {{ $selectedAc->name }} ")
+                                alert(" {{ session('suksesAlert') }} ")
                             </script>
                         </div>
                     @endif
@@ -115,30 +124,30 @@
 
                         <button class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36 "
                             type="submit" ">
-                                                <div class="flex-1 py-2 text-sm font-medium   rounded-full 
+                                                    <div class="flex-1 py-2 text-sm font-medium   rounded-full 
                             {{ $selectedAc->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}"> ON
 
-                                                </div>
-                                                <div class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
+                                                    </div>
+                                                    <div class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
                             {{ $selectedAc->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}"> OFF
 
-                                                </div>
-                                            </button>
+                                                    </div>
+                                                </button>
 
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                <!-- Schedule -->
-                                <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
-                                    <div>
-                                        <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
-                                        <!-- Tombol Add Schedule dengan jarak -->
-                                             @if (session('error'))
-                            <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
-                                {{ session('error') }}</div>
-                            @endif
+                                    <!-- Schedule -->
+                                    <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                                        <div>
+                                            <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
+                                            <!-- Tombol Add Schedule dengan jarak -->
+                                                @if (session('error'))
+                                                <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
+                                                    {{ session('error') }}</div>
+                                                @endif
                             @if (session('sukses'))
                                 <div class="error  text-green-800 bg-green-300 p-3 rounded-lg mb-2 font-bold ">
                                     {{ session('sukses') }} !!</div>
