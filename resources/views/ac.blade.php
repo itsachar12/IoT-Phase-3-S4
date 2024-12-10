@@ -55,47 +55,69 @@
                 <h2 class="text-xl font-bold text-center mb-6">AC Control</h2>
 
                 <!-- Wrapper Flex untuk menyusun elemen horizontal -->
-                <div class="flex justify-between items-center gap-5 p-4">
+                <div class="flex justify-between items-center  p-4  ">
+
                     <!-- Temperature Control -->
-                    <div class="flex justify-center items-center gap-2.5 p-4 border border-gray-300 rounded-lg bg-white">
-                        <!-- Button Minus -->
-                        <button
-                            class="w-12 h-12 border border-gray-300 rounded-lg bg-gray-100 flex justify-center items-center cursor-pointer">
+                    <div
+                        class="flex justify-center flex-wrap items-center gap-2.5 p-4 border border-gray-300 rounded-lg bg-white max-w-52">
+                        <button onclick="updateDegree(-1)"
+                            class="w-10 h-10 border border-gray-300 rounded-lg bg-gray-100 flex justify-center items-center cursor-pointer ">
                             <i class="fa-solid fa-minus text-red-500 text-lg"></i>
                         </button>
-                        <!-- Temperature Display -->
-                        <span class="text-2xl font-bold text-gray-800 px-5">
+                        <span class="text-xl font-bold text-gray-800 px-1" id="displayDegree">
                             {{ $selectedAc->degree }}°C
                         </span>
-                        <!-- Button Plus -->
-                        <button
-                            class="w-12 h-12 border border-gray-300 rounded-lg bg-gray-100 flex justify-center items-center cursor-pointer">
+                        <button onclick="updateDegree(+1)"
+                            class="w-10 h-10 border border-gray-300 rounded-lg bg-gray-100 flex justify-center items-center cursor-pointer">
                             <i class="fa-solid fa-plus text-green-500 text-lg"></i>
                         </button>
+
+
+                        <form action="{{ route('ac.degree', $selectedAc->id_appliances) }}" id="acDegree" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <input class="hidden" type="number" name="degree" id="inputDegree"
+                                value="{{ $selectedAc->degree }}">
+                            <button type="submit"
+                                class="p-1 font-semibold text-slate-500  hover:bg-green-300 text-sm border-2 rounded-lg shadow border-green-300  ">Change
+                            </button>
+                        </form>
+
                     </div>
 
+                    {{-- ? SCRIPT SUHU AC --}}
+                    <script>
+                        let degree = {{ $selectedAc->degree }}; // Suhu awal dari server
+
+                        function updateDegree(angka) {
+                            degree += angka; // Tambah atau kurangi suhu
+                            document.getElementById('displayDegree').innerText = degree + "°C"; // Perbarui tampilan
+                            document.getElementById('inputDegree').value = degree; // Perbarui nilai input hidden
+                        }
+                    </script>
+
                     <!-- Speed Fan Control -->
-                    <div class="text-center flex flex-col justify-center items-center">
+                    <div class="text-center flex flex-col justify-center items-center ">
                         <h2 class="text-lg font-medium mb-2">Speed Fan</h2>
-                        <div class="flex gap-2.5">
-                            
-                            <form action="{{ route('ac.speed', $selectedAc->id_appliances ) }}" method="post">
+                        <div class="flex gap-2">
+
+                            <form action="{{ route('ac.speed', $selectedAc->id_appliances) }}" method="post">
                                 @csrf
                                 @method('PATCH')
 
                                 <button type="submit" name="speed_fan" value="SLOW"
-                                    class="w-24 px-6 py-2 text-sm border rounded-lg 
+                                    class="w-20 p-2 text-sm border rounded-lg 
                                 {{ $selectedAc->speed_fan === 'SLOW' ? 'bg-gray-800 text-white' : 'bg-gray-100' }}
                                 hover:bg-gray-200">
                                     SLOW
                                 </button>
                                 <button type="submit" name="speed_fan" value="NORMAL"
-                                    class="w-24 px-6 py-2 text-sm border rounded-lg 
+                                    class="w-20 p-2 text-sm border rounded-lg 
                                 {{ $selectedAc->speed_fan === 'NORMAL' ? 'bg-gray-800 text-white' : 'bg-gray-100' }} ">
                                     NORMAL
                                 </button>
                                 <button type="submit" name="speed_fan" value="FAST"
-                                    class="w-24 px-6 py-2 text-sm border rounded-lg  
+                                    class="w-20 p-2 text-sm border rounded-lg  
                                 {{ $selectedAc->speed_fan === 'FAST' ? 'bg-gray-800 text-white *:' : 'bg-gray-100' }} hover:bg-gray-200">
                                     FAST
                                 </button>
@@ -124,30 +146,30 @@
 
                         <button class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36 "
                             type="submit" ">
-                                                    <div class="flex-1 py-2 text-sm font-medium   rounded-full 
+                                                                        <div class="flex-1 py-2 text-sm font-medium   rounded-full 
                             {{ $selectedAc->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}"> ON
 
-                                                    </div>
-                                                    <div class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
+                                                                        </div>
+                                                                        <div class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
                             {{ $selectedAc->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}"> OFF
 
-                                                    </div>
-                                                </button>
+                                                                        </div>
+                                                                    </button>
 
-                                            </form>
-                                        </div>
-                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
 
 
-                                    <!-- Schedule -->
-                                    <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
-                                        <div>
-                                            <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
-                                            <!-- Tombol Add Schedule dengan jarak -->
-                                                @if (session('error'))
-                                                <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
-                                                    {{ session('error') }}</div>
-                                                @endif
+                                                        <!-- Schedule -->
+                                                        <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                                                            <div>
+                                                                <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
+                                                                <!-- Tombol Add Schedule dengan jarak -->
+                                                                         @if (session('error'))
+                            <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
+                                {{ session('error') }}</div>
+                            @endif
                             @if (session('sukses'))
                                 <div class="error  text-green-800 bg-green-300 p-3 rounded-lg mb-2 font-bold ">
                                     {{ session('sukses') }} !!</div>

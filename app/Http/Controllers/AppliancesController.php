@@ -25,7 +25,9 @@ class AppliancesController extends Controller
         $total_power_ac = $total_ac->sum('electrical_power');
         $total_power_lamp = $total_lamp->sum('electrical_power');
 
+        
         return view('appliences', compact('appliances', 'schedules', 'total_act', 'total_ac', 'total_lamp', 'total_act_ac', 'total_act_lamp', 'total_power', 'total_power_ac', 'total_power_lamp' ));
+
     }
 
     public function status(Request $request, $id){
@@ -36,7 +38,7 @@ class AppliancesController extends Controller
         $status = Appliances::findOrFail($id);
         $status->status = $request->status;
         $status->save();
-        return redirect()->back()->with('suksesAlert', 'Successed '.$status->status.' '.$status->name);
+        return redirect()->back();
     }
     public function create()
     {

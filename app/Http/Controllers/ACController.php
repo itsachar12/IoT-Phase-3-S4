@@ -32,5 +32,19 @@ class ACController extends Controller
 
         $ac = Appliances::findOrFail($id);
         $ac->update(['speed_fan' => $request->speed_fan]);
-        return redirect()->back()->with('suksesAlert', 'Success Updated AC Speed');
-    }}
+        return redirect()->back();
+    }
+
+    public function degree(Request $request, $id){
+        $request->validate([
+            'degree' => 'required']);
+
+            $degree = Appliances::findOrFail($id);
+            $degree->degree = $request->degree;
+            $degree->save();
+
+            return back();
+    }
+
+
+}

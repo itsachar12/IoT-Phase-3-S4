@@ -57,5 +57,9 @@ use App\Models\Appliances;
 
         Route::patch('/appliances/{id}/status', [AppliancesController::class, 'status'])->name('appliances.status');
         Route::patch('/appliances/AC/{id}/speed-fan', [ACController::class, 'speed'])->name('ac.speed');
+
+        Route::patch('/ac/degree/{id}', [ACController::class, 'degree'])->name('ac.degree');
+
+
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
