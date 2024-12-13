@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Des 2024 pada 06.46
+-- Waktu pembuatan: 13 Des 2024 pada 07.47
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -43,9 +43,9 @@ CREATE TABLE `appliances` (
 --
 
 INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux_percentage`) VALUES
-(1, 'Air Conditioner lt 1 main room', 'Inactive', 'SLOW', 22, 234, 'AC', 0),
-(2, 'Lights 1 lt 2 Side Room', 'Inactive', '0', 0, 111, 'Light', 50),
-(3, 'AC 2 ', 'Inactive', 'NORMAL', 16, 12, 'AC', 0),
+(1, 'Air Conditioner lt 1 main room', 'Active', 'NORMAL', 30, 234, 'AC', 0),
+(2, 'Lights 1 lt 2 Side Room', 'Active', '0', 0, 111, 'Light', 50),
+(3, 'AC 2 ', 'Active', 'NORMAL', 16, 12, 'AC', 0),
 (4, 'Light 2 comp', 'Inactive', '', 0, 5, 'Light', 87),
 (5, 'Lamp site a', 'Inactive', NULL, NULL, 12, 'Light', 66);
 
@@ -72,6 +72,31 @@ CREATE TABLE `cache_locks` (
   `owner` varchar(255) NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `emitter`
+--
+
+CREATE TABLE `emitter` (
+  `id_emission` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `power` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `emission` float NOT NULL,
+  `predicted_emission` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `emitter`
+--
+
+INSERT INTO `emitter` (`id_emission`, `name`, `power`, `status`, `emission`, `predicted_emission`) VALUES
+(1, 'Diesel', 12, 'Active', 52.9, 512.1),
+(2, 'Gas Engine', 16, 'Inactive', 30.4, 300),
+(3, 'PLN', 3, 'Active', 12.2, 300),
+(4, 'Panel Surya', 0, 'Active', 0.9, 10);
 
 -- --------------------------------------------------------
 
@@ -127,16 +152,6 @@ CREATE TABLE `job_batches` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `laporan`
---
-
-CREATE TABLE `laporan` (
-  `id_laporan` int(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `migrations`
 --
 
@@ -188,7 +203,6 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id_schedule`, `name_appliance`, `time_start`, `time_end`, `repeat_schedule`, `status`, `id_appliances`) VALUES
-(10, 'AC 2', '18:53:00', '20:50:00', 'Daily', 'Inactive', 3),
 (13, 'AC 2', '20:02:00', '20:04:00', 'Once', 'Inactive', 3),
 (14, 'Air Conditioner lt 1 main room', '20:04:00', '22:04:00', 'Daily', 'Active', 1),
 (15, 'Air Conditioner lt 1 main room', '20:08:00', '20:07:00', 'Once', 'Active', 1),
@@ -271,6 +285,12 @@ ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
 
 --
+-- Indeks untuk tabel `emitter`
+--
+ALTER TABLE `emitter`
+  ADD PRIMARY KEY (`id_emission`);
+
+--
 -- Indeks untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -289,12 +309,6 @@ ALTER TABLE `jobs`
 --
 ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `laporan`
---
-ALTER TABLE `laporan`
-  ADD PRIMARY KEY (`id_laporan`);
 
 --
 -- Indeks untuk tabel `migrations`
@@ -341,6 +355,12 @@ ALTER TABLE `appliances`
   MODIFY `id_appliances` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT untuk tabel `emitter`
+--
+ALTER TABLE `emitter`
+  MODIFY `id_emission` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -351,12 +371,6 @@ ALTER TABLE `failed_jobs`
 --
 ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `laporan`
---
-ALTER TABLE `laporan`
-  MODIFY `id_laporan` int(15) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`

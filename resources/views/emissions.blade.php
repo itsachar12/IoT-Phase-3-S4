@@ -15,56 +15,21 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8">
 
             <!-- Diesel Footprint -->
+
+            @foreach ($emissions as $i)
             <div class="bg-white shadow-md rounded-lg p-6 text-center ">
-                <h2 class="text-xl font-bold mb-4">Diesel Footprint</h2>
+                <h2 class="text-xl font-bold mb-4">{{ $i->name }}</h2>
                 <div class="relative flex flex-col items-center">
-                    <div class="relative bg-red-400 rounded-full w-40 h-56 flex items-center justify-center shadow-lg">
-                        <p class="text-white text-center font-semibold absolute top-5">Predicted<br>312.3 kg CO2e</p>
-                        <p class="text-white text-center font-bold">Used<br>52.9 kg CO2e</p>
+                    <div class="relative {{ $i->status === 'Active' ? 'bg-green-500' : 'bg-red-500' }} rounded-full w-40 h-52 flex items-center justify-center shadow-lg">
+                        <p class="text-white text-center font-semibold absolute top-5">Predicted<br>
+                            {{ $i->predicted_emission }} kg CO2e</p>
+                        <p class="text-white text-center font-bold">Used<br>{{ $i->emission }} kg CO2e</p>
                     </div>
                     <div class="w-1 h-8 bg-gray-500"></div>
-                    <p class="mt-4 text-gray-600">Total Energy Used: <span class="font-bold">3 kWh</span></p>
+                    <p class="mt-4 text-gray-600">Total Energy Used: <span class="font-bold">{{ $i->power }} kWh</span></p>
                 </div>
             </div>
-
-            <!-- Gas Engine Footprint -->
-            <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                <h2 class="text-xl font-bold mb-4">Gas Engine Footprint</h2>
-                <div class="relative flex flex-col items-center">
-                    <div class="relative bg-red-400 rounded-full w-40 h-56 flex items-center justify-center shadow-lg">
-                        <p class="text-white text-center font-semibold absolute top-5">Predicted<br>312.3 kg CO2e</p>
-                        <p class="text-white text-center font-bold">Used<br>100 kg CO2e</p>
-                    </div>
-                    <div class="w-1 h-8 bg-gray-500"></div>
-                    <p class="mt-4 text-gray-600">Total Energy Used: <span class="font-bold">10 kWh</span></p>
-                </div>
-            </div>
-
-            <!-- PLN Footprint -->
-            <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                <h2 class="text-xl font-bold mb-4">PLN Footprint</h2>
-                <div class="relative flex flex-col items-center">
-                    <div class="relative bg-red-400 rounded-full w-40 h-56 flex items-center justify-center shadow-lg">
-                        <p class="text-white text-center font-semibold absolute top-5">Predicted<br>312.3 kg CO2e</p>
-                        <p class="text-white text-center font-bold">Used<br>22 kg CO2e</p>
-                    </div>
-                    <div class="w-1 h-8 bg-gray-500"></div>
-                    <p class="mt-4 text-gray-600">Total Energy Used: <span class="font-bold">3 kWh</span></p>
-                </div>
-            </div>
-
-            <!-- Panel Surya Footprint -->
-            <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                <h2 class="text-xl font-bold mb-4">Panel Surya Footprint</h2>
-                <div class="relative flex flex-col items-center">
-                    <div class="relative bg-green-400 rounded-full w-40 h-56 flex items-center justify-center shadow-lg">
-                        <p class="text-white text-center font-semibold absolute top-5">Predicted<br>312.3 kg CO2e</p>
-                        <p class="text-white text-center font-bold">Used<br>0.1 kg CO2e</p>
-                    </div>
-                    <div class="w-1 h-8 bg-gray-500"></div>
-                    <p class="mt-4 text-gray-600">Total Energy Used: <span class="font-bold">1 Watt</span></p>
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </div>

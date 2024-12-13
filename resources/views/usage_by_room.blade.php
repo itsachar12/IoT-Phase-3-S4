@@ -17,7 +17,7 @@
                     <span class="material-icons mr-2">thermostat</span> 25°C
                 </div>
                 <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
-                    <span class="material-icons mr-2">bolt</span> 50kWh
+                    <span class="material-icons mr-2">bolt</span> {{ $lamp_power }}kWh
                 </div>
             </div>
             <div class="absolute bottom-4 right-4 text-white text-2xl font-bold drop-shadow-md">
@@ -32,10 +32,10 @@
             </a>
             <div class="absolute top-4 left-4 space-y-2">
                 <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
-                    <span class="material-icons mr-2">thermostat</span> 25°C
+                    <span class="material-icons mr-2">thermostat</span> {{ $ac_degree }}°C
                 </div>
                 <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
-                    <span class="material-icons mr-2">bolt</span> 50kWh
+                    <span class="material-icons mr-2">bolt</span> {{ $ac_power }}kWh
                 </div>
             </div>
             <div class="absolute bottom-4 right-4 text-white text-2xl font-bold drop-shadow-md">
