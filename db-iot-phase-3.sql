@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Des 2024 pada 07.47
+-- Waktu pembuatan: 13 Des 2024 pada 09.19
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `appliances` (
   `id_appliances` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `status` varchar(20) NOT NULL,
+  `usage_time` date DEFAULT NULL,
   `speed_fan` varchar(20) DEFAULT NULL,
   `degree` float DEFAULT NULL,
   `electrical_power` int(11) NOT NULL,
@@ -42,12 +43,12 @@ CREATE TABLE `appliances` (
 -- Dumping data untuk tabel `appliances`
 --
 
-INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux_percentage`) VALUES
-(1, 'Air Conditioner lt 1 main room', 'Active', 'NORMAL', 30, 234, 'AC', 0),
-(2, 'Lights 1 lt 2 Side Room', 'Active', '0', 0, 111, 'Light', 50),
-(3, 'AC 2 ', 'Active', 'NORMAL', 16, 12, 'AC', 0),
-(4, 'Light 2 comp', 'Inactive', '', 0, 5, 'Light', 87),
-(5, 'Lamp site a', 'Inactive', NULL, NULL, 12, 'Light', 66);
+INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `usage_time`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux_percentage`) VALUES
+(1, 'Air Conditioner lt 1 main room', 'Active', NULL, 'NORMAL', 30, 234, 'AC', 0),
+(2, 'Lights 1 lt 2 Side Room', 'Active', NULL, '0', 0, 111, 'Light', 50),
+(3, 'AC 2 ', 'Active', NULL, 'NORMAL', 16, 12, 'AC', 0),
+(4, 'Light 2 comp', 'Inactive', NULL, '', 0, 5, 'Light', 87),
+(5, 'Lamp site a', 'Inactive', NULL, NULL, NULL, 12, 'Light', 66);
 
 -- --------------------------------------------------------
 

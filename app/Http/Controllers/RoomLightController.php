@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appliances;
 use Illuminate\Http\Request;
 
 class RoomLightController extends Controller
 {
     public function index()
     {
-        $appliances = [
-            ['name' => 'Panasonic Lamp', 'time' => '3Hour 18Minutes', 'watt' => 23, 'kwh' => 67, 'status' => 'Active'],
-            ['name' => 'Panasonic Lamp', 'time' => '3Hour 18Minutes', 'watt' => 23, 'kwh' => 67, 'status' => 'Deactivate'],
-            ['name' => 'Panasonic Lamp', 'time' => '3Hour 18Minutes', 'watt' => 23, 'kwh' => 67, 'status' => 'Deactivate'],
-        ];
+        $lightList = Appliances::where('type_appliance', 'Light')->get();
+        $total_power = $lightList->sum('electrical_power');
+
 
         // Data simulasi untuk Room Analysis
         $roomAnalysis = [
@@ -25,6 +24,6 @@ class RoomLightController extends Controller
             ['day' => 'Sun', 'value' => 10.222, 'color' => 'blue'],
         ];
 
-        return view('room_light', compact('appliances'));
+        return view('room_light', compact('lightList', 'roomAnalysis', 'total_power'));
     }
 }

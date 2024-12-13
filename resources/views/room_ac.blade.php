@@ -16,7 +16,7 @@
                 </a>
                 <div class="flex items-center bg-gray-100 rounded-full px-6 py-3 shadow">
                     <div class="flex flex-col items-start">
-                        <span class="text-2xl font-bold text-gray-800">54,523 Watts</span>
+                        <span class="text-2xl font-bold text-gray-800">{{ $total_power }} Watts</span>
                         <span class="text-gray-500 text-sm">Bigger than last week</span>
                     </div>
                     <span class="text-red-500 flex items-center text-sm ml-6">
@@ -32,17 +32,17 @@
             <div class="mb-12">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">Appliances Usage</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    @foreach([1, 2, 3] as $appliance)
+                    @foreach($acList as $i)
                     <div class="bg-white rounded-lg shadow p-6 flex flex-col space-y-4 hover:shadow-lg transition">
-                        <div class="text-gray-800 font-semibold">Panasonic AC</div>
+                        <div class="text-gray-800 font-semibold">{{ $i->name }}</div>
                         <div class="text-gray-500">Usage Time: 3 Hours 18 Minutes</div>
-                        <div class="text-gray-500">Power: 23 Watts</div>
+                        <div class="text-gray-500">Power: {{ $i->electrical_power }} Watts</div>
                         <div class="text-gray-500">Energy: 67 kWh</div>
                         <div class="flex items-center justify-between mt-auto">
-                            <span class="{{ $loop->first ? 'text-green-500' : 'text-red-500' }}">
-                                {{ $loop->first ? 'Active' : 'Inactive' }}
+                            <span class="{{ $i->status === 'Active' ? 'text-green-500' : 'text-red-500' }}">
+                                {{ $i->status }}
                             </span>
-                            <a href="#" class="text-blue-500 px-4 py-2 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white transition">
+                            <a href="{{ route('ac', ['id_appliances' => $i->id_appliances]) }}" class="text-blue-500 px-4 py-2 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white transition">
                                 View Details
                             </a>
                         </div>

@@ -13,9 +13,9 @@
                 <img src="{{ url('/image/g5.jpg') }}" class="w-full h-44 lg:h-56 object-cover" alt="Lights Room">
             </a>
             <div class="absolute top-4 left-4 space-y-2">
-                <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
+                {{-- <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
                     <span class="material-icons mr-2">thermostat</span> 25°C
-                </div>
+                </div> --}}
                 <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
                     <span class="material-icons mr-2">bolt</span> {{ $lamp_power }}kWh
                 </div>
@@ -27,7 +27,7 @@
 
         <!-- AC Room -->
         <div class="relative rounded-lg overflow-hidden shadow-lg bg-white">
-            <a href="/room_light">
+            <a href="/room_ac">
                 <img src="{{ url('/image/g4.jpg') }}" class="w-full h-44 lg:h-56 object-cover" alt="AC Room">
             </a>
             <div class="absolute top-4 left-4 space-y-2">
@@ -47,11 +47,11 @@
         <div class="relative rounded-lg overflow-hidden shadow-lg bg-white">
             <img src="{{ url('/image/g6.jpg') }}" class="w-full h-44 lg:h-56 object-cover" alt="Emission Room">
             <div class="absolute top-4 left-4 space-y-2">
-                <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
+                {{-- <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
                     <span class="material-icons mr-2">thermostat</span> 25°C
-                </div>
+                </div> --}}
                 <div class="flex items-center text-white bg-gray-800 bg-opacity-80 rounded-full px-4 py-1 text-sm">
-                    <span class="material-icons mr-2">bolt</span> 50kWh
+                    <span class="material-icons mr-2">bolt</span> {{ $em_power }}kWh
                 </div>
             </div>
             <div class="absolute bottom-4 right-4 text-white text-2xl font-bold drop-shadow-md">
