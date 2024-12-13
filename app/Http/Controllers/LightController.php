@@ -23,4 +23,20 @@ class LightController extends Controller
             : Schedule::where('id_appliances', $lightList->first()->id_appliances)->get();
         return view('light', compact('lightList', 'selectedLamp', 'schList'));
     }
+
+    public function lux(Request $request, $id)
+    {
+        $request->validate(['lux' => 'required|min:0|max:100']);
+
+
+        $lux = Appliances::findOrFail($id);
+        $status = $request->lux == 0 ? 'Inactive' : 'Active';
+
+        $lux->update([
+            'lux' => $request->lux,
+            'status' => $status,
+        ]);
+
+        return redirect()->back();
+    }
 }

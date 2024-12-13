@@ -36,8 +36,11 @@ class AppliancesController extends Controller
         );
         
         $status = Appliances::findOrFail($id);
-        $status->status = $request->status;
-        $status->save();
+        $status->update([
+            'status' => $request->status,
+            'lux' => $request->status === 'Inactive' ? 0 : rand(1, 100)
+        ]);
+
         return redirect()->back();
     }
     public function create()

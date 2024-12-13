@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Des 2024 pada 09.19
+-- Waktu pembuatan: 13 Des 2024 pada 15.03
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -36,19 +36,19 @@ CREATE TABLE `appliances` (
   `degree` float DEFAULT NULL,
   `electrical_power` int(11) NOT NULL,
   `type_appliance` varchar(50) NOT NULL,
-  `lux_percentage` int(11) DEFAULT NULL
+  `lux` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `appliances`
 --
 
-INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `usage_time`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux_percentage`) VALUES
+INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `usage_time`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux`) VALUES
 (1, 'Air Conditioner lt 1 main room', 'Active', NULL, 'NORMAL', 30, 234, 'AC', 0),
-(2, 'Lights 1 lt 2 Side Room', 'Active', NULL, '0', 0, 111, 'Light', 50),
+(2, 'Lights 1 lt 2 Side Room', 'Active', NULL, '0', 0, 111, 'Light', 82),
 (3, 'AC 2 ', 'Active', NULL, 'NORMAL', 16, 12, 'AC', 0),
-(4, 'Light 2 comp', 'Inactive', NULL, '', 0, 5, 'Light', 87),
-(5, 'Lamp site a', 'Inactive', NULL, NULL, NULL, 12, 'Light', 66);
+(4, 'Light 2 comp', 'Active', NULL, '', 0, 5, 'Light', 88),
+(5, 'Lamp site a', 'Inactive', NULL, NULL, NULL, 12, 'Light', 0);
 
 -- --------------------------------------------------------
 

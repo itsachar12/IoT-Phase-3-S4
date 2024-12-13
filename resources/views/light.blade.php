@@ -51,34 +51,56 @@
 
 
             <!-- Light Control -->
-            <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-md h-52
+            ">
                 <h2 class="text-xl font-bold text-center mb-6">Light Control</h2>
 
                 <!-- Wrapper Flex untuk menyusun elemen horizontal -->
                 <div class="flex justify-between items-center gap-5 p-4">
                     <!-- light Control -->
                     <div class="flex items-center justify-center w-full">
-                        <!-- Kontainer Progress Bar -->
+                        {{-- ? Kontainer bar lux --}}
                         <div class="relative w-full max-w-[700px] bg-gray-200 rounded-full h-12">
                             <!-- Bagian Kuning -->
-                            <div class="absolute left-0 top-0 h-12 bg-yellow-300 rounded-l-full flex items-center px-4"
-                                style="width: 85%;">
-                                <!-- Teks dan Garis Vertikal -->
-                                <div class="flex w-full justify-between items-center">
-                                    <span class="text-sm font-medium text-gray-600">25%</span>
-                                    <div class="h-8 border-l border-gray-400"></div>
-                                    <span class="text-sm font-medium text-gray-600">50%</span>
-                                    <div class="h-8 border-l border-gray-400"></div>
-                                    <span class="text-sm font-medium text-gray-600">75%</span>
+                            <form action="{{ route('light.lux', $selectedLamp->id_appliances) }}" method="post">
+                                @csrf
+                                @method('PATCH')
+
+                                <input type="range" name="lux" id="lux" min="0" max="100"
+                                    value="{{ $selectedLamp->lux }}" oninput="updateLuxValue()"
+                                    class="w-full h-12 bg-gradient-to-r from-yellow-100 via-yellow-300 to-yellow-400 rounded-full appearance-none focus:outline-none">
+                                <div class="absolute flex justify-between inset-0  items-center px-2 pointer-events-none">
+                                    <span class="text-sm font-medium text-gray-500">0%</span>
+                                    <span class="text-sm font-medium text-gray-500">25%</span>
+                                    <span class="text-sm font-medium text-gray-500">50%</span>
+                                    <span class="text-sm font-medium text-gray-500">75%</span>
+                                    <span class="text-sm font-medium text-gray-500">100%</span>
                                 </div>
-                            </div>
-                            <!-- Bagian Abu-Abu -->
-                            <div class="absolute right-0 top-0 h-12 bg-gray-300 rounded-r-full flex items-center justify-center"
-                                style="width: 15%;">
-                                <span class="text-sm font-medium text-gray-600">100%</span>
-                            </div>
+                                <div class="w-full flex justify-between items-center  absolute mt-3 px-5">
+                                    <p class="text-lg text-slate-600 flex items-center">Current Lux :
+                                        <span class="text-lg font-bold text-slate-700 items-center ml-2">
+                                            {{ $selectedLamp->lux }}%</span>
+                                    </p>
+                                    <button type="submit"
+                                        class=" p-1  font-semibold text-slate-600 hover:bg-green-300 text-lg border-2 rounded-lg shadow border-green-300 ">Change
+                                    </button>
+                                    <p class="text-lg text-slate-600 flex items-center">to Lux :
+                                        <span id="luxpreview" class="text-lg font-bold text-slate-700 items-center ml-2">
+                                            {{ $selectedLamp->lux }}%</span>
+                                    </p>
+                                </div>
+                            </form>
                         </div>
                     </div>
+
+                    {{-- ? Script ubah range lux --}}
+                    <script>
+                        function updateLuxValue() {
+                            const nilaiLuxSlider = document.getElementById('lux');
+                            const luxPreview = document.getElementById('luxpreview');
+                            luxPreview.textContent = nilaiLuxSlider.value + "%";
+                        }
+                    </script>
 
                     <!-- ON/OFF Button -->
                     @if (session('sukses'))

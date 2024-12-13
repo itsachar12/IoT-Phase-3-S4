@@ -60,6 +60,6 @@ use App\Models\Appliances;
 
         Route::patch('/ac/degree/{id}', [ACController::class, 'degree'])->name('ac.degree');
 
-
+        Route::patch('/light/lux/{id}', [LightController::class, 'lux'])->name('light.lux');
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
