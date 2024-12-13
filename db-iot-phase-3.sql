@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Des 2024 pada 17.12
+-- Waktu pembuatan: 13 Des 2024 pada 06.46
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -43,11 +43,11 @@ CREATE TABLE `appliances` (
 --
 
 INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux_percentage`) VALUES
-(1, 'Air Conditioner lt 1 main room', 'Active', 'NORMAL', 20, 234, 'AC', 0),
+(1, 'Air Conditioner lt 1 main room', 'Inactive', 'SLOW', 22, 234, 'AC', 0),
 (2, 'Lights 1 lt 2 Side Room', 'Inactive', '0', 0, 111, 'Light', 50),
-(3, 'AC 2 ', 'Active', 'FAST', 16, 12, 'AC', 0),
-(4, 'Light 2 comp', 'Active', '', 0, 5, 'Light', 87),
-(5, 'Lamp site a', 'Active', NULL, NULL, 12, 'Light', 66);
+(3, 'AC 2 ', 'Inactive', 'NORMAL', 16, 12, 'AC', 0),
+(4, 'Light 2 comp', 'Inactive', '', 0, 5, 'Light', 87),
+(5, 'Lamp site a', 'Inactive', NULL, NULL, 12, 'Light', 66);
 
 -- --------------------------------------------------------
 
