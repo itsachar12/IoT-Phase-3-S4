@@ -13,13 +13,13 @@
 
             <!-- User Profile Button -->
             <div class="flex items-center relative">
-               <button id="dropdownButton" type="button" class="flex items-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-green-600 dark:focus:ring-gray-600">
+               <button  type="button" class="flex items-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-green-600 dark:focus:ring-gray-600">
                   <span class="sr-only">Open user menu</span>
                   <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                </button>
 
                <!-- Dropdown menu -->
-               <div id="dropdown-user" class="hidden absolute right-0 top-12 w-48 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
+               <div id="dropdown-user" class="hidden absolute right-0 top-16 w-48 bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
                   <div class="px-4 py-3" role="none">
                      <p class="text-sm text-gray-900 dark:text-white" role="none">{{ Auth::user()->username }}</p>
                      <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">{{ Auth::user()->email }}</p>
@@ -30,6 +30,13 @@
                   </ul>
                </div>
             </div>
+
+            
+
+            <!-- Menu Icon for Sidebar Toggle -->
+            <button id="dropdownButton" type="button" class="text-gray-900 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white focus:outline-none">
+               <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
 
             <script>
                // Toggle dropdown visibility
@@ -49,11 +56,6 @@
                   }
                });
             </script>
-
-            <!-- Menu Icon for Sidebar Toggle -->
-            <button type="button" class="text-gray-900 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white focus:outline-none">
-               <i class="fa-solid fa-bars text-2xl"></i>
-            </button>
          </div>
       </div>
    </div>
