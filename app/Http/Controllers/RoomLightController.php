@@ -32,9 +32,10 @@ class RoomLightController extends Controller
         $lampu = Appliances::findOrFail($id);
     
     // Convert usage_time (HH:mm:ss) to seconds
-    list($hours, $minutes, $seconds) = explode(':', $request->usage_time);
-    $totalSeconds = $hours * 3600 + $minutes * 60 + $seconds;
-    $lampu->usage_time = $totalSeconds;
+    // list($hours, $minutes, $seconds) = explode(':', $request->usage_time);
+    // $totalSeconds = $hours * 3600 + $minutes * 60 + $seconds;
+    // $lampu->usage_time = $totalSeconds;
+    $lampu->usage_time = $request->usage_time; 
     $lampu->save();
 
     }

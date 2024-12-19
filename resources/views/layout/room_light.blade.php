@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Room Light</title>
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -18,58 +21,85 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/ea41a3ae8b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+
     <!-- Flowbite  -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    
+
     <!-- Tailwind CSS  -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 
 
+
     <script>
         // Function to calculate and display elapsed time
         function realtimeUsage() {
-            const startTime = document.getElementById('startTime').textContent;
-            const startTimeDate = new Date(startTime);
-            const timerElement = document.getElementById('usageTime');
-            console.log(timerElement)
-            
-            setInterval(() => {
-                const now = new Date();
+            const startTimes = document.querySelectorAll('.startTime');
 
-                const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
+            startTimes.forEach((startTimeElement) => {
+                const startTime = startTimeElement.textContent;
 
-                // Format elapsed time into HH:mm:ss
-                const hours = Math.floor(elapsed / 3600);
-                const minutes = Math.floor((elapsed % 3600) / 60);
-                const seconds = elapsed % 60;
+                const id = startTimeElement.dataset.idAppliance;
+                const startTimeDate = new Date(startTime);
+                const timerElement = document.getElementById('usageTime-' + id);
 
-                timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
+                setInterval(() => {
+                    const now = new Date();
+
+                    const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
+                    console.log(elapsed)
+
+                    // Format elapsed time into HH:mm:ss
+                    const hours = Math.floor(elapsed / 3600);
+                    const minutes = Math.floor((elapsed % 3600) / 60);
+                    const seconds = elapsed % 60;
+
+                    timerElement.textContent =
+                        `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                    updateUsage(id, elapsed)
+
+                }, 1000);
+
+            })
         }
 
         // Update database every minute
-        function updateUsage() {
-            const id = document.getElementById('id_appliance').textContent;
-
-            setInterval(() => {
-                const elapsed = document.getElementById('usageTime').textContent;
-                console.log(elapsed);
-                fetch(`/lampu/${id}/update-usage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ usage_time: elapsed })
-                });
-            }, 2000); 
+        function updateUsage(id, elapsed) {
+            fetch(`/lampu/${id}/update-usage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Token CSRF
+                },
+                body: JSON.stringify({
+                    usage_time: elapsed // Kirim waktu penggunaan yang dihitung
+                })
+            })
         }
     </script>
+    {{-- // function updateUsage(id, elapsed) {
+
+        //     fetch(`/lampu/${id}/update-usage`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        //             },
+        //             body: JSON.stringify({
+        //                 usage_time: elapsed
+        //             })
+        //         })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data.message)
+        //         })
+        //         .catch(error => console.error('Error updating usage time:', error));
+        // } --}}
 
 </head>
-<body onload="realtimeUsage(); updateUsage();">
+
+<body onload="realtimeUsage()">
 
     <header>
         @include('components.header')
@@ -86,4 +116,5 @@
     </footer>
 
 </body>
+
 </html>
