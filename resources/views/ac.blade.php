@@ -145,88 +145,92 @@
                         {{ $selectedAc->status === 'Active' ? 'Inactive' : 'Active' }}">
 
                         <button class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36 "
-                            type="submit" ">
-                                                                        <div class="flex-1 py-2 text-sm font-medium   rounded-full 
-                            {{ $selectedAc->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}"> ON
+                            type="submit">
+                            <div
+                                class="flex-1 py-2 text-sm font-medium   rounded-full 
+                            {{ $selectedAc->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
+                                ON
 
-                                                                        </div>
-                                                                        <div class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
-                            {{ $selectedAc->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}"> OFF
-
-                                                                        </div>
-                                                                    </button>
-
-                                                                </form>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <!-- Schedule -->
-                                                        <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
-                                                            <div>
-                                                                <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
-                                                                <!-- Tombol Add Schedule dengan jarak -->
-                                                                         @if (session('error'))
-                            <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
-                                {{ session('error') }}</div>
-                            @endif
-                            @if (session('sukses'))
-                                <div class="error  text-green-800 bg-green-300 p-3 rounded-lg mb-2 font-bold ">
-                                    {{ session('sukses') }} !!</div>
-                            @endif
-                            <div class="mt-6 text-right">
-                                <a href="{{ route('schedule.add') }}"
-                                    class="px-5 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
-                                    + Add Schedule
-                                </a>
                             </div>
-                            <!-- Tabel Schedule -->
-                            <table class="w-full mt-4 text-sm border-collapse border border-gray-300">
-                                <thead class="bg-gray-200">
-                                    <tr>
-                                        <th class="p-3 border">No</th>
-                                        <th class="p-3 border">Description</th>
-                                        <th class="p-3 border">Time</th>
-                                        <th class="p-3 border">Status</th>
-                                        <th class="p-3 border">Repeat</th>
-                                        <th class="p-3 border">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($schList as $item)
-                                        <tr>
-                                            <td class="p-3 border text-center">{{ 1 }}</td>
-                                            <td class="p-3 border">{{ $item->name_appliance }}</td>
-                                            <td class="p-3 border text-center">{{ $item->time_start }} to
-                                                {{ $item->time_end }}
-                                            </td>
-                                            <td
-                                                class="p-3 border text-center 
+                            <div
+                                class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
+                            {{ $selectedAc->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
+                                OFF
+
+                            </div>
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- Schedule -->
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                <div>
+                    <h2 class="text-xl font-bold text-center mb-4">Schedule</h2>
+                    <!-- Tombol Add Schedule dengan jarak -->
+                    @if (session('error'))
+                        <div class="error  text-red-600 bg-red-300 p-3 rounded-lg">
+                            {{ session('error') }}</div>
+                    @endif
+                    @if (session('sukses'))
+                        <div class="error  text-green-800 bg-green-300 p-3 rounded-lg mb-2 font-bold ">
+                            {{ session('sukses') }} !!</div>
+                    @endif
+                    <div class="mt-6 text-right">
+                        <a href="{{ route('schedule.add') }}"
+                            class="px-5 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                            + Add Schedule
+                        </a>
+                    </div>
+                    <!-- Tabel Schedule -->
+                    <table class="w-full mt-4 text-sm border-collapse border border-gray-300">
+                        <thead class="bg-gray-200">
+                            <tr>
+                                <th class="p-3 border">No</th>
+                                <th class="p-3 border">Description</th>
+                                <th class="p-3 border">Time</th>
+                                <th class="p-3 border">Status</th>
+                                <th class="p-3 border">Repeat</th>
+                                <th class="p-3 border">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($schList as $item)
+                                <tr>
+                                    <td class="p-3 border text-center">{{ 1 }}</td>
+                                    <td class="p-3 border">{{ $item->name_appliance }}</td>
+                                    <td class="p-3 border text-center">{{ $item->time_start }} to
+                                        {{ $item->time_end }}
+                                    </td>
+                                    <td
+                                        class="p-3 border text-center 
                                     {{ $item->status === 'Active' ? 'text-green-600' : 'text-red-600' }}
                                     ">
-                                                {{ $item->status }}</td>
-                                            <td class="p-3 border text-center">{{ $item->repeat_schedule }}</td>
-                                            <!-- Ikon Edit dan Hapus -->
-                                            <td class="p-3 border text-center space-x-4">
-                                                <a href="{{ route('schedule.edit', $item->id_schedule) }}"
-                                                    class="text-blue-500 hover:text-blue-700">
-                                                    <i class="fa-regular fa-pen-to-square"></i>
-                                                </a>
-                                                <form action="{{ route('schedule.delete', $item->id_schedule) }}"
-                                                    method="post" class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="text-red-500 hover:text-red-700" type="submit"
-                                                        onclick="return confirm('Are You Sure Want to Delete this Schedule? ') ">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                    </button>
-                                                </form>
+                                        {{ $item->status }}</td>
+                                    <td class="p-3 border text-center">{{ $item->repeat_schedule }}</td>
+                                    <!-- Ikon Edit dan Hapus -->
+                                    <td class="p-3 border text-center space-x-4">
+                                        <a href="{{ route('schedule.edit', $item->id_schedule) }}"
+                                            class="text-blue-500 hover:text-blue-700">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                        <form action="{{ route('schedule.delete', $item->id_schedule) }}" method="post"
+                                            class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="text-red-500 hover:text-red-700" type="submit"
+                                                onclick="return confirm('Are You Sure Want to Delete this Schedule? ') ">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

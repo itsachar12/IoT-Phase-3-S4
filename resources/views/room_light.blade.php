@@ -3,7 +3,8 @@
 @section('title', 'Aplikasi GX DOJO')
 
 @section('content')
-<div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 ml-64">
+<div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 ml-64"
+>
     <div class="w-64 hidden lg:block"></div>
 
     <!-- Konten Utama -->
@@ -33,9 +34,12 @@
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">Appliances Usage</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach($lightList as $i)
-                    <div class="bg-white rounded-lg shadow p-6 flex flex-col space-y-4 hover:shadow-lg transition">
+                    <div class="bg-white rounded-lg shadow p-6 flex flex-col space-y-4 hover:shadow-lg transition" >
+                        <span class="hidden" id="startTime">{{ $i->start_time }}</span>
+                        <span class="hidden" id="id_appliance">{{ $i->id_appliances }}</span>
+
                         <div class="text-gray-800 font-semibold">{{ $i->name }}</div>
-                        <div class="text-gray-500">Usage Time: 3 Hours 18 Minutes</div>
+                        <div id="usageTime" class="text-gray-500"></div>
                         <div class="text-gray-500">Power: {{ $i->electrical_power }} Watts</div>
                         <div class="text-gray-500">Energy: 67 kWh</div>
                         <div class="flex items-center justify-between mt-auto">
@@ -50,6 +54,12 @@
                     @endforeach
                 </div>
             </div>
+            
+            <script>
+                function tes(){
+                    console.log('hai')
+                }
+            </script>
 
             <!-- Room Analysis Section -->
             <div class="bg-white rounded-lg shadow p-8">

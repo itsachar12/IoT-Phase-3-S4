@@ -11,6 +11,7 @@ class RoomLightController extends Controller
     {
         $lightList = Appliances::where('type_appliance', 'Light')->get();
         $total_power = $lightList->sum('electrical_power');
+        
 
 
         // Data simulasi untuk Room Analysis
@@ -25,5 +26,16 @@ class RoomLightController extends Controller
         ];
 
         return view('room_light', compact('lightList', 'roomAnalysis', 'total_power'));
+    }
+
+    public function updateUsage(Request $request, $id){
+        $lampu = Appliances::findOrFail($id);
+    
+    // Convert usage_time (HH:mm:ss) to seconds
+    list($hours, $minutes, $seconds) = explode(':', $request->usage_time);
+    $totalSeconds = $hours * 3600 + $minutes * 60 + $seconds;
+    $lampu->usage_time = $totalSeconds;
+    $lampu->save();
+
     }
 }

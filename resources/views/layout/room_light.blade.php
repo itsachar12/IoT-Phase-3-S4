@@ -26,8 +26,50 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 
+
+    <script>
+        // Function to calculate and display elapsed time
+        function realtimeUsage() {
+            const startTime = document.getElementById('startTime').textContent;
+            const startTimeDate = new Date(startTime);
+            const timerElement = document.getElementById('usageTime');
+            console.log(timerElement)
+            
+            setInterval(() => {
+                const now = new Date();
+
+                const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
+
+                // Format elapsed time into HH:mm:ss
+                const hours = Math.floor(elapsed / 3600);
+                const minutes = Math.floor((elapsed % 3600) / 60);
+                const seconds = elapsed % 60;
+
+                timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Update database every minute
+        function updateUsage() {
+            const id = document.getElementById('id_appliance').textContent;
+
+            setInterval(() => {
+                const elapsed = document.getElementById('usageTime').textContent;
+                console.log(elapsed);
+                fetch(`/lampu/${id}/update-usage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ usage_time: elapsed })
+                });
+            }, 2000); 
+        }
+    </script>
+
 </head>
-<body>
+<body onload="realtimeUsage(); updateUsage();">
 
     <header>
         @include('components.header')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Schedule;
 use App\Models\Appliances;
 use Illuminate\Http\Request;
@@ -38,6 +39,7 @@ class AppliancesController extends Controller
         $status = Appliances::findOrFail($id);
         $status->update([
             'status' => $request->status,
+            'start_time' => Carbon::now(),
             'lux' => $request->status === 'Inactive' ? 0 : rand(1, 100)
         ]);
 

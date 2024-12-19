@@ -65,5 +65,7 @@ use App\Models\Appliances;
         Route::get('/report/add', [ReportController::class, 'showAdd'])->name('report.add');
         Route::post('/report/create', [ReportController::class, 'create'])->name('report.create');
         Route::delete('/report/delete/{id}', [ReportController::class, 'destroy'])->name('report.delete');
+
+        Route::post('/lampu/{id}/update-usage', [RoomLightController::class, 'updateUsage']);
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

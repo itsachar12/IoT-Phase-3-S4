@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Des 2024 pada 15.03
+-- Waktu pembuatan: 19 Des 2024 pada 10.16
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -31,7 +31,8 @@ CREATE TABLE `appliances` (
   `id_appliances` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `status` varchar(20) NOT NULL,
-  `usage_time` date DEFAULT NULL,
+  `start_time` timestamp NULL DEFAULT NULL,
+  `usage_time` int(11) DEFAULT NULL,
   `speed_fan` varchar(20) DEFAULT NULL,
   `degree` float DEFAULT NULL,
   `electrical_power` int(11) NOT NULL,
@@ -43,12 +44,12 @@ CREATE TABLE `appliances` (
 -- Dumping data untuk tabel `appliances`
 --
 
-INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `usage_time`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux`) VALUES
-(1, 'Air Conditioner lt 1 main room', 'Active', NULL, 'NORMAL', 30, 234, 'AC', 0),
-(2, 'Lights 1 lt 2 Side Room', 'Active', NULL, '0', 0, 111, 'Light', 82),
-(3, 'AC 2 ', 'Active', NULL, 'NORMAL', 16, 12, 'AC', 0),
-(4, 'Light 2 comp', 'Active', NULL, '', 0, 5, 'Light', 88),
-(5, 'Lamp site a', 'Inactive', NULL, NULL, NULL, 12, 'Light', 0);
+INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `start_time`, `usage_time`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux`) VALUES
+(1, 'Air Conditioner lt 1 main room', 'Active', '2024-12-19 00:05:55', NULL, 'NORMAL', 27, 234, 'AC', 78),
+(2, 'Lights 1 lt 2 Side Room', 'Active', '2024-12-19 07:40:23', 5701, '0', 0, 111, 'Light', 53),
+(3, 'AC 2 ', 'Active', NULL, NULL, 'NORMAL', 16, 12, 'AC', 0),
+(4, 'Light 2 comp', 'Active', '2024-12-19 07:41:31', NULL, '', 0, 5, 'Light', 33),
+(5, 'Lamp site a', 'Active', '2024-12-19 07:41:35', NULL, NULL, NULL, 12, 'Light', 37);
 
 -- --------------------------------------------------------
 
@@ -182,6 +183,28 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `reports`
+--
+
+CREATE TABLE `reports` (
+  `id_report` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `type_report` varchar(50) NOT NULL,
+  `periode` varchar(50) NOT NULL,
+  `time_span` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `reports`
+--
+
+INSERT INTO `reports` (`id_report`, `description`, `date`, `type_report`, `periode`, `time_span`) VALUES
+(8, 'dddad', '2024-12-19', 'AC', 'Today', '2024-12-19');
 
 -- --------------------------------------------------------
 
@@ -324,6 +347,12 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indeks untuk tabel `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`id_report`);
+
+--
 -- Indeks untuk tabel `schedule`
 --
 ALTER TABLE `schedule`
@@ -378,6 +407,12 @@ ALTER TABLE `jobs`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `id_report` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `schedule`

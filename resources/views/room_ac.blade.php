@@ -3,7 +3,8 @@
 @section('title', 'Aplikasi GX DOJO')
 
 @section('content')
-<div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 ml-64">
+<div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 ml-64"
+onload="realtimeUsage(); updateUsage() ">
     <div class="w-64 hidden lg:block"></div>
 
     <!-- Konten Utama -->
@@ -35,7 +36,7 @@
                     @foreach($acList as $i)
                     <div class="bg-white rounded-lg shadow p-6 flex flex-col space-y-4 hover:shadow-lg transition">
                         <div class="text-gray-800 font-semibold">{{ $i->name }}</div>
-                        <div class="text-gray-500">Usage Time: 3 Hours 18 Minutes</div>
+                        <div id="clock" class="text-gray-500"></div>
                         <div class="text-gray-500">Power: {{ $i->electrical_power }} Watts</div>
                         <div class="text-gray-500">Energy: 67 kWh</div>
                         <div class="flex items-center justify-between mt-auto">
@@ -50,6 +51,40 @@
                     @endforeach
                 </div>
             </div>
+            <script>
+                // Function to calculate and display elapsed time
+                function realtimeUsage(startTime) {
+                    const startTimeDate = new Date(startTime); // Convert to JS Date object
+                    const timerElement = document.getElementById('usageTime');
+        
+                    setInterval(() => {
+                        const now = new Date();
+                        const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
+        
+                        // Format elapsed time into HH:mm:ss
+                        const hours = Math.floor(elapsed / 3600);
+                        const minutes = Math.floor((elapsed % 3600) / 60);
+                        const seconds = elapsed % 60;
+        
+                        timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }, 1000);
+                }
+        
+                // Update database every minute
+                function updateUsage(lampuId) {
+                    setInterval(() => {
+                        const elapsed = document.getElementById('usageTime').textContent;
+                        fetch(`/lampu/${lampuId}/update-usage`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ usage_time: elapsed })
+                        });
+                    }, 60000); // Update every 60 seconds
+                }
+            </script>
 
             <!-- Room Analysis Section -->
             <div class="bg-white rounded-lg shadow p-8">
