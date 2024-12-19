@@ -137,6 +137,11 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
+
+                const activeApp = @json($activeApp);
+
+                console.log(activeApp);
+
                 const ctx = document.getElementById('activeAppliancesChart').getContext('2d');
                 const activeAppliancesChart = new Chart(ctx, {
                     type: 'bar',
@@ -144,7 +149,8 @@
                         labels: ['AC', 'Lamp'],
                         datasets: [{
                             label: 'kWh',
-                            data: [400, 450],
+                            data: [activeApp['ac'], activeApp['light']],
+                            // data: [200, 450],
                             backgroundColor: ['#a0f0ff', '#39d2b4'],
                             borderWidth: 1,
                             borderRadius: 5,
