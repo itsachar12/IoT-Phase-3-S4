@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appliances;
+use App\Models\Emission;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -20,7 +21,14 @@ class DashboardController extends Controller
             'ac' => $ac,
             'light' => $light,
         ];
-        // dd($activeApp);
-        return view('dashboard', compact('data', 'activeApp'));
+
+        $emission = Emission::all();
+        $dataEmission = [
+            'total_emision' => $emission->sum('emission'),
+            'highestEmision' => $emission->max('predicted_emission'),
+            'percentage' => round(($emission->sum('emission') / $emission->max('predicted_emission'))*100)
+        ];
+        // dd($dataEmisi);
+        return view('dashboard', compact('data', 'activeApp', 'dataEmission'));
     }
 }

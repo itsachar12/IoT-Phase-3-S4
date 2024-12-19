@@ -292,11 +292,12 @@
                 </div>
                 <!-- Emission Bar -->
                 <div class="relative mt-2 h-4 bg-gray-200 rounded-full overflow-hidden">
-                    <div class="absolute h-full bg-gray-700" style="width: 2%;"></div>
+                    <div class="absolute h-full bg-gray-700" 
+                    style="width: {{ $dataEmission['percentage'] }}%;"></div>
                 </div>
                 <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
-                    <span>52.9 Kg of CO2</span>
-                    <span>3124.12 Kg of CO2</span>
+                    <span>{{ $dataEmission['total_emision'] }} Kg of CO2</span>
+                    <span>{{ $dataEmission['highestEmision'] }} Kg of CO2</span>
                 </div>
             </div>
 
