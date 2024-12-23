@@ -67,5 +67,6 @@ use App\Models\Appliances;
         Route::delete('/report/delete/{id}', [ReportController::class, 'destroy'])->name('report.delete');
 
         Route::post('/lampu/{id}/update-usage', [RoomLightController::class, 'updateUsage']);
+        Route::post('/ac/{id}/update-usage', [RoomACController::class, 'updateUsage']);
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

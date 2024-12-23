@@ -26,4 +26,12 @@ class RoomACController extends Controller
 
         return view('room_ac', compact('acList', 'total_power', 'roomAnalysis'));
     }
+
+    public function updateUsage(Request $request, $id)
+    {
+        $ac = Appliances::findOrFail($id);
+
+        $ac->usage_time = $request->usage_time;
+        $ac->save();
+    }
 }

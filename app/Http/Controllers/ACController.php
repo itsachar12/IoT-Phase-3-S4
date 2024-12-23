@@ -11,21 +11,22 @@ class ACController extends Controller
     public function index(Appliances $appliances, Request $request)
     {
         // * daftar ac
-        $acList = Appliances::where('type_appliance','AC')->get();
-        
+        $acList = Appliances::where('type_appliance', 'AC')->get();
+
         // * Pilian dari daftar ac
-        $selectedAc = $request->has('id_appliances') ? Appliances::find($request->id_appliances) 
-        : $acList->first();
+        $selectedAc = $request->has('id_appliances') ? Appliances::find($request->id_appliances)
+            : $acList->first();
 
         // * Jadwall sesuai ac
-        $schList = $request->has('id_appliances') 
-        ? Schedule::where('id_appliances', $request->id_appliances)->get()
-        : Schedule::where('id_appliances', $acList->first()->id_appliances)->get();
-        
+        $schList = $request->has('id_appliances')
+            ? Schedule::where('id_appliances', $request->id_appliances)->get()
+            : Schedule::where('id_appliances', $acList->first()->id_appliances)->get();
+
         return view('ac', compact('acList', 'schList', 'selectedAc'));
     }
 
-    public function speed(Request $request, $id){
+    public function speed(Request $request, $id)
+    {
         $request->validate(
             ['speed_fan' => 'required']
         );
@@ -35,16 +36,18 @@ class ACController extends Controller
         return redirect()->back();
     }
 
-    public function degree(Request $request, $id){
+    public function degree(Request $request, $id)
+    {
         $request->validate([
-            'degree' => 'required']);
+            'degree' => 'required'
+        ]);
 
-            $degree = Appliances::findOrFail($id);
-            $degree->degree = $request->degree;
-            $degree->save();
+        $degree = Appliances::findOrFail($id);
+        $degree->degree = $request->degree;
+        $degree->save();
 
-            return back();
+        return back();
     }
 
-
+    
 }

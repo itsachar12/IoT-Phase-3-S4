@@ -35,8 +35,14 @@ onload="realtimeUsage(); updateUsage() ">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach($acList as $i)
                     <div class="bg-white rounded-lg shadow p-6 flex flex-col space-y-4 hover:shadow-lg transition">
+
+                        <span class="hidden startTime" data-id-appliance="{{ $i->id_appliances }}">{{ $i->start_time }}</span>
+                        <span class="hidden" id="id_appliance">{{ $i->id_appliances }}</span>
+                        <span class="hidden" id="status-{{ $i->id_appliances }}">{{ $i->status }}</span>
+                        <span class="hidden" id="totalUsageTime-{{ $i->id_appliances }}">{{ $i->usage_time }}</span>
+
                         <div class="text-gray-800 font-semibold">{{ $i->name }}</div>
-                        <div id="clock" class="text-gray-500"></div>
+                        <div id="usageTime-{{ $i->id_appliances }}" class="text-gray-500"></div>
                         <div class="text-gray-500">Power: {{ $i->electrical_power }} Watts</div>
                         <div class="text-gray-500">Energy: 67 kWh</div>
                         <div class="flex items-center justify-between mt-auto">

@@ -66,7 +66,7 @@
                         const minutes = Math.floor((totalUsageTime % 3600) / 60);
                         const seconds = totalUsageTime % 60;
                         timerElement.textContent =
-                            `Usage Time : ${hours.toString()}:${minutes.toString()}:${seconds.toString()}`;
+                            `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                     }
 
