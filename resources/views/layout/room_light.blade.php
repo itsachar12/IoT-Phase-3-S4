@@ -34,6 +34,7 @@
     <script>
         // Function to calculate and display elapsed time
         function realtimeUsage() {
+
             const startTimes = document.querySelectorAll('.startTime');
 
             startTimes.forEach((startTimeElement) => {
@@ -42,22 +43,34 @@
                 const id = startTimeElement.dataset.idAppliance;
                 const startTimeDate = new Date(startTime);
                 const timerElement = document.getElementById('usageTime-' + id);
+                const status = document.getElementById('status-' + id).textContent;
+                const totalUsageTime = document.getElementById('totalUsageTime-' + id).textContent;
+                console.log(totalUsageTime);
 
                 setInterval(() => {
                     const now = new Date();
 
                     const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
-                    console.log(elapsed)
 
-                    // Format elapsed time into HH:mm:ss
-                    const hours = Math.floor(elapsed / 3600);
-                    const minutes = Math.floor((elapsed % 3600) / 60);
-                    const seconds = elapsed % 60;
+                    if (status === 'Active') {
+                        // Format elapsed time into HH:mm:ss
+                        const hours = Math.floor(elapsed / 3600);
+                        const minutes = Math.floor((elapsed % 3600) / 60);
+                        const seconds = elapsed % 60;
+                        timerElement.textContent =
+                            `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-                    timerElement.textContent =
-                        `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        updateUsage(id, elapsed)
+                    } else {
+                        const hours = Math.floor(totalUsageTime / 3600);
+                        const minutes = Math.floor((totalUsageTime % 3600) / 60);
+                        const seconds = totalUsageTime % 60;
+                        timerElement.textContent =
+                            `Usage Time : ${hours.toString()}:${minutes.toString()}:${seconds.toString()}`;
 
-                    updateUsage(id, elapsed)
+                    }
+
+
 
                 }, 1000);
 
@@ -78,24 +91,7 @@
             })
         }
     </script>
-    {{-- // function updateUsage(id, elapsed) {
 
-        //     fetch(`/lampu/${id}/update-usage`, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        //             },
-        //             body: JSON.stringify({
-        //                 usage_time: elapsed
-        //             })
-        //         })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             console.log(data.message)
-        //         })
-        //         .catch(error => console.error('Error updating usage time:', error));
-        // } --}}
 
 </head>
 
