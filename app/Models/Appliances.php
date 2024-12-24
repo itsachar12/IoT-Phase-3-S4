@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Appliances extends Model
 {
@@ -21,6 +22,15 @@ class Appliances extends Model
     public function summaries()
     {
         return $this->hasMany(Summary::class, 'id_appliances');
+    }
+
+    public static function resetUsageTimeAtMidnight()
+    {
+        $now = Carbon::now();
+        if ($now->hour == 00 && $now->minute == 00) {
+            // Reset usage_time untuk semua appliance
+            self::query()->update(['usage_time' => 0]);
+        }
     }
 }
 

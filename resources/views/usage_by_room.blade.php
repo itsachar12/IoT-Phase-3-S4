@@ -1,4 +1,4 @@
-@extends('layout.usage_by_room')
+@extends('layout.mainLayout')
 
 @section('title', 'Aplikasi GX DOJO')
 

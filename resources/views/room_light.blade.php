@@ -1,9 +1,9 @@
-@extends('layout.room_light')
+@extends('layout.mainLayout')
 
 @section('title', 'Aplikasi GX DOJO')
 
 @section('content')
-<div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 ml-64"
+<div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 "
 >
     <div class="w-64 hidden lg:block"></div>
 

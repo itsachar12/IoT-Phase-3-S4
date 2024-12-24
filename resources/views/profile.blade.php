@@ -1,10 +1,11 @@
-@extends('layout.profile')
+@extends('layout.mainLayout')
+
 
 @section('title', 'Aplikasi GX DOJO')
 
 @section('content')
 
-<div class="max-w-4xl mx-auto bg-green-100 shadow-md rounded-lg p-6 space-y-8 mt-20 ">
+<div class="max-w-4xl mx-auto bg-green-100 shadow-md rounded-lg p-6 space-y-8 mt-32 ">
     <!-- Header Section -->
     <div class="text-center">
         <h1 class="text-2xl font-bold text-gray-700">Your Profile</h1>

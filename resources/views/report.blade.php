@@ -1,4 +1,5 @@
-@extends('layout.report')
+@extends('layout.mainLayout')
+
 
 @section('title', 'Aplikasi GX DOJO')
 
