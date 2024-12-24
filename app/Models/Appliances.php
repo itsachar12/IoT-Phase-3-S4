@@ -18,5 +18,9 @@ class Appliances extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+    public function summaries()
+    {
+        return $this->hasMany(Summary::class, 'id_appliances');
+    }
 }
 

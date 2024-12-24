@@ -43,7 +43,7 @@
                         <div class="text-gray-800 font-semibold">{{ $i->name }}</div>
                         <div id="usageTime-{{ $i->id_appliances }}" class="text-gray-500"> </div>
                         <div class="text-gray-500">Power: {{ $i->electrical_power }} Watts</div>
-                        <div class="text-gray-500">Energy: 67 kWh</div>
+                        <div class="text-gray-500">Energy Used: {{ $i->total_power }} Wh</div>
                         <div class="flex items-center justify-between mt-auto">
                             <span class="{{ $i->status === 'Active' ? 'text-green-500' : 'text-red-500' }}">
                                 {{ $i->status }}
