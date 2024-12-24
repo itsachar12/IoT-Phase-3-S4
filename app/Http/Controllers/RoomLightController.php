@@ -30,9 +30,15 @@ class RoomLightController extends Controller
 
     public function updateUsage(Request $request, $id)
     {
+        $request->validate([
+            'usage_time' => 'required|integer|min:0',
+        ]);
         $lampu = Appliances::findOrFail($id);
 
         $lampu->usage_time = $request->usage_time;
+        // dd($lampu);
+        
         $lampu->save();
+        return response()->json(['success' => true, 'message' => 'Usage time updated']);
     }
 }

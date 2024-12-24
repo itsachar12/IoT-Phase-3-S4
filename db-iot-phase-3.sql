@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Des 2024 pada 10.16
+-- Waktu pembuatan: 24 Des 2024 pada 11.57
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `appliances` (
   `name` varchar(255) NOT NULL,
   `status` varchar(20) NOT NULL,
   `start_time` timestamp NULL DEFAULT NULL,
-  `usage_time` int(11) DEFAULT NULL,
+  `usage_time` int(11) NOT NULL,
   `speed_fan` varchar(20) DEFAULT NULL,
   `degree` float DEFAULT NULL,
   `electrical_power` int(11) NOT NULL,
@@ -45,11 +45,11 @@ CREATE TABLE `appliances` (
 --
 
 INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `start_time`, `usage_time`, `speed_fan`, `degree`, `electrical_power`, `type_appliance`, `lux`) VALUES
-(1, 'Air Conditioner lt 1 main room', 'Active', '2024-12-19 00:05:55', NULL, 'NORMAL', 27, 234, 'AC', 78),
-(2, 'Lights 1 lt 2 Side Room', 'Active', '2024-12-19 07:40:23', 5701, '0', 0, 111, 'Light', 53),
-(3, 'AC 2 ', 'Active', NULL, NULL, 'NORMAL', 16, 12, 'AC', 0),
-(4, 'Light 2 comp', 'Active', '2024-12-19 07:41:31', NULL, '', 0, 5, 'Light', 33),
-(5, 'Lamp site a', 'Active', '2024-12-19 07:41:35', NULL, NULL, NULL, 12, 'Light', 37);
+(1, 'AC 1', 'Active', '2024-12-24 08:37:31', 8389, 'NORMAL', 27, 234, 'AC', 94),
+(2, 'Lamp 1', 'Active', '2024-12-24 09:53:33', 3736, '0', 0, 111, 'Light', 18),
+(3, 'AC 2 ', 'Active', '2024-12-24 09:37:32', 4788, 'NORMAL', 16, 12, 'AC', 63),
+(4, 'Lamp 2', 'Active', '2024-12-24 10:20:30', 2119, '', 0, 5, 'Light', 53),
+(5, 'Lamp 3', 'Active', '2024-12-24 10:50:30', 319, NULL, NULL, 12, 'Light', 64);
 
 -- --------------------------------------------------------
 
@@ -204,7 +204,7 @@ CREATE TABLE `reports` (
 --
 
 INSERT INTO `reports` (`id_report`, `description`, `date`, `type_report`, `periode`, `time_span`) VALUES
-(8, 'dddad', '2024-12-19', 'AC', 'Today', '2024-12-19');
+(9, 'Laporan Penggunaan Lampu di Ruangan Utama Minggi Ini', '2024-12-19', 'Light', 'Today', '2024-12-19');
 
 -- --------------------------------------------------------
 
@@ -227,11 +227,7 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id_schedule`, `name_appliance`, `time_start`, `time_end`, `repeat_schedule`, `status`, `id_appliances`) VALUES
-(13, 'AC 2', '20:02:00', '20:04:00', 'Once', 'Inactive', 3),
-(14, 'Air Conditioner lt 1 main room', '20:04:00', '22:04:00', 'Daily', 'Active', 1),
-(15, 'Air Conditioner lt 1 main room', '20:08:00', '20:07:00', 'Once', 'Active', 1),
-(17, 'Light 2 comp', '23:09:00', '23:10:00', 'Daily', 'Active', 4),
-(18, 'Lights 1 lt 2 Side Room', '23:10:00', '12:10:00', 'Once', 'Active', 2);
+(19, 'AC 1', '14:30:00', '14:33:00', 'Once', 'Active', 1);
 
 -- --------------------------------------------------------
 
@@ -263,13 +259,28 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `summary`
+--
+
+CREATE TABLE `summary` (
+  `id_summary` int(11) NOT NULL,
+  `id_appliances` int(11) NOT NULL,
+  `total_power` int(50) NOT NULL,
+  `total_usage_time` int(50) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
-  `picture` text NOT NULL,
+  `picture` text DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
@@ -283,7 +294,6 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `picture`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Rysha Nidya', '', 'rysha@gmail.com', NULL, '$2y$10$/PvK479rqFj55XtAQRit..PezK.29XZg.RiHgSoDetlDVYgFZZuOq', NULL, NULL, '2024-11-21 06:27:16'),
 (2, 'admin', '', 'admin@gmail.com', NULL, '$2y$10$M1MuYXw9WcUt7uMyIjPNVORcIDNkQRCYngv/4jcAh6N7aR7OK7w2u', NULL, NULL, NULL);
 
 --
@@ -368,6 +378,13 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
+-- Indeks untuk tabel `summary`
+--
+ALTER TABLE `summary`
+  ADD PRIMARY KEY (`id_summary`),
+  ADD KEY `id_appliances` (`id_appliances`);
+
+--
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
@@ -412,19 +429,41 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id_report` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_report` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id_schedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_schedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT untuk tabel `summary`
+--
+ALTER TABLE `summary`
+  MODIFY `id_summary` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `schedule`
+--
+ALTER TABLE `schedule`
+  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`id_appliances`) REFERENCES `appliances` (`id_appliances`);
+
+--
+-- Ketidakleluasaan untuk tabel `summary`
+--
+ALTER TABLE `summary`
+  ADD CONSTRAINT `summary_ibfk_1` FOREIGN KEY (`id_appliances`) REFERENCES `appliances` (`id_appliances`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

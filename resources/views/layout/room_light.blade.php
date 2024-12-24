@@ -43,31 +43,41 @@
                 const id = startTimeElement.dataset.idAppliance;
                 const startTimeDate = new Date(startTime);
                 const timerElement = document.getElementById('usageTime-' + id);
-                const status = document.getElementById('status-' + id).textContent;
                 const totalUsageTime = document.getElementById('totalUsageTime-' + id).textContent;
-                console.log(totalUsageTime);
+                // console.log(totalUsageTime);
 
+                let updateCounter = 0
+                
                 setInterval(() => {
+                    const status = document.getElementById('status-' + id).textContent;
                     const now = new Date();
 
                     const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
-
+                    // console.log(elapsed);
+                    
                     if (status === 'Active') {
                         // Format elapsed time into HH:mm:ss
                         const hours = Math.floor(elapsed / 3600);
                         const minutes = Math.floor((elapsed % 3600) / 60);
                         const seconds = elapsed % 60;
+
+                        // menampilkan waktu yang telah digunakan
                         timerElement.textContent =
                             `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-                        updateUsage(id, elapsed)
+                            // update tiap 5 detik
+                        updateCounter++
+                        if(updateCounter >= 5){
+
+                            updateUsage(id, elapsed)
+                            updateCounter = 0
+                        }
                     } else {
                         const hours = Math.floor(totalUsageTime / 3600);
                         const minutes = Math.floor((totalUsageTime % 3600) / 60);
                         const seconds = totalUsageTime % 60;
                         timerElement.textContent =
                             `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
                     }
 
 
@@ -79,16 +89,21 @@
 
         // Update database every minute
         function updateUsage(id, elapsed) {
+            // console.log(elapsed)
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            // console.log(csrfToken)
             fetch(`/lampu/${id}/update-usage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Token CSRF
-                },
-                body: JSON.stringify({
-                    usage_time: elapsed // Kirim waktu penggunaan yang dihitung
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken // Token CSRF
+                    },
+                    body: JSON.stringify({
+                        usage_time: elapsed // Kirim waktu penggunaan yang dihitung
+                    })
                 })
-            })
+                // .then(data => console.log(data))
+                .catch(error => console.error("Error:", error));
         }
     </script>
 

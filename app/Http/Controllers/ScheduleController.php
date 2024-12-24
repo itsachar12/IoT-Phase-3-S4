@@ -50,7 +50,7 @@ class ScheduleController extends Controller
     {
         //
     }
-    
+
 
 
 
@@ -65,7 +65,7 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Schedule $schedule, $id )
+    public function edit(Schedule $schedule, $id)
     {
         $schedule = Schedule::find($id);
         $dataSch = Schedule::all();
@@ -75,7 +75,7 @@ class ScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id  )
+    public function update(Request $request, $id)
     {
 
         $sch = Schedule::findOrFail($id);

@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appliances extends Model
 {
-    protected $guarded = [''];
+    
     protected $table = 'appliances';
     protected $primaryKey = 'id_appliances';
+    protected $guarded = ['start_time'];
     public $timestamps = false;
 
 
