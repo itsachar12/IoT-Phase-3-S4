@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>title</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -30,63 +32,58 @@
 
 
     <script>
-        // Function to calculate and display elapsed time
-        function realtimeUsage() {
+        function realtimeUsageLamp() {
+            const appliances = document.querySelectorAll('.startTime');
 
-            const startTimes = document.querySelectorAll('.startTime');
+            appliances.forEach(appliance => {
+                const id = appliance.dataset.idAppliance;
+                const status = document.getElementById('status-' + id).textContent;
+                const usageTimeElement = document.getElementById('usageTime-' + id);
+                let updateCounter = 0;
 
-            startTimes.forEach((startTimeElement) => {
-                const startTime = startTimeElement.textContent;
 
-                const id = startTimeElement.dataset.idAppliance;
-                const startTimeDate = new Date(startTime);
-                const timerElement = document.getElementById('usageTime-' + id);
-                const totalUsageTime = document.getElementById('totalUsageTime-' + id).textContent;
-                // console.log(totalUsageTime);
+                let usageTime = parseInt(document.getElementById('totalUsageTime-' + id).textContent);
 
-                let updateCounter = 0
+                // merubah usage time detik to time H:m:s
+                function formatTime(seconds) {
+                    const hours = Math.floor(seconds / 3600);
+                    const minutes = Math.floor((seconds % 3600) / 60);
+                    const remainingSeconds = seconds % 60;
+                    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+                }
 
-                setInterval(() => {
-                    const status = document.getElementById('status-' + id).textContent;
-                    const now = new Date();
 
-                    const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
-                    // console.log(elapsed);
+                if (status === 'Active') {
 
-                    if (status === 'Active') {
-                        // Format elapsed time into HH:mm:ss
-                        const hours = Math.floor(elapsed / 3600);
-                        const minutes = Math.floor((elapsed % 3600) / 60);
-                        const seconds = elapsed % 60;
+                    const intervalId = setInterval(() => {
 
-                        // menampilkan waktu yang telah digunakan
-                        timerElement.textContent =
-                            `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        if (document.getElementById('status-' + id).textContent === 'Active') {
+                            usageTime++;
 
-                        // update tiap 5 detik
-                        updateCounter++
-                        if (updateCounter >= 5) {
 
-                            updateUsage(id, elapsed)
-                            updateCounter = 0
+                            usageTimeElement.textContent = `Usage Time : ${formatTime(usageTime)}`;
+
+
+                            updateCounter++;
+                            if (updateCounter >= 5) {
+                                updateUsageLamp(id, usageTime);
+                                updateCounter = 0;
+                            }
                         }
-                    } else {
-                        const hours = Math.floor(totalUsageTime / 3600);
-                        const minutes = Math.floor((totalUsageTime % 3600) / 60);
-                        const seconds = totalUsageTime % 60;
-                        timerElement.textContent =
-                            `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    }
+                    }, 1000);
 
+                    // Simpan intervalID ke dalam data atribut agar bisa di-clear jika diperlukan
+                    // appliance.setAttribute('data-interval', intervalId); 
 
+                } else {
 
-                }, 1000);
-
-            })
+                    usageTimeElement.textContent = `Usage Time : ${formatTime(usageTime)}`;
+                }
+            });
         }
 
-        // Update database every minute
-        function updateUsage(id, elapsed) {
+
+        function updateUsageLamp(id, usageTime) {
             // console.log(elapsed)
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             // console.log(csrfToken)
@@ -97,7 +94,7 @@
                         'X-CSRF-TOKEN': csrfToken // Token CSRF
                     },
                     body: JSON.stringify({
-                        usage_time: elapsed // Kirim waktu penggunaan yang dihitung
+                        usage_time: usageTime // Kirim waktu penggunaan yang dihitung
                     })
                 })
                 // .then(data => console.log(data))
@@ -115,41 +112,41 @@
                 const startTimeDate = new Date(startTime);
                 const timerElement = document.getElementById('usageTime-' + id);
                 const status = document.getElementById('status-' + id).textContent;
-                const totalUsageTime = document.getElementById('totalUsageTime-' + id).textContent;
-                console.log(totalUsageTime);
+                const UsageTime = document.getElementById('totalUsageTime-' + id).textContent;
+                // console.log(totalUsageTime);
+                if (status === 'Active') {
+                    const intervalId = setInterval(() => {
+                        const now = new Date();
 
-                setInterval(() => {
-                    const now = new Date();
+                        const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
 
-                    const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
+                        if (document.getElementById('status-' + id).textContent === 'Active') {
+                            usageTime++;
 
-                    if (status === 'Active') {
-                        // Format elapsed time into HH:mm:ss
-                        const hours = Math.floor(elapsed / 3600);
-                        const minutes = Math.floor((elapsed % 3600) / 60);
-                        const seconds = elapsed % 60;
-                        timerElement.textContent =
-                            `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-                        updateUsageAC(id, elapsed)
-                    } else {
-                        const hours = Math.floor(totalUsageTime / 3600);
-                        const minutes = Math.floor((totalUsageTime % 3600) / 60);
-                        const seconds = totalUsageTime % 60;
-                        timerElement.textContent =
-                            `Usage Time : ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+                            usageTimeElement.textContent = `Usage Time : ${formatTime(usageTime)}`;
 
-                    }
+
+                            updateCounter++;
+                            if (updateCounter >= 5) {
+                                updateUsageAC(id, usageTime);
+                                updateCounter = 0;
+                            }
+                        } else {
+                            usageTimeElement.textContent = `Usage Time : ${formatTime(usageTime)}`;
+                        }
 
 
 
-                }, 1000);
+                    }, 1000);
+                }
+
 
             })
         }
 
         // Update database every minute
-        function updateUsageAC(id, elapsed) {
+        function updateUsageAC(id, usageTime) {
             fetch(`/ac/${id}/update-usage`, {
                 method: 'POST',
                 headers: {
@@ -157,7 +154,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}' // Token CSRF
                 },
                 body: JSON.stringify({
-                    usage_time: elapsed // Kirim waktu penggunaan yang dihitung
+                    usage_time: usageTime // Kirim waktu penggunaan yang dihitung
                 })
             })
         }
@@ -178,7 +175,7 @@
 
 </head>
 
-<body onload="realtimeUsageAC(); realtimeUsage(); resetDataApp()">
+<body onload="realtimeUsageAC(); resetDataApp(); realtimeUsageLamp()">
 
     <header>
         @include('components.header')
