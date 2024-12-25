@@ -60,7 +60,7 @@
                         if (document.getElementById('status-' + id).textContent === 'Active') {
                             usageTime++;
 
-
+                            console.log(usageTime);
                             usageTimeElement.textContent = `Usage Time : ${formatTime(usageTime)}`;
 
 
@@ -110,15 +110,23 @@
 
                 const id = startTimeElement.dataset.idAppliance;
                 const startTimeDate = new Date(startTime);
-                const timerElement = document.getElementById('usageTime-' + id);
+                const usageTimeElement = document.getElementById('usageTime-' + id);
                 const status = document.getElementById('status-' + id).textContent;
-                const UsageTime = document.getElementById('totalUsageTime-' + id).textContent;
+                let updateCounter = 0;
+                let usageTime = parseInt(document.getElementById('totalUsageTime-' + id).textContent);
                 // console.log(totalUsageTime);
+
+
+                function formatTime(seconds) {
+                    const hours = Math.floor(seconds / 3600);
+                    const minutes = Math.floor((seconds % 3600) / 60);
+                    const remainingSeconds = seconds % 60;
+                    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+                }
+
                 if (status === 'Active') {
                     const intervalId = setInterval(() => {
-                        const now = new Date();
-
-                        const elapsed = Math.floor((now - startTimeDate) / 1000); // in seconds
+                        // in seconds
 
                         if (document.getElementById('status-' + id).textContent === 'Active') {
                             usageTime++;
