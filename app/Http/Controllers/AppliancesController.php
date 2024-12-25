@@ -45,6 +45,27 @@ class AppliancesController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function resetDataApp(){
+
+        $appliances = Appliances::all();   
+        $today = Carbon::now()->format('Y-m-d');
+
+        // pengecekan tnggal hari ini
+        foreach ($appliances as $app) {
+            $start_time = Carbon::parse($app->start_time)->format('Y-m-d');
+
+            if ($start_time !== $today) {
+                $app->total_power = 0;
+                $app->usage_time = 0;
+                $app->start_time = Carbon::now()->startOfDay();
+                $app->save();
+            }
+        }
+        return response()->json(['message' => 'Data has been reset successfully.']);
+    }
+
     public function create()
     {
         //

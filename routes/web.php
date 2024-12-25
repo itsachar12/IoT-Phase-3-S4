@@ -68,5 +68,7 @@ use App\Models\Appliances;
 
         Route::post('/lampu/{id}/update-usage', [RoomLightController::class, 'updateUsage']);
         Route::post('/ac/{id}/update-usage', [RoomACController::class, 'updateUsage']);
+
+        Route::get('/appliances/resetDataApp', [AppliancesController::class, 'resetDataApp']);
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

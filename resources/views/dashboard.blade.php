@@ -129,9 +129,9 @@
         <!-- Active Appliances -->
         <div class="col-span-1 bg-white rounded-lg shadow-md p-6">
             <h2 class="text-lg font-semibold text-gray-700">ACTIVE APPLIENCES</h2>
-            <div class="mt-4">
+            <div class="mt-4 h-60">
                 <!-- Chart Canvas -->
-                <canvas id="activeAppliancesChart" class="w-full h-40"></canvas>
+                <canvas id="activeAppliancesChart" class="w-full h-64"></canvas>
             </div>
         </div>
 
@@ -140,7 +140,7 @@
 
                 const activeApp = @json($activeApp);
 
-                console.log(activeApp);
+                // console.log(activeApp);
 
                 const ctx = document.getElementById('activeAppliancesChart').getContext('2d');
                 const activeAppliancesChart = new Chart(ctx, {
@@ -148,9 +148,8 @@
                     data: {
                         labels: ['AC', 'Lamp'],
                         datasets: [{
-                            label: 'kWh',
+                            label: 'Wh',
                             data: [activeApp['ac'], activeApp['light']],
-                            // data: [200, 450],
                             backgroundColor: ['#a0f0ff', '#39d2b4'],
                             borderWidth: 1,
                             borderRadius: 5,
@@ -161,13 +160,13 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                max: 500,
+                                max: 10000,
                                 ticks: {
-                                    stepSize: 100,
+                                    stepSize: 1000,
                                 },
                                 title: {
                                     display: true,
-                                    text: 'kWh',
+                                    text: 'Wh',
                                     font: {
                                         size: 12,
                                     }

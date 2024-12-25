@@ -161,11 +161,24 @@
                 })
             })
         }
+
+        function resetDataApp() {
+            fetch(`/appliances/resetDataApp`, {
+                    method: 'GET',
+
+                }).then(response => response.json())
+                .then(data => {
+                    console.log(data.message); // Tampilkan respons dari backend
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     </script>
 
 </head>
 
-<body onload="realtimeUsageAC(); realtimeUsage()">
+<body onload="realtimeUsageAC(); realtimeUsage(); resetDataApp()">
 
     <header>
         @include('components.header')
