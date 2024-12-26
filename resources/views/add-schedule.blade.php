@@ -1,6 +1,7 @@
 @extends('layout.mainLayout')
 
-@section('title', 'Aplikasi GX DOJO')
+@section('title', 'Add Schedule')
+
 
 @section('content')
 

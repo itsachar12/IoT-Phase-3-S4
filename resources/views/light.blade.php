@@ -1,7 +1,7 @@
 @extends('layout.mainLayout')
 
 
-@section('title', 'Aplikasi GX DOJO') <!-- Perbaikan di sini, lebih ringkas -->
+@section('title', 'Lights') <!-- Perbaikan di sini, lebih ringkas -->
 
 @section('content')
 

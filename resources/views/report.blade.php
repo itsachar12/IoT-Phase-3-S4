@@ -1,7 +1,7 @@
 @extends('layout.mainLayout')
 
 
-@section('title', 'Aplikasi GX DOJO')
+@section('title', 'Report')
 
 @section('content')
 
@@ -57,6 +57,7 @@
                         <tr>
                             <th class="px-6 py-3 font-semibold text-gray-800 text-center">No</th>
                             <th class="px-6 py-3 font-semibold text-gray-800">Report Name</th>
+                            <th class="px-6 py-3 font-semibold text-gray-800">Type Appliance</th>
                             <th class="px-6 py-3 font-semibold text-gray-800 text-center">Date</th>
                             <th class="px-6 py-3 font-semibold text-gray-800 text-center">Actions</th>
                         </tr>
@@ -66,9 +67,10 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-3 text-center">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-3">{{ $i->description }}</td>
+                                <td class="px-6 py-3">{{ $i->type_report }}</td>
                                 <td class="px-6 py-3 text-center">{{ $i->date }}</td>
                                 <td class="px-6 py-3 text-center flex justify-center gap-2">
-                                    <a href="#"
+                                    <a href="{{ route('report.view', $i->id_report) }}"
                                         class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
                                         <i class="fa fa-eye"></i>
                                     </a>

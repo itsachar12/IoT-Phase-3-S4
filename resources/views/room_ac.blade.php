@@ -1,7 +1,7 @@
 @extends('layout.mainLayout')
 
 
-@section('title', 'Aplikasi GX DOJO')
+@section('title', 'AC Room')
 
 @section('content')
 <div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 "

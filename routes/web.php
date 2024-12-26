@@ -63,6 +63,7 @@ use App\Models\Appliances;
         Route::patch('/light/lux/{id}', [LightController::class, 'lux'])->name('light.lux');
 
         Route::get('/report/add', [ReportController::class, 'showAdd'])->name('report.add');
+        Route::get('/report/view-{id}', [ReportController::class, 'view'])->name('report.view');
         Route::post('/report/create', [ReportController::class, 'create'])->name('report.create');
         Route::delete('/report/delete/{id}', [ReportController::class, 'destroy'])->name('report.delete');
 
