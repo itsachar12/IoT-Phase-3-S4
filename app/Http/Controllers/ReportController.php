@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Report;
 use App\Models\Summary;
+use App\Models\Appliances;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
@@ -60,37 +62,39 @@ class ReportController extends Controller
         $tipe = $report->type_report;
         $periode = $report->periode;
         $report_date = $report->date;
-        $format = Carbon::createFromFormat('Y-m-d', $report_date);
-        
+        $daysBefore = $report->time_span;
 
         $data_summary = Summary::whereHas('appliance', function ($query) use ($tipe) {
             $query->where('type_appliance', $tipe);
         })->get();
 
+
         if ($periode === 'Today') {
 
-            
             $data_summary_report = $data_summary->filter(function ($item) use ($report_date) {
                 return $item->created_at->isSameDay($report_date);
-            });  
+            }); 
             
-        } elseif ($periode === 'Week') {
+        } else {
             
-            $today = Carbon::now(); 
-            $weekStart = Carbon::now()->subDay(7);
-            $data_summary_report = $data_summary->filter(function ($item) use ($weekStart, $today) {
-                $created_at = Carbon::parse($item->created_at);
-                return $created_at->between($weekStart, $today);
+            $data_summary_report = $data_summary->filter(function ($item) use ($daysBefore, $report_date) {
+                return $item->created_at->between($daysBefore, $report_date);
             });
-            // dd($data_summary_report);
-        } elseif ($periode === 'Month') {
-            $today = Carbon::now(); 
-            $monthStart = Carbon::now()->subDay(30);
-            $data_summary_report = $data_summary->filter(function ($item) use ($monthStart, $today) {
-                return $item->created_at->between($monthStart, $today);
-            });
-        }
+        } 
         return view('see-report', compact('data_summary_report', 'report'));
+    }
+
+    public function downloadPdf($id){
+        $appliances = Appliances::get();
+        $data = [
+            'id' => '1',
+            'name' => 'Yurisha',
+            'date' => Carbon::now(),
+            'tes' => $appliances,
+        ];
+
+        $pdf = PDF::loadView('report_PDF', $data);
+        return $pdf->download($data['date'].'.pdf');
     }
 
     public function destroy($id)

@@ -4,9 +4,15 @@
 @section('title', 'Reports Detail')
 
 @section('content')
-    <div class="flex flex-col items-center w-auto bg-green-100 min-h-screen mt-20 ml-64">
 
-        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-6xl mx-auto mt-10">
+    <div class="flex flex-col  w-auto bg-green-100 min-h-screen mt-20 ml-64 ">
+        <div class="mb-4 mt-10 ml-10">
+            <a href="/report"
+                class="text-blue-500 px-4 py-2 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white transition ">
+                Back
+            </a>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-6xl mx-auto mt-5 mb-14">
             @if (session('sukses'))
                 <div class="error  text-green-600 bg-green-200 p-3 rounded-lg mb-5 font-semibold ">
                     {{ session('sukses') }} !!</div>
