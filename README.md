@@ -84,23 +84,13 @@ Note :
    - Set `APP_DEBUG=true` in the `.env` file.
 
 
-7. **Database COnfiguration**
-   - make new database `db-iot-phase-3` to your phpmyadmin database
-   - set `DB_CONNECTION=sqlite` to `DB_CONNECTION=mysql`.
-   - uncomment `DB_HOST=127.0.0.1` `DB_PORT=3306` `DB_DATABASE=laravel_11' 'DB_USERNAME=root' 'DB_PASSWORD=` 
-   - set `DB_DATABASE=laravel_11` to `DB_DATABASE=db-iot-phase-3`
-   - Jalankan Perintah Berikut pada terminal:
-   ```bash
-   php artisan migrate
-   ```
-
-8. **Generate New Application Key**:
+7. **Generate New Application Key**:
 
    ```bash
    php artisan key:generate
    ```
 
-9. **Launch The App**
+8. **Launch The App**
    - Add new terminal for running laravel
    ```bash
    php artisan serve
