@@ -17,12 +17,18 @@
                 <div class="error  text-green-600 bg-green-200 p-3 rounded-lg mb-5 font-semibold ">
                     {{ session('sukses') }} !!</div>
             @endif
-
+                
             <!-- Tabel -->
             <span class="text-slate-800 text-xl  font-bold ">{{ $report->description }}</span>
             <div class="overflow-x-auto mt-5">
                 <table
                     class="w-full border border-gray-300 divide-y divide-gray-300 text-sm text-left bg-white rounded-lg shadow-md">
+                    <div class="mt-6 text-right mb-5">
+                        <a href="{{ route('report.download', ['id' => $report->id_report, 'data' => serialize($data_summary_report)]) }}"
+                            class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <span class="fa fa-print mr-3"></span>Print
+                        </a>
+                    </div>
                     <thead class="bg-gray-200">
                         <tr>
                             <th class="px-6 py-3 font-semibold text-gray-800 text-center">No</th>
@@ -33,7 +39,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data_summary_report as $i)
+                        @forelse ($data_summary_report as $i)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-3 text-center">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-3">{{ $i->appliance->name }}</td>
@@ -52,45 +58,21 @@
 
                                 
                             </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="4" class="px-6 py-3 text-center text-gray-500">
+                                <div class="flex flex-col items-center">
+                                    <svg class="w-16 h-16 text-gray-300 mb-3" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 -5 30 30" stroke-width="2" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M12 8v4l3 3m9-7.5a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p class="text-gray-700 font-medium">No reports available.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
 
-                        {{-- @forelse ($reports as $i)
-                      <tr class="hover:bg-gray-50">
-                          <td class="px-6 py-3 text-center">{{ $loop->iteration }}</td>
-                          <td class="px-6 py-3">{{ $i->description }}</td>
-                          <td class="px-6 py-3 text-center">{{ $i->date }}</td>
-                          <td class="px-6 py-3 text-center flex justify-center gap-2">
-                              <a href="{{ route('report.view') }}"
-                                  class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
-                                  <i class="fa fa-eye"></i>
-                              </a>
-
-                              <form action="{{ route('report.delete', $i->id_report) }}" method="post">
-                                  @csrf
-                                  @method('DELETE')
-
-                                  <button type="submit" onclick="return confirm('Are You Sure to delete this report?')"
-                                      class="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600">
-                                      <i class="fa fa-trash"></i>
-                                  </button>
-                              </form>
-
-                          </td>
-                      </tr>
-                  @empty
-                      <tr>
-                          <td colspan="4" class="px-6 py-3 text-center text-gray-500">
-                              <div class="flex flex-col items-center">
-                                  <svg class="w-16 h-16 text-gray-300 mb-3" xmlns="http://www.w3.org/2000/svg"
-                                      fill="none" viewBox="0 -5 30 30" stroke-width="2" stroke="currentColor">
-                                      <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M12 8v4l3 3m9-7.5a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
-                                  <p class="text-gray-700 font-medium">No reports available.</p>
-                              </div>
-                          </td>
-                      </tr>
-                  @endforelse --}}
                     </tbody>
                 </table>
 

@@ -73,28 +73,31 @@ class ReportController extends Controller
 
             $data_summary_report = $data_summary->filter(function ($item) use ($report_date) {
                 return $item->created_at->isSameDay($report_date);
-            }); 
-            
+            });
         } else {
-            
+
             $data_summary_report = $data_summary->filter(function ($item) use ($daysBefore, $report_date) {
                 return $item->created_at->between($daysBefore, $report_date);
             });
-        } 
+        }
+        session(['data' => $data_summary_report]);
+        // dd($data_summary_report);
         return view('see-report', compact('data_summary_report', 'report'));
     }
 
-    public function downloadPdf($id){
-        $appliances = Appliances::get();
-        $data = [
-            'id' => '1',
-            'name' => 'Yurisha',
-            'date' => Carbon::now(),
-            'tes' => $appliances,
+    public function downloadPdf($id, Request $request)
+    {
+        $datas = unserialize($request->query('data'));
+        $report= Report::find($id);
+        $datas = [
+            'report' => $report,
+            'summaries' => $datas,
         ];
+        // dd($data_summary_report);
+        $unik = now()->format('d-m-Y') . '_' . rand(1, 10000000);
 
-        $pdf = PDF::loadView('report_PDF', $data);
-        return $pdf->download($data['date'].'.pdf');
+        $pdf = PDF::loadView('report_PDF', $datas);
+        return $pdf->download($unik . '.pdf');
     }
 
     public function destroy($id)

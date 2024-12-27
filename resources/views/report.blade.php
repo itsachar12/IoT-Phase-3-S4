@@ -75,10 +75,10 @@
                                         class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('report.download', $i->id_report) }}"
+                                    {{-- <a href="{{ route('report.download', $i->id_report) }}"
                                         class="bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600">
                                         <i class="fa fa-print"></i>
-                                    </a>
+                                    </a> --}}
 
                                     <form action="{{ route('report.delete', $i->id_report) }}" method="post">
                                         @csrf
