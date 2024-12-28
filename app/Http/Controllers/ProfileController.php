@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -37,5 +39,38 @@ class ProfileController extends Controller
         }
         return back()->with('error', 'Failed to update profile!');  
 
+    }
+
+    public function updatePic(Request $request){
+        $request->validate([
+            'picture' =>'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $user = User::findOrFail(Auth::user()->id);
+
+        // hapus foto lama jika ada
+        if ($user->picture && File::exists(public_path('ProfilePicture/' . $user->picture))) {
+            File::delete(public_path('ProfilePicture/' . $user->picture));
+        }
+
+        $file = $request->file('picture');  
+        $ext = $file->getClientOriginalExtension();
+        $fileName = $user->username . $user->id . '_' . now()->format('dmY').'.'.$ext; // Buat nama unik
+        $file->move(public_path('ProfilePicture'), $fileName);
+
+        $user->update([
+            'picture' => $fileName,
+        ]);
+
+        return redirect()->back()->with('success', 'Picture updated successfully.');
+    }
+
+    public function pictureDel(){
+
+        $user = User::findOrFail(Auth::user()->id);
+        $user->picture = null;
+        $user->save();
+        return redirect()->back()->with('success', 'Picture updated successfully.');
+        
     }
 }

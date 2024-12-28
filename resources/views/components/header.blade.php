@@ -13,9 +13,16 @@
 
             <!-- User Profile Button -->
             <div class="flex items-center relative">
-               <button  type="button" class="flex items-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-green-600 dark:focus:ring-gray-600">
+               <button  type="button" class="flex items-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-green-600 dark:focus:ring-gray-600 ">
                   <span class="sr-only">Open user menu</span>
-                  <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                  @if (Auth::user()->picture)
+                  <img class="w-10 h-10 object-cover rounded-full" 
+                  src="{{ asset('ProfilePicture/'.Auth::user()->picture) }}" alt="user photo">
+                  @else
+                  <img class="w-10 h-10 rounded-full" 
+                  src="{{ asset('ProfilePicture/default-profile-picture.jpg') }}" alt="user photo">
+                  @endif
+                  
                </button>
 
                <!-- Dropdown menu -->

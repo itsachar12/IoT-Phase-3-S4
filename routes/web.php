@@ -37,6 +37,9 @@ use App\Models\Appliances;
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/profile/picture', [ProfileController::class, 'updatePic'])->name('profile.picture');
+        Route::get('/profile/delete', [ProfileController::class, 'pictureDel'])->name('profile.delete');
+
         Route::get('/appliences', [AppliancesController::class, 'index'])->name('appliences');
         Route::get('/usage_by_room', [UsageByRoomController::class, 'index'])->name('usage_by_room');
         Route::get('/emissions', [EmissionsController::class, 'index'])->name('emissions');
