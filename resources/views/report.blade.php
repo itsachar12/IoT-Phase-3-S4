@@ -5,9 +5,9 @@
 
 @section('content')
 
-    <div class="flex flex-col items-center w-auto bg-green-100 min-h-screen mt-20 ml-64">
+    <div class="flex flex-col items-center w-auto bg-green-100 min-h-screen mt-20 ml-64 ">
 
-        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-6xl mx-auto mt-10">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-6xl mx-auto mt-10 mb-5">
             @if (session('sukses'))
                 <div class="error  text-green-600 bg-green-200 p-3 rounded-lg mb-5 font-semibold ">
                     {{ session('sukses') }} !!</div>
@@ -58,6 +58,7 @@
                             <th class="px-6 py-3 font-semibold text-gray-800 text-center">No</th>
                             <th class="px-6 py-3 font-semibold text-gray-800">Report Name</th>
                             <th class="px-6 py-3 font-semibold text-gray-800">Type Appliance</th>
+                            <th class="px-6 py-3 font-semibold text-gray-800">Periode</th>
                             <th class="px-6 py-3 font-semibold text-gray-800 text-center">Date</th>
                             <th class="px-6 py-3 font-semibold text-gray-800 text-center">Actions</th>
                         </tr>
@@ -68,6 +69,7 @@
                                 <td class="px-6 py-3 text-center">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-3">{{ $i->description }}</td>
                                 <td class="px-6 py-3">{{ $i->type_report }}</td>
+                                <td class="px-6 py-3">{{ $i->periode }}</td>
                                 <td class="px-6 py-3 text-center">{{ $i->date }}</td>
                                 <td class="px-6 py-3 text-center flex justify-center gap-2">
 

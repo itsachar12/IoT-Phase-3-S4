@@ -28,9 +28,10 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 0 dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         <option value="" selected disabled>--Select Type Report--</option>
                         {{-- perulangan daftar appliances --}}
+                        <option value="All">All</option>
                         <option value="Light">Light</option>
                         <option value="AC">AC</option>
-                        <option value="Emission">Emission</option>
+                        {{-- <option value="Emission">Emission</option> --}}
                         
                     </select>
                 </div>
@@ -50,7 +51,7 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 0 dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         <option selected value="" disabled>--Select Periode--</option>
                         {{-- perulangan daftar appliances --}}
-                        <option value="Today">Today</option>
+                        <option value="A Day">A Day</option>
                         <option value="Week">Week</option>
                         <option value="Month">Month</option>
                         

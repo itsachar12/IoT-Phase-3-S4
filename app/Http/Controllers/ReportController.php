@@ -13,17 +13,16 @@ class ReportController extends Controller
 {
     public function index()
     {
-        // Contoh data dummy
+
         $reports = Report::all();
 
-        // Kirim data ke view
+        
         return view('report', compact('reports'));
     }
 
     public function showAdd()
     {
-        // $timeSpan = Carbon::now()->subDays(0);
-        // dd($timeSpan);
+
         return view('report-add');
     }
 
@@ -64,12 +63,17 @@ class ReportController extends Controller
         $report_date = $report->date;
         $daysBefore = $report->time_span;
 
-        $data_summary = Summary::whereHas('appliance', function ($query) use ($tipe) {
-            $query->where('type_appliance', $tipe);
-        })->get();
+        if($tipe === 'All'){
+            $data_summary = Summary::get();
+        } else {
+
+            $data_summary = Summary::whereHas('appliance', function ($query) use ($tipe) {
+                $query->where('type_appliance', $tipe);
+            })->get();
+        }
 
 
-        if ($periode === 'Today') {
+        if ($periode === 'A Day') {
 
             $data_summary_report = $data_summary->filter(function ($item) use ($report_date) {
                 return $item->created_at->isSameDay($report_date);
