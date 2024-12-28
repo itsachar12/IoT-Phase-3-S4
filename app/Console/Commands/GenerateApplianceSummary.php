@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use App\Models\Summary;
 use App\Models\Appliances;
 use Illuminate\Console\Command;
@@ -21,20 +22,30 @@ class GenerateApplianceSummary extends Command
     public function handle()
     {
         // mengambil semua data appliance
+        $today = Carbon::now()->startOfDay();
         $appliances = Appliances::all();
+        // $summaries = Summary::all();
 
         foreach ($appliances as $app) {
 
-            $app->summaries()->create(
-                [
+            $summary = Summary::where('id_appliances', $app->id_appliances)
+            ->whereDate('created_at', $today)->first();
+
+            if($summary){
+                $summary->update([
+                    'total_usage_time' =>$app->usage_time,
+                    'total_power' => $app->total_power,
+                    'updated_at' => now(),
+                ]);
+            } else {
+                Summary::create([
                     'id_appliances' => $app->id_appliances,
                     'total_usage_time' => $app->usage_time,
                     'total_power' => $app->total_power,
                     'created_at' => now(),
                     'updated_at' => now(),
-                ]
-
-            );
+                ]);
+            }
         }
 
         $this->info('Appliance summaries added successfully!');

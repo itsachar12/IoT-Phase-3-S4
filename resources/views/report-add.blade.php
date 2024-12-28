@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="mt-28 mb-10 ml-96">
-    <a href="/appliences"
+    <a href="/report"
         class="text-blue-500 px-4 py-2 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white transition">
         Back
     </a>
@@ -24,9 +24,9 @@
                 {{-- ? TYPE REPORT --}}
                 <div class="col-span-2">
                     <label for="type_report" class="block mb-2 text-sm font-medium text-gray-900 ">Type Report</label>
-                    <select id="type_report" required name="type_report"
+                    <select id="type_report" required name="type_report" 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 0 dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="" disabled>--Select Type Report--</option>
+                        <option value="" selected disabled>--Select Type Report--</option>
                         {{-- perulangan daftar appliances --}}
                         <option value="Light">Light</option>
                         <option value="AC">AC</option>
@@ -42,20 +42,13 @@
                     
                 </div>
 
-                {{-- ? Time End --}}
-                {{-- <div class="col-span-2 ">
-                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900 ">Date</label>
-                    <input type="date" name="date" id="date"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 0 dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        required>
-                </div> --}}
-
+                
                 {{-- ?Periode --}}
                 <div class="col-span-2">
                     <label for="periode" class="block mb-2 text-sm font-medium text-gray-900 ">Periode Time</label>
                     <select id="periode" required name="periode"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 0 dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="" disabled>--Select Periode--</option>
+                        <option selected value="" disabled>--Select Periode--</option>
                         {{-- perulangan daftar appliances --}}
                         <option value="Today">Today</option>
                         <option value="Week">Week</option>

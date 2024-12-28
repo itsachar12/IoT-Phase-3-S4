@@ -10,11 +10,10 @@ use App\Http\Controllers\Controller;
 
 class AppliancesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
+        
         $schedules = Schedule::all();
         $appliances = Appliances::all();
         $total_act = $appliances->where('status', 'Active');
@@ -23,8 +22,8 @@ class AppliancesController extends Controller
         $total_act_ac = $total_act->where('type_appliance', 'AC');
         $total_act_lamp = $total_act->where('type_appliance', 'Light');
         $total_power = $appliances->sum('electrical_power');
-        $total_power_ac = $total_ac->sum('electrical_power');
-        $total_power_lamp = $total_lamp->sum('electrical_power');
+        $total_power_ac = $total_ac->sum('total_power');
+        $total_power_lamp = $total_lamp->sum('total_power');
 
         
         return view('appliences', compact('appliances', 'schedules', 'total_act', 'total_ac', 'total_lamp', 'total_act_ac', 'total_act_lamp', 'total_power', 'total_power_ac', 'total_power_lamp' ));

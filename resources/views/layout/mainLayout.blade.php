@@ -153,7 +153,7 @@
             })
         }
 
-        // Update database every minute
+        
         function updateUsageAC(id, usageTime) {
             fetch(`/ac/${id}/update-usage`, {
                 method: 'POST',

@@ -80,8 +80,7 @@ class ReportController extends Controller
                 return $item->created_at->between($daysBefore, $report_date);
             });
         }
-        session(['data' => $data_summary_report]);
-        // dd($data_summary_report);
+        
         return view('see-report', compact('data_summary_report', 'report'));
     }
 

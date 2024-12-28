@@ -6,7 +6,7 @@
 @section('content')
 
     <div class="flex flex-col items-center w-auto bg-green-100 min-h-screen mt-20 ml-64">
-        
+
         <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-6xl mx-auto mt-10">
             @if (session('sukses'))
                 <div class="error  text-green-600 bg-green-200 p-3 rounded-lg mb-5 font-semibold ">
@@ -84,7 +84,8 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" onclick="return confirm('Are You Sure to delete this report?')"
+                                        <button type="submit"
+                                            onclick="return confirm('Are You Sure to delete this report?')"
                                             class="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600">
                                             <i class="fa fa-trash"></i>
                                         </button>

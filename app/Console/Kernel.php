@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('summary:buat-summary-auto')->hourly()
+        $schedule->command('summary:buat-summary-auto')->everyTenMinutes()
             ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 
