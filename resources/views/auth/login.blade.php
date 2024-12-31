@@ -30,7 +30,7 @@
                     </div>
                     <div class="mb-6">
                         <label for="username" class="block font-semibold text-white mb-2">Username</label>
-                        <input type="text" name="username" id="username" placeholder="Enter Username..." class="w-full px-4 py-2 rounded-lg shadow-md bg-white text-gray-600 font-semibold placeholder-gray-500 focus:outline-none border-none" required>
+                        <input type="text" name="username" id="username" placeholder="Enter Username..." class="w-full px-4 py-2 rounded-lg shadow-md bg-white text-gray-600 font-semibold placeholder-gray-500 focus:outline-none border-none"  required>
                     </div>
 
                     <div class="mb-6">

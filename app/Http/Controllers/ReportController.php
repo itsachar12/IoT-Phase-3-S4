@@ -71,6 +71,8 @@ class ReportController extends Controller
                 $query->where('type_appliance', $tipe);
             })->get();
         }
+        
+        dd($data_summary);
 
 
         if ($periode === 'A Day') {

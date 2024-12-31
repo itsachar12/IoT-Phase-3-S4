@@ -80,16 +80,16 @@
                 @method('PATCH')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <input type="text" name="username" placeholder="New Username"
-                        class="w-full px-4 py-2 border border-gray-300 text-slate-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        class="w-full px-4 py-2 border border-gray-300 text-slate-400 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                         required value="{{ Auth::user()->username }}">
                     <input type="email" name="email" placeholder="New Email..."
-                        class="w-full px-4 py-2 border border-gray-300 text-slate-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        class="w-full px-4 py-2 border border-gray-300 text-slate-400 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                         required value="{{ Auth::user()->email }}">
                     <input type="password" name="password" placeholder="New Password"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                         minlength="6">
                     <input type="password" name="password_confirmation" placeholder="Confirm Password"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                         minlength="6">
                 </div>
                 <button type="submit"
