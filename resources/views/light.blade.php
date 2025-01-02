@@ -39,7 +39,7 @@
                                             }
                                         @endphp
                                         |
-                                        <span class="text-slate-600">{{ $item->electrical_power }}kWh</span>
+                                        <span class="text-slate-600">{{ $item->electrical_power }}Wh</span>
                                     </p>
                                     </p>
                                 </div>

@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 "
-onload="realtimeUsage(); updateUsage() ">
+>
     <div class="w-64 hidden lg:block"></div>
 
     <!-- Konten Utama -->
@@ -97,9 +97,9 @@ onload="realtimeUsage(); updateUsage() ">
             <div class="bg-white rounded-lg shadow p-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-lg font-semibold text-gray-800">Room Analysis</h2>
-                    <select class="border-gray-300 rounded px-4 py-2">
-                        <option>Week</option>
-                        <option>Month</option>
+                    <select class="border-gray-300 rounded px-4 py-2" id="periodeSelected">
+                        <option value="week" selected>Week</option>
+                        <option value="month">Month</option>
                     </select>
                 </div>
                 <p class="text-sm text-gray-600 mb-4">
@@ -108,8 +108,8 @@ onload="realtimeUsage(); updateUsage() ">
                 <div>
                     <canvas id="roomAnalysisChart"></canvas>
                 </div>
-                <div class="text-gray-500 text-sm mt-4 text-center">
-                    Periode: 01-09-24 to 07-09-24
+                <div class="text-gray-500 text-sm mt-4 text-center" id="rentang_periode">
+                    
                 </div>
             </div>
         </div>
@@ -117,23 +117,33 @@ onload="realtimeUsage(); updateUsage() ">
 </div>
 
 <script>
-    // Initialize Chart.js Bar Chart
+    const dataAnalysis = @json($roomAnalysis);
     const ctx = document.getElementById('roomAnalysisChart').getContext('2d');
+    const periodeElement = document.getElementById('periodeSelected');
+    let label = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    let data = Object.values(dataAnalysis.week)
+    let max = 500
+    let rentangAwal = document.getElementById('rentang_periode');
+    rentangAwal.textContent = `Periode : ${dataAnalysis.dateStartWeek} to ${dataAnalysis.today}`
+    console.log(rentangAwal)
+
+
+
     const roomAnalysisChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels: label,
             datasets: [{
-                label: 'kWh',
-                data: [3.847, 22.125, 15.124, 9.245, 19.451, 5.128, 10.222],
+                label: 'Wh',
+                data: data,
                 backgroundColor: [
-                    'rgba(59, 130, 246, 0.8)',  // Blue
-                    'rgba(239, 68, 68, 0.8)',  // Red
+                    'rgba(59, 130, 246, 0.8)', // Blue
+                    'rgba(239, 68, 68, 0.8)', // Red
                     'rgba(249, 115, 22, 0.8)', // Orange
+                    'rgba(34, 197, 94, 0.8)', // Green
                     'rgba(59, 130, 246, 0.8)', // Blue
                     'rgba(249, 115, 22, 0.8)', // Orange
-                    'rgba(34, 197, 94, 0.8)',  // Green
-                    'rgba(34, 197, 94, 0.8)',  // Green
+                    'rgba(34, 197, 94, 0.8)', // Green
                 ],
                 borderRadius: 8,
                 borderWidth: 1,
@@ -142,11 +152,13 @@ onload="realtimeUsage(); updateUsage() ">
         options: {
             responsive: true,
             plugins: {
-                legend: { display: false },
+                legend: {
+                    display: false
+                },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return `${context.raw} kWh`;
+                            return `${context.raw} Wh`;
                         }
                     }
                 }
@@ -154,15 +166,48 @@ onload="realtimeUsage(); updateUsage() ">
             scales: {
                 y: {
                     beginAtZero: true,
+                    max : max,
                     ticks: {
                         callback: function(value) {
-                            return value + ' kWh';
-                        }
+                            return value + ' Wh';
+                        },
                     }
                 }
             }
         }
     });
+
+    periodeElement.addEventListener('change', () => {
+        const labelSelected = periodeElement.value
+
+        if (labelSelected == 'week') {
+            label = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data = Object.values(dataAnalysis.week)
+            max = (Math.max(...data) - Math.min(...data)) / 8
+
+
+
+            rentangAwal.textContent = `Periode : ${dataAnalysis.dateStartWeek} to ${dataAnalysis.today}`
+
+
+
+        } else if (labelSelected == 'month') {
+            label = Object.keys(dataAnalysis.month)
+            data = Object.values(dataAnalysis.month)
+            max = (Math.max(...data) - Math.min(...data)) / 8
+            console.log('ini ' + max)
+            rentangAwal.textContent = `Periode : ${dataAnalysis.dateStartMonth} to ${dataAnalysis.today}`
+
+
+
+        }
+        console.log(data)
+
+        roomAnalysisChart.data.labels = label;
+        roomAnalysisChart.data.datasets[0].data = data;
+        roomAnalysisChart.options.scales.y.max = max;
+        roomAnalysisChart.update();
+    })
 </script>
 
 @endsection

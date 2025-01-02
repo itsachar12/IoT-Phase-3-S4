@@ -16,7 +16,7 @@ class UsageByRoomController extends Controller
 
         //mengambil data ac yangg aktive
         $ac = Appliances::where('type_appliance', 'AC')->where('status', 'Active')->get();
-        $ac_power = $ac->sum('electrical_power');
+        $ac_power = $ac->sum('degree');
         $ac_degree = $ac_power/$ac->count();
 
         // data emisson 

@@ -13,15 +13,15 @@
                     {{ session('sukses') }} !!</div>
             @endif
             <!-- Filter dan Search -->
-            <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+            <div class="flex flex-wrap justify-end   items-center mb-6 gap-4">
                 <!-- Date Range -->
-                <div id="date-range-picker" class="flex items-center gap-3 w-full md:w-auto">
+                {{-- <div id="date-range-picker" class="flex items-center gap-3 w-full md:w-auto">
                     <input id="datepicker-range-start" name="start" type="date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full md:w-48 p-2.5" />
                     <span class="text-gray-500">to</span>
                     <input id="datepicker-range-end" name="end" type="date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full md:w-48 p-2.5" />
-                </div>
+                </div> --}}
 
                 <!-- Search -->
                 <form class="flex items-center gap-3 w-full md:w-auto">

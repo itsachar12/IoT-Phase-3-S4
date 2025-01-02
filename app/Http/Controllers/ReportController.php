@@ -72,7 +72,7 @@ class ReportController extends Controller
             })->get();
         }
         
-        dd($data_summary);
+        // dd($data_summary);
 
 
         if ($periode === 'A Day') {

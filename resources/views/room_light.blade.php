@@ -92,7 +92,7 @@
         let max = 500
         let rentangAwal = document.getElementById('rentang_periode');
         rentangAwal.textContent = `Periode : ${dataAnalysis.dateStartWeek} to ${dataAnalysis.today}`
-        console.log(rentangAwal)
+        // console.log(rentangAwal)
 
 
 
@@ -151,6 +151,7 @@
                 label = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                 data = Object.values(dataAnalysis.week)
                 max = (Math.max(...data) - Math.min(...data)) / 8
+                console.log(data)
 
 
 
