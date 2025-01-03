@@ -62,7 +62,7 @@ class ProfileController extends Controller
             'picture' => $fileName,
         ]);
 
-        return redirect()->back()->with('success', 'Picture updated successfully.');
+        return redirect()->back();
     }
 
     public function pictureDel(){

@@ -89,7 +89,7 @@
         const periodeElement = document.getElementById('periodeSelected');
         let label = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         let data = Object.values(dataAnalysis.week)
-        let max = 500
+        let max 
         let rentangAwal = document.getElementById('rentang_periode');
         rentangAwal.textContent = `Periode : ${dataAnalysis.dateStartWeek} to ${dataAnalysis.today}`
         // console.log(rentangAwal)
@@ -150,8 +150,9 @@
             if (labelSelected == 'week') {
                 label = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                 data = Object.values(dataAnalysis.week)
-                max = (Math.max(...data) - Math.min(...data)) / 8
-                console.log(data)
+                // max = (Math.max(...data) - Math.min(...data)) / 2
+                max = 1000
+                // console.log(data)
 
 
 
@@ -161,9 +162,11 @@
 
             } else if (labelSelected == 'month') {
                 label = Object.keys(dataAnalysis.month)
+                label = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
                 data = Object.values(dataAnalysis.month)
-                max = (Math.max(...data) - Math.min(...data)) / 8
-                console.log('ini ' + max)
+                // max = (Math.max(...data) - Math.min(...data)) / 8
+                max = 5000
+                // console.log(data)
                 rentangAwal.textContent = `Periode : ${dataAnalysis.dateStartMonth} to ${dataAnalysis.today}`
 
 

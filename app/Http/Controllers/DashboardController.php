@@ -15,8 +15,8 @@ class DashboardController extends Controller
             'predictedUsage' => 200,
         ];
 
-        $ac = Appliances::where('status', 'Active')->where('type_appliance', 'AC')->sum('total_power');
-        $light = Appliances::where('status', 'Active')->where('type_appliance', 'Light')->sum('total_power');
+        $ac = Appliances::where('type_appliance', 'AC')->sum('total_power');
+        $light = Appliances::where('type_appliance', 'Light')->sum('total_power');
         $activeApp = [
             'ac' => $ac,
             'light' => $light,

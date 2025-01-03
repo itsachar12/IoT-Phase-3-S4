@@ -74,6 +74,7 @@ class RoomLightController extends Controller
             $renamedWeeks['Week '. ($i + 1)] = $value;
         }
 
+        // dd($renamedWeeks);pd
         
 
 

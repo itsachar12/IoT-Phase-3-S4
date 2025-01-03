@@ -18,10 +18,10 @@ class summaryFactory extends Factory
     {
         return [
             'id_appliances' => $this->faker->numberBetween(1, 5),
-            'total_power' => $this->faker->numberBetween(1, 10000),
-            'total_usage_time' => $this->faker->numberBetween(1, 86400),
-            'created_at' => $this->faker->unique()->dateTimeBetween('2024-11-01', now()),
-            'updated_at' => $this->faker->unique()->dateTimeBetween('2024-11-01', now()),
+            'total_power' => $this->faker->numberBetween(1, 1000),
+            'total_usage_time' => $this->faker->numberBetween(1, 30000),
+            'created_at' => $this->faker->unique()->dateTimeBetween('2024-12-30', now()),
+            'updated_at' => $this->faker->unique()->dateTimeBetween('2024-12-30', now()),
 
         ];
     }

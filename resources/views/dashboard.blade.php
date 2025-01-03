@@ -160,7 +160,7 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                max: 10000,
+                                max: 1000,
                                 ticks: {
                                     stepSize: 1000,
                                 },
