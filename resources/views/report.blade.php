@@ -13,7 +13,7 @@
                     {{ session('sukses') }} !!</div>
             @endif
             <!-- Filter dan Search -->
-            <div class="flex flex-wrap justify-end   items-center mb-6 gap-4">
+            <div class="flex flex-wrap justify-end  fact items-center mb-6 gap-4">
                 <!-- Date Range -->
                 {{-- <div id="date-range-picker" class="flex items-center gap-3 w-full md:w-auto">
                     <input id="datepicker-range-start" name="start" type="date"

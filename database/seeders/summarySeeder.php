@@ -13,6 +13,6 @@ class summarySeeder extends Seeder
      */
     public function run(): void
     {
-        Summary::factory(50)->create();
+        Summary::factory(10)->create();
     }
 }
