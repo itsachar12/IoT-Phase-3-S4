@@ -13,7 +13,7 @@
 </div> 
     <div class="  ml-96 bg-slate-100 rounded-lg p-5 mb-10 w-1/2 ">
         
-        <h1 class="text-center text-xl font-semibold mb-2">Add New Schedule</h1>
+        <h1 class="text-center text-xl font-semibold mb-2">Add New Report</h1>
         <hr>
         <form class="p-4 md:p-5" action="{{ route('report.create') }}" method="post">
             @csrf

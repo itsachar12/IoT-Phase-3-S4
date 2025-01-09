@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -19,31 +18,44 @@ class ProfileController extends Controller
     {
         // Validasi data yang dikirimkan
         $this->validate($request, [
-            
-            'username' => 'required|string|max:15|min:3|regex:/^[a-zA-Z0-9]+&/',
-            'password' => 'nullable|confirmed|min:8|max:15',
-            'email' => 'required|email|max:255',
-            'password_confirmation' => 'nullable'
+            'username' => 'required|string|max:15|min:3|regex:/^[a-zA-Z0-9]+$/|unique:users,username,' . Auth::user()->id, // Pastikan username unik
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', // Pastikan ada domain setelah '@'
+                'unique:users,email,' . Auth::user()->id,
+            ],
+            'password' => 'nullable|confirmed|min:8|max:15', // Password optional, hanya diperlukan jika diubah
+            'password_confirmation' => 'nullable' // Pastikan password_confirmation ada jika password diisi
         ]);
 
         $user = User::findOrFail(Auth::user()->id);
 
-        if($request['password'] === $request['password_confirmation']){
-            $request['password'] = bcrypt($request['password']);
-
-            $user->update($request->all());
-            return back()->with('sukses', 'Success changed profile');  
-        } else {
-            return back()->with('error', 'Failed to update profile!');  
-            
+        // Update username dan email jika ada perubahan
+        if ($request->has('username')) {
+            $user->username = $request->username;
         }
-        return back()->with('error', 'Failed to update profile!');  
 
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+
+        // Update password jika ada perubahan password dan konfirmasi yang valid
+        if ($request->has('password') && $request->password === $request->password_confirmation) {
+            $user->password = bcrypt($request->password); // Enkripsi password baru
+        }
+
+        // Simpan perubahan data
+        $user->save();
+
+        return back()->with('sukses', 'Profile updated successfully!');
     }
 
-    public function updatePic(Request $request){
+    public function updatePic(Request $request)
+    {
         $request->validate([
-            'picture' =>'required|image|mimes:jpeg,png,jpg|max:2048'
+            'picture' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $user = User::findOrFail(Auth::user()->id);
@@ -55,22 +67,22 @@ class ProfileController extends Controller
 
         $file = $request->file('picture');  
         $ext = $file->getClientOriginalExtension();
-        $fileName = $user->username . $user->id . '_' . now()->format('dmY').'.'.$ext; // Buat nama unik
+        $fileName = $user->username . $user->id . '_' . now()->format('dmY') . '.' . $ext; // Buat nama unik
         $file->move(public_path('ProfilePicture'), $fileName);
 
         $user->update([
             'picture' => $fileName,
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('sukses', 'Picture updated successfully.');
     }
 
-    public function pictureDel(){
-
+    public function pictureDel()
+    {
         $user = User::findOrFail(Auth::user()->id);
         $user->picture = null;
         $user->save();
-        return redirect()->back()->with('success', 'Picture updated successfully.');
-        
+
+        return redirect()->back()->with('sukses', 'Picture removed successfully.');
     }
 }

@@ -37,8 +37,7 @@ class ScheduleController extends Controller
         $request['id_appliances'] = $id_app->id_appliances;
         // dd($request['id_appliances']);
         if (Schedule::create($request->all())) {
-            return back()->with('sukses', 'Success added new schedule');
-        }
+            return redirect('/appliences')->with('sukses', 'Success added new schedule');        }
 
         return back()->with('error', 'Failed to add new schedule!');
     }

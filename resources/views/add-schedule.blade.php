@@ -11,16 +11,25 @@
         Back
     </a>
 </div> 
+
     <div class="  ml-96 bg-slate-100 rounded-lg p-5 mb-10 w-1/2 ">
         
         <h1 class="text-center text-xl font-semibold mb-2">Add New Schedule</h1>
         <hr>
         <form class="p-4 md:p-5" action="{{ route('schedule.create') }}" method="post">
             @csrf
+            @if ($errors->any())
+                <div class="text-red-600 bg-red-300 p-3 rounded-lg">
+                    <strong class="font-bold">Error:</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="grid gap-4 mb-4 grid-cols-2">
-
                 <input type="number" class="hidden" value="">
-
                 {{-- ? apliance --}}
                 <div class="col-span-2">
                     <label for="name_appliance" class="block mb-2 text-sm font-medium text-gray-900 ">Appliance</label>
@@ -85,6 +94,7 @@
                 </svg>
                 Add New Schedule
             </button>
+        
         </form>
     </div>
 
