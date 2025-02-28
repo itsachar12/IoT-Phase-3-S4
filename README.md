@@ -1,6 +1,6 @@
 # IOT Energy Phase 3 | GX DOJO GREEN
 
-Kelompok PBL IF-13 DAN IF-14, Beranggotakan: 
+Kelompok PBL IF-13 DAN IF-14, yang beranggotakan: 
 
 <br>
 3312301016 - Marsya Huriyah Ibtisamah
