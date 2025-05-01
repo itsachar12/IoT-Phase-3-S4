@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <div class="flex h-auto w-screen flex-col bg-green-100 min-h-screen p-8 mt-20 ml-64 ">
+    <div class="flex h-auto  flex-col bg-green-100 min-h-screen p-8 mt-20 ml-64 ">
         <div class="grid gap-2 w-full max-w-5xl">
             <!-- Back Button -->
             <div class="mb-4">

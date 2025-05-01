@@ -127,8 +127,8 @@
 
 
         <!-- Active Appliances -->
-        <div class="col-span-1 bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-lg font-semibold text-gray-700">ACTIVE APPLIENCES</h2>
+        <div class="col-span-1 bg-white rounded-lg shadow-md p-2">
+            <h2 class="text-lg font-semibold text-gray-700 text-center">ACTIVE APPLIENCES</h2>
             <div class="mt-4 h-60">
                 <!-- Chart Canvas -->
                 <canvas id="activeAppliancesChart" class="w-full h-64"></canvas>
@@ -151,7 +151,7 @@
                             label: 'Wh',
                             data: [activeApp['ac'], activeApp['light']],
                             backgroundColor: ['#a0f0ff', '#39d2b4'],
-                            borderWidth: 1,
+                            borderWidth: 10,
                             borderRadius: 5,
                             barPercentage: 0.6,
                         }]
@@ -162,13 +162,13 @@
                                 beginAtZero: true,
                                 max: 1000,
                                 ticks: {
-                                    stepSize: 1000,
+                                    stepSize: 500, 
                                 },
                                 title: {
                                     display: true,
                                     text: 'Wh',
                                     font: {
-                                        size: 12,
+                                        size: 10,
                                     }
                                 }
                             }

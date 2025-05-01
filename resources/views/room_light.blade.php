@@ -3,7 +3,7 @@
 @section('title', 'Lights Room')
 
 @section('content')
-    <div class="flex flex-col items-center w-full bg-green-100 min-h-screen mt-20 ">
+    <div class="flex flex-col items-center bg-green-100 min-h-screen mt-20">
         <div class="w-64 hidden lg:block"></div>
 
         <!-- Konten Utama -->
