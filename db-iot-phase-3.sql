@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jan 2025 pada 05.55
+-- Waktu pembuatan: 01 Bulan Mei 2025 pada 07.18
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -46,11 +46,11 @@ CREATE TABLE `appliances` (
 --
 
 INSERT INTO `appliances` (`id_appliances`, `name`, `status`, `start_time`, `usage_time`, `speed_fan`, `degree`, `electrical_power`, `total_power`, `type_appliance`, `lux`) VALUES
-(1, 'AC 1', 'Active', '2025-01-02 17:00:00', 915, 'NORMAL', 27, 457, 116, 'AC', 50),
-(2, 'Lamp 1', 'Active', '2025-01-02 17:00:00', 585, '0', 0, 29, 5, 'Light', 54),
-(3, 'AC 2 ', 'Active', '2025-01-02 17:00:00', 915, 'NORMAL', 16, 564, 143, 'AC', 0),
-(4, 'Lamp 2', 'Inactive', '2025-01-02 17:00:00', 890, '0', 0, 20, 5, 'Light', 0),
-(5, 'Lamp 3', 'Active', '2025-01-02 17:00:00', 585, '0', 0, 18, 3, 'Light', 69);
+(1, 'AC 1', 'Active', '2025-04-30 17:00:00', 55, 'NORMAL', 27, 457, 7, 'AC', 2),
+(2, 'Lamp 1', 'Active', '2025-04-30 17:00:00', 400, '0', 0, 29, 3, 'Light', 73),
+(3, 'AC 2 ', 'Inactive', '2025-04-30 17:00:00', 0, 'NORMAL', 16, 564, 0, 'AC', 0),
+(4, 'Lamp 2', 'Active', '2025-04-30 17:00:00', 290, '0', 0, 20, 2, 'Light', 100),
+(5, 'Lamp 3', 'Active', '2025-04-30 17:00:00', 400, '0', 0, 18, 2, 'Light', 100);
 
 --
 -- Trigger `appliances`
@@ -235,8 +235,8 @@ INSERT INTO `reports` (`id_report`, `description`, `date`, `type_report`, `perio
 CREATE TABLE `schedule` (
   `id_schedule` int(11) NOT NULL,
   `name_appliance` varchar(255) NOT NULL,
-  `time_start` time NOT NULL,
-  `time_end` time NOT NULL,
+  `time_start` datetime DEFAULT NULL,
+  `time_end` datetime DEFAULT NULL,
   `repeat_schedule` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `id_appliances` int(11) NOT NULL
@@ -247,7 +247,7 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id_schedule`, `name_appliance`, `time_start`, `time_end`, `repeat_schedule`, `status`, `id_appliances`) VALUES
-(19, 'AC 1', '14:30:00', '14:33:00', 'Once', 'Active', 1);
+(21, 'Lamp 1', '2025-05-01 01:54:00', '2025-05-01 01:55:00', 'Once', 'Active', 2);
 
 -- --------------------------------------------------------
 
@@ -546,7 +546,7 @@ ALTER TABLE `reports`
 -- AUTO_INCREMENT untuk tabel `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id_schedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_schedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `summary`
