@@ -111,31 +111,58 @@
                             </script>
                         </div>
                     @endif
-                    <form action="{{ route('appliances.status', $selectedLamp->id_appliances) }}" method="post">
-                        @csrf
-                        @method('PATCH')
+                              <form action="/control" method="POST" id="controlForm">
+                                @csrf
+                                <input type="hidden" name="id_appliances" value="{{ $selectedLamp->id_appliances }}">
+                                <input type="hidden" name="command" id="commandInput" value="">
 
-                        <input type="text" class="hidden" name="status"
-                            value="
-                        {{ $selectedLamp->status === 'Active' ? 'Inactive' : 'Active' }}">
+                                <button 
+                                    type="submit" 
+                                    class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36"
+                                    onclick="toggleCommand(event)"
+                                >
+                                    <div class="flex-1 py-2 text-sm font-medium rounded-full 
+                                        {{ $selectedLamp->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
+                                        ON
+                                    </div>
+                                    <div class="flex-1 py-2 text-sm font-medium text-gray-700 rounded-full
+                                        {{ $selectedLamp->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
+                                        OFF
+                                    </div>
+                                </button>
+                            </form>
 
-                        <button class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36 "
-                            type="submit">
-                            <div
-                                class="flex-1 py-2 text-sm font-medium   rounded-full 
-                            {{ $selectedLamp->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
-                                ON
+                            {{-- ✅ Taruh script di bawah form --}}
+                            <script>
+                                function toggleCommand(event) {
+                                    event.preventDefault();
 
-                            </div>
-                            <div
-                                class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
-                            {{ $selectedLamp->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
-                                OFF
+                                    const statusNow = "{{ $selectedLamp->status }}";
+                                    const nextCommand = statusNow === "Active" ? "off" : "on";
+                                    const nextStatus = nextCommand === "on" ? "Active" : "Inactive";
 
-                            </div>
-                        </button>
+                                    // MQTT
+                                    document.getElementById('commandInput').value = nextCommand;
+                                    document.getElementById('controlForm').submit();
 
-                    </form>
+                                    // DB update
+                                    fetch(`/appliances/{{ $selectedLamp->id_appliances }}/status`, {
+                                        method: 'PATCH',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify({ status: nextStatus })
+                                    }).then(response => {
+                                        if (response.ok) {
+                                            console.log('Status DB updated');
+                                        } else {
+                                            console.error('Failed update DB');
+                                        }
+                                    });
+                                }
+                            </script>
+
                 </div>
             </div>
 

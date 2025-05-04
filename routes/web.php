@@ -12,8 +12,8 @@
     use App\Http\Controllers\EmissionsController;
     use App\Http\Controllers\RoomLightController;
     use App\Http\Controllers\AppliancesController;
-    use App\Http\Controllers\AppliencesController;
     use App\Http\Controllers\UsageByRoomController;
+    use App\Http\Controllers\MqttController;
 use App\Models\Appliances;
 
     /*
@@ -50,6 +50,7 @@ use App\Models\Appliances;
         Route::get('/ac', [ACController::class, 'index'])->name('ac');
         Route::get('/light', [LightController::class, 'index'])->name('light');
 
+
         Route::get('/schedule/add', [ScheduleController::class, 'index'])->name('schedule.add');
         Route::post('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
 
@@ -60,6 +61,9 @@ use App\Models\Appliances;
 
         Route::patch('/appliances/{id}/status', [AppliancesController::class, 'status'])->name('appliances.status');
         Route::patch('/appliances/AC/{id}/speed-fan', [ACController::class, 'speed'])->name('ac.speed');
+        Route::patch('/appliances/{id}/toggle', [AppliancesController::class, 'toggle'])->name('appliances.toggle');
+        
+
 
         Route::patch('/ac/degree/{id}', [ACController::class, 'degree'])->name('ac.degree');
 
@@ -75,5 +79,6 @@ use App\Models\Appliances;
         Route::post('/ac/{id}/update-usage', [RoomACController::class, 'updateUsage']);
 
         Route::get('/appliances/resetDataApp', [AppliancesController::class, 'resetDataApp']);
+        Route::post('/control', [MqttController::class, 'control']);
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

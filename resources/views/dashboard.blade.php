@@ -279,18 +279,18 @@
 
 
         <!-- Carbon Footprint -->
-        <div class="col-span-2 bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-lg font-semibold text-gray-800">CARBON FOOTPRINT</h2>
+        <!-- <div class="col-span-2 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-800">CARBON FOOTPRINT</h2> -->
 
             <!-- Emission Section -->
-            <div class="mt-6">
+            <!-- <div class="mt-6">
                 <p class="text-sm font-medium text-gray-600">Emission</p>
                 <div class="flex items-center justify-between mt-1 text-xs text-gray-500">
                     <span>To Now</span>
                     <span>Predicted</span>
-                </div>
+                </div> -->
                 <!-- Emission Bar -->
-                <div class="relative mt-2 h-4 bg-gray-200 rounded-full overflow-hidden">
+                <!-- <div class="relative mt-2 h-4 bg-gray-200 rounded-full overflow-hidden">
                     <div class="absolute h-full bg-gray-700" 
                     style="width: {{ $dataEmission['percentage'] }}%;"></div>
                 </div>
@@ -298,13 +298,13 @@
                     <span>{{ $dataEmission['total_emision'] }} Kg of CO2</span>
                     <span>{{ $dataEmission['highestEmision'] }} Kg of CO2</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Green Energy Generated Section -->
-            <div class="mt-6">
-                <p class="text-sm font-medium text-gray-600">Green Energy Generated</p>
+            <!-- <div class="mt-6">
+                <p class="text-sm font-medium text-gray-600">Green Energy Generated</p> -->
                 <!-- Green Energy Generated Bar -->
-                <div class="relative mt-2 h-4 bg-gray-200 rounded-full overflow-hidden">
+                <!-- <div class="relative mt-2 h-4 bg-gray-200 rounded-full overflow-hidden">
                     <div class="absolute h-full bg-green-400" style="width: 30%;"></div>
                 </div>
                 <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
@@ -312,7 +312,7 @@
                     <span>XXXX</span>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         @endsection

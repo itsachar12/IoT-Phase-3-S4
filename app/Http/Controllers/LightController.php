@@ -9,20 +9,28 @@ use Illuminate\Http\Request;
 class LightController extends Controller
 {
     public function index(Request $request)
-    {
-        //* daftar Lampu
-        $lightList = Appliances::where('type_appliance', 'Light')->get();
+{
+    //* daftar Lampu
+    $lightList = Appliances::where('type_appliance', 'Light')->get();
 
-        //* tampil data list lmpu
-        $selectedLamp = $request->has('id_appliances') ? Appliances::find($request->id_appliances)
-            : $lightList->first();
+    //* tampil data list lampu
+    $selectedLamp = $request->has('id_appliances') 
+        ? Appliances::find($request->id_appliances) 
+        : $lightList->first();
 
-        // * Jadwall sesuai ac
-        $schList = $request->has('id_appliances')
-            ? Schedule::where('id_appliances', $request->id_appliances)->get()
-            : Schedule::where('id_appliances', $lightList->first()->id_appliances)->get();
-        return view('light', compact('lightList', 'selectedLamp', 'schList'));
+    // Jika selectedLamp kosong, pastikan ada fallback atau redirect
+    if (!$selectedLamp) {
+        return redirect()->route('light')->with('error', 'Lamp not found!');
     }
+    
+    //* Jadwal sesuai ac
+    $schList = $request->has('id_appliances')
+        ? Schedule::where('id_appliances', $request->id_appliances)->get()
+        : Schedule::where('id_appliances', $lightList->first()->id_appliances)->get();
+
+    return view('light', compact('lightList', 'selectedLamp', 'schList'));
+}
+
 
     public function lux(Request $request, $id)
     {
