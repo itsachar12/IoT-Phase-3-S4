@@ -125,7 +125,7 @@
 
 
                             </form>
-
+                             
                         </div>
                     </div>
 
@@ -137,31 +137,63 @@
                             </script>
                         </div>
                     @endif
-                    <form action="{{ route('appliances.status', $selectedAc->id_appliances) }}" method="post">
-                        @csrf
-                        @method('PATCH')
+                   <form action="/control-kipas" method="POST" id="controlkipas">
+                    @csrf
+                    {{-- Ganti status kipas --}}
+                    <input type="hidden" name="status" id="statusKipasInput" value="">
+                    {{-- Command untuk MQTT --}}
+                    <input type="hidden" name="command" id="commandKipasInput" value="">
+                    <input type="hidden" name="id_appliances" value="{{ $selectedAc->id_appliances }}">
 
-                        <input type="text" class="hidden" name="status"
-                            value="
-                        {{ $selectedAc->status === 'Active' ? 'Inactive' : 'Active' }}">
-
-                        <button class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36 "
-                            type="submit">
-                            <div
-                                class="flex-1 py-2 text-sm font-medium   rounded-full 
+                    <button 
+                        type="submit" 
+                        class="flex items-center rounded-full border border-gray-300 bg-gray-100 p-1 w-36"
+                        onclick="toggleKipasCommand(event)"
+                    >
+                        <div class="flex-1 py-2 text-sm font-medium rounded-full 
                             {{ $selectedAc->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
-                                ON
-
-                            </div>
-                            <div
-                                class="flex-1 py-2 text-sm font-medium text-gray-700  rounded-full
+                            ON
+                        </div>
+                        <div class="flex-1 py-2 text-sm font-medium text-gray-700 rounded-full
                             {{ $selectedAc->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
-                                OFF
+                            OFF
+                        </div>
+                    </button>
+                </form>
 
-                            </div>
-                        </button>
+                <script>
+                    function toggleKipasCommand(event) {
+                        event.preventDefault();
 
-                    </form>
+                        const statusNow = "{{ $selectedAc->status }}";
+                        const nextCommand = statusNow === "Active" ? "kipas off" : "kipas on";
+                        const nextStatus = nextCommand === "kipas on" ? "Active" : "Inactive";
+
+                        // Set nilai input hidden
+                        document.getElementById('commandKipasInput').value = nextCommand;
+                        document.getElementById('statusKipasInput').value = nextStatus;
+
+                        // Submit form
+                        document.getElementById('controlkipas').submit();
+
+                        // Update ke DB (opsional kalau form udah ngurusin)
+                        fetch(`/appliances/{{ $selectedAc->id_appliances }}/status`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ status: nextStatus })
+                        }).then(response => {
+                            if (response.ok) {
+                                console.log('Status DB updated');
+                            } else {
+                                console.error('Failed update DB');
+                            }
+                        });
+                    }
+                </script>
+
                 </div>
             </div>
 

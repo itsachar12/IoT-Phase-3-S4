@@ -11,7 +11,20 @@ class MqttController extends Controller
     {
         $command = $request->input('command');
 
-        if (!in_array($command, ['on', 'off'])) {
+        if (!in_array($command, ['lampu 1 on', 'lampu 1 off'])) {
+            return response()->json(['error' => 'Perintah tidak valid'], 400);
+        }
+
+        $mqtt->publish($command);
+        return redirect()->back()->with('success', "Perintah \"$command\" berhasil dikirim");
+
+    }
+
+    public function control_kipas(Request $request, MqttService $mqtt)
+    {
+        $command = $request->input('command');
+
+        if (!in_array($command, ['kipas on', 'kipas off'])) {
             return response()->json(['error' => 'Perintah tidak valid'], 400);
         }
 

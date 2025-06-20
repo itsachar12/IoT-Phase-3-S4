@@ -80,5 +80,6 @@ use App\Models\Appliances;
 
         Route::get('/appliances/resetDataApp', [AppliancesController::class, 'resetDataApp']);
         Route::post('/control', [MqttController::class, 'control']);
+        Route::post('/control-kipas', [MqttController::class, 'control_kipas']);
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

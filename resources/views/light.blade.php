@@ -138,8 +138,8 @@
                                     event.preventDefault();
 
                                     const statusNow = "{{ $selectedLamp->status }}";
-                                    const nextCommand = statusNow === "Active" ? "off" : "on";
-                                    const nextStatus = nextCommand === "on" ? "Active" : "Inactive";
+                                    const nextCommand = statusNow === "Active" ? "lampu 1 off" : "lampu 1 on";
+                                    const nextStatus = nextCommand === "lampu 1 on" ? "Active" : "Inactive";
 
                                     // MQTT
                                     document.getElementById('commandInput').value = nextCommand;
