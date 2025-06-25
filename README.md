@@ -1,28 +1,17 @@
 # IOT Energy Phase 3 | GX DOJO GREEN
 
-Kelompok PBL IF-13 DAN IF-14, yang beranggotakan: 
+Kelompok PBL IF19, yang beranggotakan: 
 
-<br>
-3312301016 - Marsya Huriyah Ibtisamah
-<br>
-3312301011 - Elvira Fitriayu Ardina 
-<br>
-3312301056 - Nania Prima Citra Aulia
-<br>
-3312301053 - Yurisha Anindya 
-<br>
-3312301060 - Muhammad Farrel Ardanto
 <br>
 3312301064 - Ahmad Candra Ramadhan
 <br>
-3312301088 - Irmayani
+3312301011 - Elvira Fitriayu Ardina 
 <br>
-3312301067 - Ardian Zahran
+3312301016 - Marsya Huriyah Ibtisamah
 <br>
-3312301068 - Muhammad Haziq Afif Hidayat
+3312301060 - Muhammad Farrel Ardanto
 <br>
-3312311003 - Tarich Ziad
-<br>
+
 
 ## About the App
 <!-- gambar taro di src -->
@@ -52,7 +41,7 @@ Note :
 1. **Clone the Project**: Start by cloning the project from your friend's GitHub repository to your local machine.
 
    ```bash
-   git clone https://github.com/Irmayani3312301088/IoT-Phase-3.git
+   git clone https://github.com/itsachar12/IoT-Phase-3-S4.git
 
 2. **Navigate to the project directory**
    ```bash
