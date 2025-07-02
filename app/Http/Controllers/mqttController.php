@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\MqttService;
+use App\Models\Appliances;
 
 class MqttController extends Controller
 {
     public function control(Request $request, MqttService $mqtt)
     {
         $command = $request->input('command');
+        $id = $request->input('id_appliances');
 
-        if (!in_array($command, ['lampu 1 on', 'lampu 1 off'])) {
-            return response()->json(['error' => 'Perintah tidak valid'], 400);
+        $device = Appliances::find($id);
+        if (!$device) {
+            return redirect()->back()->with('error', 'Perangkat tidak ditemukan.');
         }
 
+        // Publish command ke MQTT
         $mqtt->publish($command);
-        return redirect()->back()->with('success', "Perintah \"$command\" berhasil dikirim");
-
+        return redirect()->back()->with('success', "Perintah \"$command\" berhasil dikirim ke {$device->name}");
     }
 
     public function control_kipas(Request $request, MqttService $mqtt)

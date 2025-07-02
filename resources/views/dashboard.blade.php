@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="flex h-auto w-auto flex-col mt-20 ml-64">
-    <div class="grid grid-cols-5 gap-6 p-6 bg-green-100 min-h-screen">
+    <div class="grid grid-cols-5 gap-5 p-3 bg-green-100 min-h-fit">
 
         <!-- Change in Cost -->
         <div class="col-span-2 bg-white rounded-lg shadow-md p-6">
@@ -72,7 +72,7 @@
                         labels: ['kwh 1', 'kwh 86', 'kwh 198', 'kwh 324', 'kwh 400'],
                         datasets: [{
                                 label: 'To Now',
-                                data: [0, 100, 200, 300, 400],
+                                data: [0, 350, 200, 300, 480],
                                 borderColor: '#ff6384',
                                 backgroundColor: 'rgba(255, 99, 132, 0.3)',
                                 pointBackgroundColor: '#ff6384',
@@ -81,7 +81,7 @@
                             },
                             {
                                 label: 'Predicted',
-                                data: [null, null, 200, 300, 435],
+                                data: [100, 300, 200, 250, 450],
                                 borderColor: '#36a2eb',
                                 backgroundColor: 'rgba(54, 162, 235, 0.3)',
                                 pointBackgroundColor: '#36a2eb',

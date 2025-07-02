@@ -57,8 +57,7 @@ use App\Models\Appliances;
         Route::get('/schedule/edit/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
         Route::patch('/schedule/edit/{id}', [ScheduleController::class, 'update'])->name('schedule.update');
         Route::delete('/schedule/delete/{id}', [ScheduleController::class, 'destroy'])->name('schedule.delete');
-
-
+        Route::get('/schedule', [ScheduleController::class, 'home']);
         Route::patch('/appliances/{id}/status', [AppliancesController::class, 'status'])->name('appliances.status');
         Route::patch('/appliances/AC/{id}/speed-fan', [ACController::class, 'speed'])->name('ac.speed');
         Route::patch('/appliances/{id}/toggle', [AppliancesController::class, 'toggle'])->name('appliances.toggle');
@@ -83,3 +82,4 @@ use App\Models\Appliances;
         Route::post('/control-kipas', [MqttController::class, 'control_kipas']);
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    

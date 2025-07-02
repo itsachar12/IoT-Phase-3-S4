@@ -10,16 +10,19 @@ class UsageByRoomController extends Controller
 {
     public function index()
     {
-        // mengambil data lampu yang
+        // Mengambil data lampu yang aktif
         $lampu = Appliances::where('type_appliance', 'Light')->where('status', 'Active')->get();
         $lamp_power = $lampu->sum('electrical_power');
 
-        //mengambil data ac yangg aktive
+        // Mengambil data AC yang aktif
         $ac = Appliances::where('type_appliance', 'AC')->where('status', 'Active')->get();
         $ac_power = $ac->sum('degree');
-        $ac_degree = $ac_power/$ac->count();
 
-        // data emisson 
+        // Cek agar tidak division by zero
+        $ac_count = $ac->count();
+        $ac_degree = $ac_count != 0 ? $ac_power / $ac_count : 0;
+
+        // Mengambil data emisi
         $emission = Emission::where('status', 'Active')->get();
         $em_power = $emission->sum('power');
         
