@@ -67,6 +67,7 @@ use App\Models\Appliances;
         Route::patch('/ac/degree/{id}', [ACController::class, 'degree'])->name('ac.degree');
 
         Route::patch('/light/lux/{id}', [LightController::class, 'lux'])->name('light.lux');
+        Route::post('/mode/update', [LightController::class, 'updateMode']);
 
         Route::get('/report/add', [ReportController::class, 'showAdd'])->name('report.add');
         Route::get('/report/view-{id}', [ReportController::class, 'view'])->name('report.view');

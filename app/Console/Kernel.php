@@ -14,12 +14,16 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')->hourly();
+{
+    // Schedule summary auto
+    $schedule->command('summary:buat-summary-auto')->everyTenMinutes()
+        ->appendOutputTo(storage_path('logs/schedule.log'));
 
-        $schedule->command('summary:buat-summary-auto')->everyTenMinutes()
-            ->appendOutputTo(storage_path('logs/schedule.log'));
-    }
+    // Schedule appliances check
+    $schedule->command('schedule:check')->everyMinute()
+        ->appendOutputTo(storage_path('logs/schedule.log'));
+}
+
 
     /**
      * Register the commands for the application.

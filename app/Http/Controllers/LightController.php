@@ -9,27 +9,38 @@ use Illuminate\Http\Request;
 class LightController extends Controller
 {
     public function index(Request $request)
-{
-    //* daftar Lampu
-    $lightList = Appliances::where('type_appliance', 'Light')->get();
+    {
+        $lightList = Appliances::where('type_appliance', 'Light')->get();
 
-    //* tampil data list lampu
-    $selectedLamp = $request->has('id_appliances') 
-        ? Appliances::find($request->id_appliances) 
-        : $lightList->first();
+        $selectedLamp = $request->has('id_appliances')
+            ? Appliances::find($request->id_appliances)
+            : $lightList->first();
 
-    // Jika selectedLamp kosong, pastikan ada fallback atau redirect
-    if (!$selectedLamp) {
-        return redirect()->route('light')->with('error', 'Lamp not found!');
+        if (!$selectedLamp) {
+            return redirect()->route('light')->with('error', 'Lamp not found!');
+        }
+
+        $schList = $request->has('id_appliances')
+            ? Schedule::where('id_appliances', $request->id_appliances)->get()
+            : Schedule::where('id_appliances', $lightList->first()->id_appliances)->get();
+
+        // 🆕 Ambil mode auto/manual dari lampu pertama
+        $autoMode = $lightList->first()->mode_control ?? 'manual';
+
+        return view('light', compact('lightList', 'selectedLamp', 'schList', 'autoMode'));
     }
-    
-    //* Jadwal sesuai ac
-    $schList = $request->has('id_appliances')
-        ? Schedule::where('id_appliances', $request->id_appliances)->get()
-        : Schedule::where('id_appliances', $lightList->first()->id_appliances)->get();
 
-    return view('light', compact('lightList', 'selectedLamp', 'schList'));
-}
+    public function updateMode(Request $request)
+    {
+        $mode = $request->input('mode'); // nilai: 'auto' atau 'manual'
+
+        // Update semua lampu ke mode yang dipilih
+        Appliances::where('type_appliance', 'Light')->update([
+            'mode_control' => $mode
+        ]);
+
+        return response()->json(['status' => 'success', 'mode' => $mode]);
+    }
 
 
     public function lux(Request $request, $id)
