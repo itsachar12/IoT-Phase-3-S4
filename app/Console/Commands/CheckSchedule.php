@@ -8,40 +8,47 @@ use App\Models\Appliances;
 use App\Services\MqttService;
 use Carbon\Carbon;
 
+
 class CheckSchedule extends Command
 {
     protected $signature = 'schedule:check';
     protected $description = 'Cek jadwal appliances dan kirim perintah jika waktu selesai';
 
-    public function handle()
-    {
-        $now = Carbon::now();
+   public function handle(MqttService $mqtt)
+{
+    $now = Carbon::now();
+    $this->info("Schedule checker running at: $now");
 
-        // Ambil semua schedule yang aktif
-        $schedules = Schedule::where('status', 'Active')->get();
+    $schedules = Schedule::where('status', 'Active')->get();
 
-        foreach ($schedules as $schedule) {
-            $endTime = Carbon::parse($schedule->time_end);
+    foreach ($schedules as $schedule) {
+        $appliance = Appliances::find($schedule->id_appliances); // perbaikan nama kolom
 
-            // Jika waktu sekarang sudah lewat dari time_end
-            if ($now->greaterThanOrEqualTo($endTime)) {
-                $appliance = Appliances::find($schedule->id_appliance);
+        if (!$appliance) continue;
 
-                // Pastikan appliance masih aktif
-                if ($appliance && $appliance->status === 'Active') {
-                    // Update DB: ubah status jadi Inactive
-                    $appliance->update(['status' => 'Inactive']);
-                    $schedule->update(['status' => 'Inactive']);
+        $start = Carbon::parse($schedule->time_start);
+        $end = Carbon::parse($schedule->time_end);
 
-                    // Kirim perintah via MQTT
-                    $mqtt = new MqttService();
-                    $mqtt->publish($appliance->mqtt_topic . ' off');
+        // Jika sekarang di antara time_start dan time_end -> nyalakan
+        if ($now->between($start, $end) && $appliance->status !== 'Active') {
+            $appliance->update(['status' => 'Active']);
+            $mqtt->publish($appliance->mqtt_topic . ' on');
 
-                    $this->info("{$appliance->name} dimatikan via MQTT pada {$now}");
-                }
-            }
+            $this->info("ON: {$appliance->name} dinyalakan via MQTT pada {$now}");
         }
 
-        return 0;
+        // Jika sekarang sudah lewat time_end -> matikan
+        if ($now->greaterThanOrEqualTo($end) && $appliance->status !== 'Inactive') {
+            $appliance->update(['status' => 'Inactive']);
+            $schedule->update(['status' => 'Inactive']); // matikan schedule jika tidak ingin lanjut
+
+            $mqtt->publish($appliance->mqtt_topic . ' off');
+
+            $this->info("OFF: {$appliance->name} dimatikan via MQTT pada {$now}");
+        }
     }
+
+    return 0;
+}
+
 }

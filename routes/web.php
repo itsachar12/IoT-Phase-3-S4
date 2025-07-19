@@ -14,6 +14,7 @@
     use App\Http\Controllers\AppliancesController;
     use App\Http\Controllers\UsageByRoomController;
     use App\Http\Controllers\MqttController;
+    use App\Services\MqttService;
 use App\Models\Appliances;
 
     /*
@@ -34,11 +35,16 @@ use App\Models\Appliances;
 
     //middleware routes
     Route::middleware(['auth'])->group(function () {
+        
+        // route profile
+
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::patch('/profile/picture', [ProfileController::class, 'updatePic'])->name('profile.picture');
         Route::get('/profile/delete', [ProfileController::class, 'pictureDel'])->name('profile.delete');
+
+        // route pindah page
 
         Route::get('/appliences', [AppliancesController::class, 'index'])->name('appliences');
         Route::get('/usage_by_room', [UsageByRoomController::class, 'index'])->name('usage_by_room');
@@ -50,36 +56,40 @@ use App\Models\Appliances;
         Route::get('/ac', [ACController::class, 'index'])->name('ac');
         Route::get('/light', [LightController::class, 'index'])->name('light');
 
-
+        // route function
+        
         Route::get('/schedule/add', [ScheduleController::class, 'index'])->name('schedule.add');
         Route::post('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
-
         Route::get('/schedule/edit/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
         Route::patch('/schedule/edit/{id}', [ScheduleController::class, 'update'])->name('schedule.update');
         Route::delete('/schedule/delete/{id}', [ScheduleController::class, 'destroy'])->name('schedule.delete');
         Route::get('/schedule', [ScheduleController::class, 'home']);
+
         Route::patch('/appliances/{id}/status', [AppliancesController::class, 'status'])->name('appliances.status');
         Route::patch('/appliances/AC/{id}/speed-fan', [ACController::class, 'speed'])->name('ac.speed');
         Route::patch('/appliances/{id}/toggle', [AppliancesController::class, 'toggle'])->name('appliances.toggle');
+        Route::get('/appliances/resetDataApp', [AppliancesController::class, 'resetDataApp']);
         
-
-
-        Route::patch('/ac/degree/{id}', [ACController::class, 'degree'])->name('ac.degree');
-
+        Route::post('/lampu/{id}/update-usage', [RoomLightController::class, 'updateUsage']);
+        Route::post('/ac/{id}/update-usage', [RoomACController::class, 'updateUsage']);
+        
         Route::patch('/light/lux/{id}', [LightController::class, 'lux'])->name('light.lux');
-
+        Route::post('/mode/update', [LightController::class, 'updateMode']);
+        Route::patch('/ac/degree/{id}', [ACController::class, 'degree'])->name('ac.degree');
+        
         Route::get('/report/add', [ReportController::class, 'showAdd'])->name('report.add');
         Route::get('/report/view-{id}', [ReportController::class, 'view'])->name('report.view');
         Route::post('/report/create', [ReportController::class, 'create'])->name('report.create');
         Route::get('/report/download-{id}', [reportController::class, 'downloadPdf'])->name('report.download');
         Route::delete('/report/delete/{id}', [ReportController::class, 'destroy'])->name('report.delete');
 
-        Route::post('/lampu/{id}/update-usage', [RoomLightController::class, 'updateUsage']);
-        Route::post('/ac/{id}/update-usage', [RoomACController::class, 'updateUsage']);
 
-        Route::get('/appliances/resetDataApp', [AppliancesController::class, 'resetDataApp']);
-        Route::post('/control', [MqttController::class, 'control']);
+       
+        Route::post('/control', [MqttController::class, 'control_lampu']);
         Route::post('/control-kipas', [MqttController::class, 'control_kipas']);
+        Route::post('/control-auto', [MqttController::class, 'control_auto']);
+
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     
+

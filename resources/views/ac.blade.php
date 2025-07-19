@@ -17,7 +17,7 @@
 
             <!-- List Air Conditioner -->
             <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold mb-4">List Air Conditioner</h2>
+                <h2 class="text-xl font-bold mb-4">List Fan</h2>
                 <div class="grid grid-cols-2 gap-4">
                     <!-- ? card list ac -->
                     @foreach ($acList as $item)
@@ -53,13 +53,13 @@
 
             <!-- AC Control -->
             <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold text-center mb-6">AC Control</h2>
+                <h2 class="text-xl font-bold text-center mb-6">Fan Control</h2>
 
                 <!-- Wrapper Flex untuk menyusun elemen horizontal -->
                 <div class="flex justify-between items-center  p-4  ">
 
                     <!-- Temperature Control -->
-                    <div
+                    <!-- <div
                         class="flex justify-center flex-wrap items-center gap-2.5 p-4 border border-gray-300 rounded-lg bg-white max-w-52">
                         <button onclick="updateDegree(-1)"
                             class="w-10 h-10 border border-gray-300 rounded-lg bg-gray-100 flex justify-center items-center cursor-pointer ">
@@ -84,10 +84,10 @@
                             </button>
                         </form>
 
-                    </div>
+                    </div> -->
 
                     {{-- ? SCRIPT SUHU AC --}}
-                    <script>
+                    <!-- <script>
                         let degree = {{ $selectedAc->degree }}; // Suhu awal dari server
 
                         function updateDegree(angka) {
@@ -95,7 +95,7 @@
                             document.getElementById('displayDegree').innerText = degree + "°C"; // Perbarui tampilan
                             document.getElementById('inputDegree').value = degree; // Perbarui nilai input hidden
                         }
-                    </script>
+                    </script> -->
 
                     <!-- Speed Fan Control -->
                     <div class="text-center flex flex-col justify-center items-center ">
