@@ -31,19 +31,31 @@ class AppliancesController extends Controller
 
     }
 
-    public function status(Request $request, $id){
-        $request->validate(
-            ['status' =>'required']
-        );
-        
-        $status = Appliances::findOrFail($id);
-        $status->update([
-            'status' => $request->status,
-            'start_time' => Carbon::now(),
-            'lux' => $request->status === 'Inactive' ? 0 : rand(1, 100)
-        ]);
+    public function status(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'status' => 'required|in:Active,Inactive'
+            ]);
 
-        return redirect()->back();
+            $appliance = Appliances::findOrFail($id);
+            $appliance->update([
+                'status' => $request->status,
+                'start_time' => $request->status === 'Active' ? Carbon::now() : null,
+                'lux' => $request->status === 'Inactive' ? 0 : rand(1, 100)
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status updated',
+                'status' => $request->status
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update status: ' . $e->getMessage()
+            ], 400);
+        }
     }
 
 

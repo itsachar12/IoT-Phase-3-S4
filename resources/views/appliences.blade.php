@@ -59,7 +59,7 @@
                         <div class="flex items-center space-x-4">
                             <img src="{{ url('/image/g3.png') }}" class="w-8 h-8 object-contain" alt="Air Conditioner">
                             <div>
-                                <p class="text-base font-medium text-gray-700">Air Conditioner</p>
+                                <p class="text-base font-medium text-gray-700">Fan</p>
                                 <p class="text-xs text-gray-500">{{ $total_ac->count() }} Units | {{ $total_power_ac }}kWh</p>
                             </div>
                         </div>

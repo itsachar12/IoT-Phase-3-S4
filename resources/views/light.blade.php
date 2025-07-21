@@ -19,95 +19,91 @@
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold mb-4">List Lights</h2>
                     <button id="modeToggleBtn" class="flex items-center justify-center rounded-full p-1 w-28 h-10 transition-all duration-300 overflow-hidden shadow-sm relative
-                {{ $autoMode ? 'bg-green-500' : 'bg-red-500' }}">
+                    {{ $autoMode ? 'bg-green-500' : 'bg-red-500' }}">
                         <span class="text-sm font-medium text-white absolute transition-all transform
-                    {{ $autoMode ? 'opacity-100 scale-100' : 'opacity-0 scale-90' }}" id="autoText">AUTO</span>
+                        {{ $autoMode ? 'opacity-100 scale-100' : 'opacity-0 scale-90' }}" id="autoText">AUTO</span>
                         <span class="text-sm font-medium text-white absolute transition-all transform
-                    {{ !$autoMode ? 'opacity-100 scale-100' : 'opacity-0 scale-90' }}" id="manualText">MANUAL</span>
+                        {{ !$autoMode ? 'opacity-100 scale-100' : 'opacity-0 scale-90' }}" id="manualText">MANUAL</span>
                     </button>
 
-
                     <script>
-    document.getElementById('modeToggleBtn').addEventListener('click', function () {
-        const currentMode = '{{ $autoMode ? 'auto' : 'manual' }}';
-        const newMode = currentMode === 'manual' ? 'auto' : 'manual';
+                        document.getElementById('modeToggleBtn').addEventListener('click', function () {
+                            const currentMode = '{{ $autoMode ? 'auto' : 'manual' }}';
+                            const newMode = currentMode === 'manual' ? 'auto' : 'manual';
 
-        // Update UI optimistically
-        updateButtonState(newMode);
-        console.log('Mengklik tombol, currentMode:', currentMode, 'newMode:', newMode);
+                            // Update UI optimistically
+                            updateButtonState(newMode);
+                            console.log('Mengklik tombol, currentMode:', currentMode, 'newMode:', newMode);
 
-        // Kirim ke server untuk update DB
-        fetch('/mode/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ command: newMode })
-        })
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                console.log('Respons dari /mode/update:', data);
-                if (data.success) {
-                    console.log('Pembaruan DB berhasil, memulai MQTT...');
-                    // Kirim ke MQTT (tanpa menunggu respons MQTT untuk refresh)
-                    fetch('/control-auto', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ command: newMode })
-                    }).catch(mqttError => {
-                        console.error('MQTT request failed:', mqttError);
-                    });
-                    console.log('Mode updated to:', data.new_mode);
-                    // Refresh halaman setelah DB sukses, terlepas dari MQTT
-                    window.location.reload();
-                } else {
-                    // Rollback UI jika gagal
-                    updateButtonState(currentMode);
-                    alert(data.message || 'Failed to update mode');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Rollback UI jika ada error
-                updateButtonState(currentMode);
-                alert('Failed to update mode: ' + error.message);
-            });
-    });
+                            // Kirim ke server untuk update DB
+                            fetch('/mode/update', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({ command: newMode })
+                            })
+                                .then(response => {
+                                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    console.log('Respons dari /mode/update:', data);
+                                    if (data.success) {
+                                        console.log('Pembaruan DB berhasil, memulai MQTT...');
+                                        // Kirim ke MQTT
+                                        fetch('/control-auto', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                            },
+                                            body: JSON.stringify({ command: newMode })
+                                        }).catch(mqttError => {
+                                            console.error('MQTT request failed:', mqttError);
+                                        });
+                                        console.log('Mode updated to:', data.new_mode);
+                                        window.location.reload();
+                                    } else {
+                                        // Rollback UI jika gagal
+                                        updateButtonState(currentMode);
+                                        alert(data.message || 'Failed to update mode');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    updateButtonState(currentMode);
+                                    alert('Failed to update mode: ' + error.message);
+                                });
+                        });
 
-    function updateButtonState(mode) {
-        const isAuto = mode === 'auto';
-        const btn = document.getElementById('modeToggleBtn');
+                        function updateButtonState(mode) {
+                            const isAuto = mode === 'auto';
+                            const btn = document.getElementById('modeToggleBtn');
 
-        btn.classList.toggle('bg-green-500', isAuto);
-        btn.classList.toggle('bg-red-500', !isAuto);
+                            btn.classList.toggle('bg-green-500', isAuto);
+                            btn.classList.toggle('bg-red-500', !isAuto);
 
-        document.getElementById('autoText').classList.toggle('opacity-100', isAuto);
-        document.getElementById('autoText').classList.toggle('opacity-0', !isAuto);
-        document.getElementById('manualText').classList.toggle('opacity-100', !isAuto);
-        document.getElementById('manualText').classList.toggle('opacity-0', isAuto);
+                            document.getElementById('autoText').classList.toggle('opacity-100', isAuto);
+                            document.getElementById('autoText').classList.toggle('opacity-0', !isAuto);
+                            document.getElementById('manualText').classList.toggle('opacity-100', !isAuto);
+                            document.getElementById('manualText').classList.toggle('opacity-0', isAuto);
 
-        document.querySelectorAll('.switchable').forEach(el => {
-            el.disabled = isAuto;
-            el.style.opacity = isAuto ? '0.4' : '1';
-            el.style.cursor = isAuto ? 'not-allowed' : 'pointer';
-        });
-    }
-</script>
+                            document.querySelectorAll('.switchable').forEach(el => {
+                                el.disabled = isAuto;
+                                el.style.opacity = isAuto ? '0.4' : '1';
+                                el.style.cursor = isAuto ? 'not-allowed' : 'pointer';
+                            });
+                        }
+                    </script>
                 </div>
 
-                <!-- Other sections (light list, schedule) remain unchanged -->
                 <div class="grid grid-cols-2 gap-4">
                     @foreach ($lightList as $item)
                         <div
                             class="flex justify-between items-center p-4 border-2 border-green-300 rounded-lg 
-                                                        {{ $item->status === 'Active' ? 'bg-green-100 hover:bg-green-200' : 'bg-white hover:bg-gray-100' }}">
+                                                                {{ $item->status === 'Active' ? 'bg-green-100 hover:bg-green-200' : 'bg-white hover:bg-gray-100' }}">
 
                             <div class="flex items-center gap-4">
                                 <i class="fa-solid fa-lightbulb text-3xl text-gray-800"></i>
@@ -136,12 +132,12 @@
                                     {{ $autoMode ? 'disabled style=opacity:0.4;cursor:not-allowed' : '' }}>
                                     <div
                                         class="flex-1 py-2 text-sm font-medium text-center rounded-full 
-                                                                                {{ $item->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
+                                                                                        {{ $item->status === 'Active' ? 'bg-green-500 text-white' : 'bg-transparent' }}">
                                         ON
                                     </div>
                                     <div
                                         class="flex-1 py-2 text-sm font-medium text-center rounded-full 
-                                                                                {{ $item->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
+                                                                                        {{ $item->status === 'Inactive' ? 'bg-red-500 text-white' : 'bg-transparent' }}">
                                         OFF
                                     </div>
                                 </button>
@@ -151,7 +147,41 @@
                                         const nextCommand = currentStatus === "Active" ? topic + " off" : topic + " on";
                                         const nextStatus = nextCommand.includes("on") ? "Active" : "Inactive";
                                         document.getElementById('commandInput-' + id).value = nextCommand;
-                                        event.target.closest("form").submit();
+                                        console.log('Mengirim perintah:', nextCommand, 'untuk ID:', id, 'ke URL:', `/appliances/${id}/status`, 'dengan metode:', 'PATCH');
+
+                                        // Kirim AJAX untuk update status di DB
+                                        fetch(`/appliances/${id}/status`, {
+                                            method: 'PATCH',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                            },
+                                            body: JSON.stringify({ status: nextStatus })
+                                        })
+                                            .then(response => {
+                                                console.log('Respons status:', response.status);
+                                                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                                                return response.json();
+                                            })
+                                            .then(data => {
+                                                console.log('Respons update status:', data);
+                                                if (data.success) {
+                                                    // Perbarui UI secara optimistis
+                                                    const button = event.target.closest('button');
+                                                    button.querySelector('.flex-1:nth-child(1)').classList.toggle('bg-green-500', nextStatus === 'Active');
+                                                    button.querySelector('.flex-1:nth-child(1)').classList.toggle('bg-transparent', nextStatus !== 'Active');
+                                                    button.querySelector('.flex-1:nth-child(2)').classList.toggle('bg-red-500', nextStatus !== 'Active');
+                                                    button.querySelector('.flex-1:nth-child(2)').classList.toggle('bg-transparent', nextStatus === 'Active');
+                                                    // Submit form untuk kontrol MQTT
+                                                    event.target.closest("form").submit();
+                                                } else {
+                                                    alert(data.message || 'Failed to update status');
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                                alert('Failed to update status: ' + error.message);
+                                            });
                                     }
                                 </script>
                             </form>
@@ -214,4 +244,5 @@
                 </div>
             </div>
         </div>
+    </div>
 @endsection
